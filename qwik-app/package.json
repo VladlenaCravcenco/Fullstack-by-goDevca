@@ -36,11 +36,8 @@
     "typescript": "5.4.5",
     "typescript-eslint": "8.26.1",
     "undici": "*",
-    "vercel": "^44.2.12",
-    "vite": "^5.4.19",
+    "vercel": "^29.1.1",
+    "vite": "5.3.5",
     "vite-tsconfig-paths": "^4.2.1"
-  },
-  "dependencies": {
-    "@sanity/client": "^7.6.0"
   }
 }
