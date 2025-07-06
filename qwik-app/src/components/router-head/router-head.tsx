@@ -11,6 +11,10 @@ export const RouterHead = component$(() => {
   return (
     <>
       <title>{head.title}</title>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&display=swap"
+        rel="stylesheet"
+      />
 
       <link rel="canonical" href={loc.url.href} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
