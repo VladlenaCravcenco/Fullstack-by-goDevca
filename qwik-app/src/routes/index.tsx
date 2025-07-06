@@ -1,4 +1,5 @@
 import { component$ } from '@builder.io/qwik';
+import { DocumentHead } from '@builder.io/qwik-city';
 
 import Header from '~/components/header/header';
 import HeroSection from './../components/hero/hero-section';
@@ -30,12 +31,13 @@ export default component$(() => {
   );
 });
 
-export const head = {
-  title: 'Главная — godevca',
-  meta: [
-    {
-      name: 'description',
-      content: 'Веб-дизайн и разработка сайтов под ключ от Cravcenco Vlada',
-    },
-  ],
+export const head: DocumentHead = {
+    title: 'Мои проекты | godevca',
+    meta: [
+        {
+            name: 'description',
+            content: 'Здесь вы можете посмотреть мои реализованные проекты.',
+
+        },
+    ],
 };
