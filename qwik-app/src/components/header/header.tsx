@@ -1,5 +1,5 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
-import './HeroSection.scss';
+import './Header.scss';
 
 import { component$, useSignal, useResource$, Resource } from '@builder.io/qwik';
 import { sanityClient } from '~/lib/sanity';
