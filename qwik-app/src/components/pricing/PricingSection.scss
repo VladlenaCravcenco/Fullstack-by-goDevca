@@ -31,6 +31,11 @@
     justify-content: flex-start;
   }
 
+  .pricing-grid {
+    display: flex;
+    gap: 20px;
+    width: 1350px;
+  }
   .pricing-card {
     flex: 1 1 calc(25% - 24px);
     max-width: calc(25% - 24px);
@@ -128,6 +133,7 @@
 
   // Mobile
   @media (max-width: 1024px) {
+    
     .pricing-card {
       flex: 1 1 45%;
       max-width: 48%;
