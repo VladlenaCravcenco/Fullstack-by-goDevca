@@ -88,7 +88,7 @@ const plans = [
   }
 ];
 
-export const PricingSection = component$(() => {
+export default component$(() => {
   return (
     <section class="pricing">
       <div class="container">
