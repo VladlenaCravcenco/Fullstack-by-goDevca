@@ -1,25 +1,31 @@
-import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { component$ } from '@builder.io/qwik';
+
+import Header from '~/components/header/header';
+import HeroSection from './../components/hero/hero-section';
+import ServicesSection from '~/components/services/services-section';
+import StepsSection from '~/components/steps/steps-section';
+import ProjectsSection from '~/components/projects/projects-section';
+import PricingSection from '~/components/pricing/pricing-section';
+import AboutSection from '~/components/about/about-section';
+import BlogSection from '~/components/blog/blog-section';
+import FaqSection from '~/components/faq/faq-section';
+import FormSection from '~/components/form/form-section';
+import Footer from '~/components/footer/footer';
 
 export default component$(() => {
   return (
     <>
-      <h1>Hi 👋</h1>
-      <div>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </div>
+      <Header />
+      <HeroSection />
+      <ServicesSection />
+      <StepsSection />
+      <ProjectsSection />
+      <PricingSection />
+      <AboutSection />
+      <BlogSection />
+      <FaqSection />
+      <FormSection />
+      <Footer />
     </>
   );
 });
-
-export const head: DocumentHead = {
-  title: "Welcome to Qwik",
-  meta: [
-    {
-      name: "description",
-      content: "Qwik site description",
-    },
-  ],
-};
