@@ -96,4 +96,32 @@
       grid-row: auto;
     }
   }
+  @media (max-width: 768px) {
+  .about-me__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .photo {
+    order: 1;
+  }
+
+  .contact {
+    order: 2;
+  }
+
+  .about-text {
+    order: 3;
+  }
+
+  .education {
+    order: 4;
+  }
+
+  .skills {
+    order: 5;
+  }
 }
+}
+
