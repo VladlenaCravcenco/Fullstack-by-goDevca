@@ -1,5 +1,5 @@
-.services {
-  padding: 100px 0;
+.steps {
+  padding: 80px 0;
   background: #f9f9f9;
 
   .container {
@@ -12,60 +12,115 @@
     font-size: 32px;
     font-weight: 600;
     text-align: center;
+    margin-bottom: 8px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    color: #666;
     margin-bottom: 48px;
   }
 
-  &__list {
+  &__content {
     display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    scroll-snap-type: x mandatory;
+    justify-content: space-between;
+    gap: 40px;
 
-    @media (min-width: 1025px) {
-      overflow-x: visible;
-      flex-wrap: wrap;
-      justify-content: center;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      display: none;
     }
   }
 }
 
-.service-card {
-  flex: 0 0 auto;
-  width: 280px;
-  background: #e8e8e8;
-  border-radius: 25px;
-  padding: 24px;
-  scroll-snap-align: start;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.step-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  cursor: pointer;
 
-  &:hover {
-    transform: translateY(-4px);
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  &__tag {
-    background: white;
-    display: inline-block;
+  &__number {
+    font-weight: 600;
+    font-size: 14px;
+    background: #f1f1f1;
+    border-radius: 8px;
     padding: 4px 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    color: #333;
-    font-weight: 500;
+    margin-right: 12px;
   }
 
   &__title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111;
+    font-weight: 500;
+    font-size: 16px;
+    flex-grow: 1;
   }
 
-  &__desc {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.5;
+  &__toggle {
+    font-size: 20px;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+  }
+
+  &__body {
+    margin-top: 12px;
+
+    p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .step-card__btn {
+      background: #ff6a00;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      &:hover {
+        background: #e45b00;
+      }
+    }
+  }
+
+  &.active {
+    .step-card__toggle {
+      transform: rotate(180deg);
+    }
   }
 }
