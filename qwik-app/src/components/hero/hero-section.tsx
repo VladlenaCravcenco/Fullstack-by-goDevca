@@ -2,7 +2,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import './HeroSection.scss';
 
 import { component$, useSignal, useResource$, Resource } from '@builder.io/qwik';
-import { sanityClient } from './../../../lib/sanity';
+import { sanityClient } from '~/lib/sanity';
 
 export default component$(() => {
     const lang = useSignal<'ru' | 'en' | 'ro'>('ru');
