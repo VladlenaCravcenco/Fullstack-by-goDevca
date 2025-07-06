@@ -1,9 +1,21 @@
-// /sanity/schemas/header.ts
 export default {
   name: 'header',
   title: 'Header',
   type: 'document',
   fields: [
+    {
+      name: 'language',
+      title: 'Язык',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Русский', value: 'ru' },
+          { title: 'English', value: 'en' },
+          { title: 'Română', value: 'ro' },
+        ],
+        layout: 'radio',
+      },
+    },
     {
       name: 'logo',
       title: 'Логотип',
@@ -12,27 +24,13 @@ export default {
     {
       name: 'navLinks',
       title: 'Навигационные ссылки',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'array', of: [{ type: 'string' }] },
-        { name: 'en', title: 'Английский', type: 'array', of: [{ type: 'string' }] },
-        { name: 'ro', title: 'Румынский', type: 'array', of: [{ type: 'string' }] },
-      ],
+      type: 'array',
+      of: [{ type: 'string' }],
     },
     {
       name: 'briefButton',
-      title: 'Кнопка “Заполнить бриф”',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'en', title: 'Английский', type: 'string' },
-        { name: 'ro', title: 'Румынский', type: 'string' },
-      ],
-    },
-    {
-      name: 'langLabel',
-      title: 'Языковая метка',
+      title: 'Текст кнопки "Заполнить бриф"',
       type: 'string',
     },
   ],
-};
+}
