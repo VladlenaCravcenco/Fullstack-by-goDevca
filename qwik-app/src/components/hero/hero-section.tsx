@@ -1,48 +1,41 @@
-import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './HeroSection.scss';
 
-export default component$(() => {
-    return (
-        <section class="hero">
-            <div class="container">
-                <div class="hero__content">
-                    <div class="hero__left">
-                        <h1>
-                            Cravcenco Vladlena —
-                            <br />
-                            веб-дизайнер и fullstack-разработчик
-                        </h1>
-                        <p>
-                            Cайт под ключ — от идеи до полноценного запуска с SEO-оптимизацией.
-                        </p>
-                        <p>
-                            Без шаблонов. Разрабатываю адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong> и корпоративные сайты на <strong>React</strong>, полностью готовые к индексации в поисковых системах.
-                        </p>
-                        
-                        <div class="hero__buttons">
-                            <button class="btn btn--primary">Посмотреть кейсы</button>
-                            <button class="btn btn--secondary">Обсудить проект</button>
-                        </div>
-                    </div>
+import { component$, useResource$, Resource } from '@builder.io/qwik';
+import { sanityClient } from './../../../lib/sanity';
 
-                    <div class="hero__right">
-                        <div class="hero__video-wrapper">
-                            
-                            <iframe
-                                class="hero__video"
-                                src="https://www.youtube.com/embed/WJeN12BEPn4"
-                                title="Visit card for Fiverr profile"
-                                style="border: none"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullscreen
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
+export default component$(() => {
+  const data = useResource$<any>(async () => {
+    const header = await sanityClient.fetch(`*[_type == "header"][0]`);
+    return header;
+  });
+
+  return (
+    <Resource
+      value={data}
+      onResolved={(header) => (
+        <header class="header">
+          <div class="container">
+            <div class="header__left">
+              <span class="logo">{header.logo}</span>
             </div>
-        </section>
-    );
+            <nav class="header__nav">
+              <ul>
+                {header.navLinks.ru.map((item: string) => (
+                  <li><a href="#">{item}</a></li>
+                ))}
+              </ul>
+            </nav>
+            <div class="header__right">
+              <div class="lang-switch">🌐 ru</div>
+              <button class="brief-btn">{header.briefButton.ru}</button>
+              <button class="burger">☰</button>
+            </div>
+          </div>
+        </header>
+      )}
+    />
+  );
 });
 
 export const head: DocumentHead = {
