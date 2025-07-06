@@ -1,117 +1,142 @@
 .pricing {
-  background-color: #f7f7f7;
-  padding: 80px 20px;
-}
+  padding: 100px 0;
+  background-color: #f9f9f9;
 
-.pricing__container {
-  max-width: 1300px;
-  margin: 0 auto;
-}
+  .container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 
-/* Заголовок */
-.pricing__title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-align: center;
-}
+  &__head {
+    text-align: center;
+    margin-bottom: 60px;
 
-.pricing__description {
-  font-size: 16px;
-  max-width: 750px;
-  margin: 0 auto 60px auto;
-  text-align: center;
-  color: #444;
-}
+    h2 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-/* Сетка карточек */
-.pricing__cards {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    p {
+      font-size: 18px;
+      color: #555;
+    }
+  }
 
-/* Карточка */
-.pricing-card {
-  background-color: #fff;
-  border-radius: 24px;
-  padding: 30px 24px;
-  flex: 1 1 280px;
-  max-width: 300px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-}
-
-.pricing-card__title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.pricing-card__description {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 24px;
-}
-
-.pricing-card__oldprice {
-  font-size: 14px;
-  text-decoration: line-through;
-  color: #999;
-}
-
-.pricing-card__price {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 4px 0 16px 0;
-}
-
-.pricing-card__button {
-  background-color: #ff5c00;
-  border: none;
-  color: white;
-  border-radius: 12px;
-  padding: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 12px rgba(255, 92, 0, 0.4);
-}
-
-.pricing-card__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.pricing-card__item {
-  font-size: 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pricing-card__item--disabled {
-  opacity: 0.5;
-}
-
-.pricing-card__item-icon {
-  width: 16px;
-  height: 16px;
-}
-
-/* Адаптив */
-@media (max-width: 768px) {
-  .pricing__cards {
-    flex-direction: column;
-    align-items: center;
+  &__cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .pricing-card {
-    max-width: 100%;
+    flex: 1 1 280px;
+    max-width: 310px;
+    background: #fff;
+    border-radius: 25px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    &__title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    &__desc {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    &__price {
+      margin-bottom: 16px;
+
+      .old {
+        text-decoration: line-through;
+        color: #aaa;
+        margin-right: 8px;
+      }
+
+      .current {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ff6b00;
+      }
+    }
+
+    &__btn {
+      margin: 20px 0;
+      background: #ff6b00;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e65a00;
+      }
+    }
+
+    &__features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+
+        &.included {
+          color: #222;
+
+          .icon {
+            color: green;
+          }
+        }
+
+        &.excluded {
+          color: #999;
+          opacity: 0.5;
+
+          .icon {
+            color: red;
+          }
+        }
+
+        .icon {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  // Mobile
+  @media (max-width: 768px) {
+    &__cards {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 16px;
+    }
+
+    .pricing-card {
+      min-width: 270px;
+      flex: 0 0 auto;
+    }
   }
 }
