@@ -12,6 +12,20 @@ export default component$ (()=>{
       imageFinal: '/images/projects/intraassets-final.jpg',
       link: '/projects/intra-assets',
     },
+    {
+      title: 'Intra Assets - Regional electricity trading company',
+      tags: ['Prototyping', 'Design', 'React', 'CMS', 'SEO', 'Vercel'],
+      imagePreview: '/images/projects/intraassets-prototype.jpg',
+      imageFinal: '/images/projects/intraassets-final.jpg',
+      link: '/projects/intra-assets',
+    },
+    {
+      title: 'Intra Assets - Regional electricity trading company',
+      tags: ['Prototyping', 'Design', 'React', 'CMS', 'SEO', 'Vercel'],
+      imagePreview: '/images/projects/intraassets-prototype.jpg',
+      imageFinal: '/images/projects/intraassets-final.jpg',
+      link: '/projects/intra-assets',
+    },
     // Добавь остальные проекты по аналогии
   ];
 
