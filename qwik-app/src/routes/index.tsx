@@ -29,3 +29,13 @@ export default component$(() => {
     </>
   );
 });
+
+export const head = {
+  title: 'Главная — godevca',
+  meta: [
+    {
+      name: 'description',
+      content: 'Веб-дизайн и разработка сайтов под ключ от Cravcenco Vlada',
+    },
+  ],
+};
