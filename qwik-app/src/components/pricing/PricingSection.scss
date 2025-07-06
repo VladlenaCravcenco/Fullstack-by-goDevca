@@ -133,7 +133,6 @@
 
   // Mobile
   @media (max-width: 1024px) {
-    
     .pricing-card {
       flex: 1 1 45%;
       max-width: 48%;
@@ -145,6 +144,11 @@
       flex-wrap: nowrap;
       overflow-x: auto;
       padding-bottom: 16px;
+    }
+    .pricing__grid {
+      display: block;
+      gap: 20px;
+      width: 100%;
     }
 
     .pricing-card {
