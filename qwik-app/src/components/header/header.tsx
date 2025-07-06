@@ -8,8 +8,8 @@ export default component$(() => {
     const lang = useSignal<'ru' | 'en' | 'ro'>('ru');
     
     const data = useResource$<any>(async () => {
-        const header = await sanityClient.fetch(`*[_type == "header"][0]`);
-        const data = await sanityClient.fetch(`*[_type == "header" && language == "${lang.value}"][0]`);
+        const header = await sanityClient.fetch(`*[_type == "header" && language == "${lang.value}"][0]`);
+        
         return header;
     });
 
