@@ -1,0 +1,126 @@
+.footer {
+  width: 100%;
+  background-color: #f9f9f9;
+  padding: 80px 0 40px;
+  border-radius: 60px 60px 0 0;
+  position: relative;
+
+  .container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  &__card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 6px 0;
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+
+      a {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          background: #ddd;
+        }
+      }
+    }
+  }
+
+  &__col {
+    h4 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 10px;
+
+        a {
+          color: #111;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+
+    font-size: 14px;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .footer__up {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #ff6a00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background: #e95d00;
+      }
+    }
+  }
+}
