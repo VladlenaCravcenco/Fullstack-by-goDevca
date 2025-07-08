@@ -10,7 +10,7 @@ import PricingSection from '~/components/pricing/pricing-section';
 import AboutSection from '~/components/about/about-section';
 import BlogSection from '~/components/blog/blog-section';
 import FaqSection from '~/components/faq/faq-section';
-import FormSection from '~/components/form/form-section';
+import FormSection from '~/components/form/brief-cta';
 import Footer from '~/components/footer/footer';
 
 export default component$(() => {
