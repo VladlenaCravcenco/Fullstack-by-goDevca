@@ -8,7 +8,7 @@ export const CalendlyBadge = component$(() => {
     document.body.appendChild(script);
 
     script.onload = () => {
-      // @ts-ignore — Calendly будет доступен после загрузки скрипта
+      // @ts-expect-error — Calendly будет доступен после загрузки скрипта
       window.Calendly?.initBadgeWidget?.({
         url: 'https://calendly.com/godevca/30min',
         text: 'Записаться на консультацию',
