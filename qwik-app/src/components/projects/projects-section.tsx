@@ -25,7 +25,7 @@ export default component$(() => {
       imageFinal: '/images/projects/intraassets-final.jpg',
       link: '/projects/intra-assets',
     },
-    // добавляй дальше
+
   ];
 
   return (
