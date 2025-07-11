@@ -80,7 +80,7 @@ export default component$(() => {
           onClick$={() => {
             if (typeof window !== 'undefined' && window.Calendly) {
               window.Calendly.initPopupWidget({
-                url: 'https://calendly.com/godevca/new-meeting',
+                url: 'https://calendly.com/godevca/30min',
               });
             } else {
               console.error('Calendly не загружен');
