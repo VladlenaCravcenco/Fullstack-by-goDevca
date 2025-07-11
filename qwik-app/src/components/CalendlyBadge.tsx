@@ -11,9 +11,10 @@ export const CalendlyBadge = component$(() => {
       // @ts-expect-error — Calendly будет доступен после загрузки скрипта
       window.Calendly?.initBadgeWidget?.({
         url: 'https://calendly.com/godevca/30min',
-        text: 'Записаться на консультацию',
+        text: '☻',
         color: '#fb651e',
         textColor: '#ffffff',
+        
       });
     };
   });
