@@ -73,7 +73,7 @@ export default component$(() => {
       {/* Подключаем внешний скрипт Calendly один раз */}
       <CalendlyPopup />
 
-      <div class="faq__cta">
+      <div class="faq__cta" id='faq'>
         <p>Не нашли интересующий вас вопрос?</p>
         <button
           class="faq__btn"

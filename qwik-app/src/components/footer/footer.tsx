@@ -5,7 +5,7 @@ import './footer-section.scss';
 
 export default component$(() => {
   return (
-    <footer class="footer">
+    <footer class="footer" id='contacts'>
       <div class="footer__container container">
         <div class="footer__col footer__contact">
           <h3>Контакты</h3>

@@ -123,8 +123,9 @@
 }
 
 .step-card__btn {
-  background: #000000;
-  color: #fff;
+  background-image: url(../../../public/images/blog-filter-bg.jpg);
+  background-size: cover;
+background-position: center;
   border: none;
   border-radius: 20px;
   font-size: 14px;

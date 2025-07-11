@@ -57,9 +57,10 @@
 }
 
 .btn--primary {
-  background: #000000;
-  color: white;
+  background-image: url(../../../public/images/blog-filter-bg.jpg);
   border-radius: 20px;
+  background-size: cover;
+background-position: center;
 }
 
 

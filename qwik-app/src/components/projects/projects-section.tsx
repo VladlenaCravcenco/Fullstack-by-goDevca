@@ -29,7 +29,7 @@ export default component$(() => {
   ];
 
   return (
-    <section class="projects">
+    <section class="projects" id='projects'>
       <div class="container">
         <div class="projects__head">
           <h2 class="projects__title">Реальные проекты — от идеи до результата</h2>

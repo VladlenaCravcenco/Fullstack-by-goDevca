@@ -3,6 +3,7 @@ import { component$, useSignal, } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './Header.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
 
@@ -12,7 +13,7 @@ export default component$(() => {
         <header class="header">
             <div class="container">
                 <div class="header__left">
-                    <span class="logo">godevca</span>
+                    <a href='/' class="logo">godevca</a>
                 </div>
 
                 <nav class="header__nav">
@@ -36,7 +37,7 @@ export default component$(() => {
                         </span> ru
                     </div>
                     <GlassEffect class="brief-btn">
-                        Заполнить бриф
+                        <Link href="/brief">заполнить бриф</Link>
                     </GlassEffect>
 
 

@@ -1,12 +1,12 @@
 
 import type {DocumentHead} from '@builder.io/qwik-city';
-
+import { GlassEffect } from '~/components/ui/GlassEffect';
 import { component$ } from '@builder.io/qwik';
-import './about-me.scss';
+import './about-me.css';
 
 export default component$(() => {
   return (
-    <section class="about-me">
+    <section class="about-me" id='about'>
       <div class="container">
         <div class="about-me__grid">
 
@@ -28,7 +28,7 @@ export default component$(() => {
             <p>Telegram: @Cravcenco_frontend</p>
             <p>Instagram: vladlenacravcenco</p>
             <p>Помимо сайтов я также создаю рекламные креативы, презентации, 3D-анимации в Blender и дизайн-шаблоны.</p>
-            <button>Открыть дизайн-портфолио</button>
+            <GlassEffect class="design-portfolio-btn">Открыть дизайн-портфолио</GlassEffect>
           </div>
 
           <div class="card education">

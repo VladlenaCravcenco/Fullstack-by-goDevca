@@ -59,7 +59,7 @@ export default component$(() => {
   ];
 
   return (
-    <section class="steps">
+    <section class="steps" id='process'>
       <div class="container">
         <h2 class="steps__title">Процесс работы по шагам</h2>
         <p class="steps__subtitle">Как я создаю сайт, который работает</p>

@@ -32,7 +32,7 @@ export default component$(() => {
     ];
 
     return (
-        <section class="services">
+        <section class="services" id='services'>
             <div class="container">
                 <h2 class="services__title">Что я могу вам предложить</h2>
                 <div class="services__list">

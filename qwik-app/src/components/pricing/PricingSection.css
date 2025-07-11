@@ -19,6 +19,7 @@
   font-size: 38px;
   font-weight: 700;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .pricing__text {
@@ -92,11 +93,15 @@
 }
 
 .pricing-card__btn {
+   background-image: url(../../../public/images/blog-filter-bg.jpg);
+  background-size: cover;
+background-position: center;
   margin: 20px 0;
   border: none;
-  border-radius: 12px;
+  border-radius: 20px;
   font-weight: 600;
   cursor: pointer;
+  width: 100%;
 }
 .pricing-card__btn .glass-btn{
   width: 100%;
@@ -114,7 +119,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 8px 0;
+  margin: 16px 0;
 }
 
 .pricing-card__features li.included {
