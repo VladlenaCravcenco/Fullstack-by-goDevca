@@ -99,18 +99,23 @@
   }
 
   @media (max-width: 768px) {
-    .hero__content {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .hero__left,
-    .hero__right {
-      flex: 1 1 100%;
-    }
-
-    .hero__left h1 {
-      font-size: 28px;
-    }
+  .hero__content {
+    flex-direction: column;
+    align-items: stretch; // чтобы блоки были 100% шириной
   }
+
+  .hero__left,
+  .hero__right {
+    flex: 1 1 auto;
+    width: 100%; // <-- ОБЯЗАТЕЛЬНО
+  }
+
+  .hero__video-wrapper {
+    width: 100%; // <-- ОБЯЗАТЕЛЬНО
+  }
+
+  .hero__left h1 {
+    font-size: 28px;
+  }
+}
 }
