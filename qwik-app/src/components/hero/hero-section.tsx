@@ -1,7 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { CalendlyBadge } from './../CalendlyBadge';
-import './HeroSection.scss';
+import './HeroSection.css';
 
 export default component$(() => {
   return (

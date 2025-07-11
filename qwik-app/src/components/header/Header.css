@@ -68,8 +68,7 @@
 }
 
 .header .brief-btn {
-  width: 200px;
-  height: 30px;
+  font-size: small;
 }
 
 .header .burger {

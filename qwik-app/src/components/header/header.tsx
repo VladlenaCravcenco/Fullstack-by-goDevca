@@ -32,7 +32,7 @@ export default component$(() => {
                     <div class="lang-switch">
                         <span class="icon">🌐</span> ru
                     </div>
-                    <GlassEffect>
+                    <GlassEffect class="brief-btn">
                         Заполнить бриф
                     </GlassEffect>
 

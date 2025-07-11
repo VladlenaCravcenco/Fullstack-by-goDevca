@@ -22,8 +22,8 @@ body {
 
   --color-black: #000;
   --color-white: #fff;
-  --color-orange: #ff6600;
-  --color-orange-dark: #e05200;
+  --color-green: #00b403;
+  --color-green-dark: #007714;
   --color-text: #222;
   --color-muted: #777;
   --container-width: 1300px;
@@ -55,6 +55,7 @@ button {
   background: none;
   border: none;
   padding: 0;
+background-color: var(--color-green);
 }
 
 img {
