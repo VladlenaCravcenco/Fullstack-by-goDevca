@@ -79,8 +79,8 @@
   border-radius: 20px;
   padding: 20px 24px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
   cursor: pointer;
+   border: 1px solid rgba(232, 232, 232, 0.8);
 }
 
 .step-card__header {
@@ -132,8 +132,9 @@
   transition: 0.2s ease;
 }
 .step-card.active{
-  border: 7px solid rgba(232, 232, 232, 0.4);
+  border: 7px solid rgba(232, 232, 232, 0.6);
   background-color: #fff;
+  
 }
 
 

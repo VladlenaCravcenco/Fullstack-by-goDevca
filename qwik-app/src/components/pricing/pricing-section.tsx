@@ -1,8 +1,8 @@
 
-import type {DocumentHead} from '@builder.io/qwik-city';
-
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 import { component$ } from '@builder.io/qwik';
-import './PricingSection.scss';
+import './PricingSection.css';
 
 const plans = [
   {
@@ -101,11 +101,15 @@ export default component$(() => {
         <div class="pricing__grid">
           {plans.map((plan, index) => (
             <div class="pricing-card" key={index}>
-              <h3 class="pricing-card__name">{plan.name}</h3>
-              <p class="pricing-card__desc">{plan.description}</p>
-              {plan.oldPrice && <p class="pricing-card__old">{plan.oldPrice}</p>}
+              <div class="pricing_top-info">
+                <h3 class="pricing-card__name">{plan.name}</h3>
+                <p class="pricing-card__desc">{plan.description}</p>
+              </div>
+              <div>
+                {plan.oldPrice && <p class="pricing-card__old">{plan.oldPrice}</p>}
               <p class="pricing-card__price">{plan.price}</p>
-              <button class="pricing-card__btn">{plan.button}</button>
+              <GlassEffect class="pricing-card__btn">{plan.button}</GlassEffect>
+              </div>
               <ul class="pricing-card__features">
                 {plan.included.map((item, i) => (
                   <li key={`in-${i}`} class="included">
@@ -127,12 +131,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-    title: 'Обо мне',
-    meta: [
-        {
-            name: 'description',
-            content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
+  title: 'Обо мне',
+  meta: [
+    {
+      name: 'description',
+      content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
 
-        },
-    ],
+    },
+  ],
 };
