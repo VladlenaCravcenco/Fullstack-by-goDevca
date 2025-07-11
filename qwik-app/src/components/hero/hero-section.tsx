@@ -2,6 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { CalendlyBadge } from './../CalendlyBadge';
 import './HeroSection.css';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
   return (
@@ -26,8 +27,8 @@ export default component$(() => {
                 Без шаблонов. Только чистый код, понятная структура и максимальная производительность.
               </p>
               <div class="hero__buttons">
-                <button class="btn btn--primary">Посмотреть кейсы</button>
-                <button class="btn btn--secondary">Обсудить проект</button>
+                <GlassEffect class="btn btn--primary">Посмотреть кейсы</GlassEffect>
+                <GlassEffect class="btn btn--secondary">Обсудить проект</GlassEffect>
               </div>
             </div>
 
