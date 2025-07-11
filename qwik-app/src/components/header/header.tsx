@@ -1,11 +1,13 @@
 
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal, } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import './Header.scss';
+import './Header.css';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
-    const menuOpen = useSignal(false);
 
+    const menuOpen = useSignal(false);
+    
     return (
         <header class="header">
             <div class="container">
@@ -30,7 +32,11 @@ export default component$(() => {
                     <div class="lang-switch">
                         <span class="icon">🌐</span> ru
                     </div>
-                    <button class="brief-btn">Заполнить бриф</button>
+                    <GlassEffect>
+                        Заполнить бриф
+                    </GlassEffect>
+
+
                     <button
                         class="burger"
                         onClick$={() => (menuOpen.value = !menuOpen.value)}

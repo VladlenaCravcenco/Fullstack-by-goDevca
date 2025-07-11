@@ -1,6 +1,7 @@
 import { component$ } from '@builder.io/qwik'
 import type { DocumentHead } from '@builder.io/qwik-city'
-import './ServicesSection.scss';
+import './ServicesSection.css';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
     const services = [
@@ -36,11 +37,15 @@ export default component$(() => {
                 <h2 class="services__title">Что я могу вам предложить</h2>
                 <div class="services__list">
                     {services.map((service, index) => (
-                        <div class="service-card" key={index}>
+                        <GlassEffect class="service-card" key={index}>
                             <div class="service-card__tag">{service.tag}</div>
-                            <h3 class="service-card__title">{service.title}</h3>
-                            <p class="service-card__desc">{service.description}</p>
-                        </div>
+                            <div class="service-card__content">
+                                <h3 class="service-card__title">{service.title}</h3>
+                                <p class="service-card__desc">{service.description}</p>
+                            </div>
+
+                        </GlassEffect>
+
                     ))}
                 </div>
             </div>
