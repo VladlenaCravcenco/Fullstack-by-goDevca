@@ -1,6 +1,7 @@
 import {component$, useSignal} from '@builder.io/qwik'
 import type {DocumentHead} from '@builder.io/qwik-city'
-import './StepsSection.scss';
+import './StepsSection.css';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
   const activeStep = useSignal(0);
@@ -79,8 +80,9 @@ export default component$(() => {
 
                 {activeStep.value === index && (
                   <div class="step-card__body">
+                    <img src={steps[activeStep.value].image} alt={steps[activeStep.value].title} />
                     <p>{step.description}</p>
-                    <button class="step-card__btn">Узнать цены</button>
+                    <GlassEffect class="step-card__btn">Узнать цены</GlassEffect>
                   </div>
                 )}
               </div>
