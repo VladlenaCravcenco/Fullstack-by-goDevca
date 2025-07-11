@@ -1,0 +1,29 @@
+.brief-cta {
+  background: url('../../../public/images/blog-filter-bg.jpg') center/cover no-repeat;
+  border-radius: 60px 60px 0 0;
+  margin-top: 60px;
+  padding: 100px 40px;
+  text-align: center;
+  color: #000;
+  position: relative;
+  bottom: -50px;
+}
+
+.brief-cta__overlay {
+
+  padding: 40px;
+  border-radius: 24px;
+  display: inline-block;
+}
+
+.brief-cta h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.brief-cta__btn {
+  
+  font-weight: 500;
+  border-radius: 8px;
+}

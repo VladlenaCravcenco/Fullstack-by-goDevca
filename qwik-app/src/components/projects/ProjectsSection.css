@@ -1,0 +1,152 @@
+.projects {
+  padding: 80px 0;
+}
+
+.projects__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.projects__desc {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #555;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.projects__head {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.projects__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.tags .btn{
+  background: transparent;
+  color: #fff;
+  border: 1px solid white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+}
+@media (max-width: 1024px) {
+  .projects__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .projects__list {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+
+  .projects__list::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.project-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  flex: 0 0 80%;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+  height: 300px;
+}
+
+.project-card:hover .project-card__image--initial {
+  opacity: 0;
+}
+
+.project-card:hover .project-card__image--final {
+  opacity: 1;
+}
+
+.project-card:hover .project-card__info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.project-card__image--initial {
+  opacity: 1;
+}
+
+.project-card__image--final {
+  opacity: 0;
+}
+
+.project-card__wrapper {
+  position: relative;
+  padding-top: 75%; /* для соотношения сторон */
+  background: #eee;
+}
+
+.project-card__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 16px;
+  color: white;
+  transform: translateY(10px);
+  transition: 0.3s ease;
+
+  background: #00000017;
+  mask: linear-gradient(to bottom, transparent, #000020f7 60%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+}
+
+.project-card__info h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: white;
+}
+
+.project-card__info .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.project-card__info .tags span {
+  background: transparent;
+  color: #fff;
+  border: 1px solid white;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.projects__btn {
+  background-image: url(../../../public/images/blog-filter-bg.jpg);
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}

@@ -1,6 +1,8 @@
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import './ProjectsSection.scss';
+import './ProjectsSection.css';
+import { GlassEffect } from '~/components/ui/GlassEffect';
+import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
   const projects = [
@@ -37,7 +39,10 @@ export default component$(() => {
             Каждый кейс — это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.
             При клике вы переходите на страницу проекта, где подробно рассказано, что и как было сделано.
           </p>
-          <a href="#pricing" class="projects__btn">проекты</a>
+          
+          <GlassEffect class="projects__btn">
+            <Link href="/projects">проекты</Link>
+          </GlassEffect>
         </div>
 
         <div class="projects__list">
@@ -60,9 +65,10 @@ export default component$(() => {
                   <div class="tags">
                     {project.tags.map((tag, i) => (
                       <span key={i}>{tag}</span>
-                    ))}
+                    ))}<div class="btn">→</div>
                   </div>
-                  <div class="btn">→</div>
+                  
+                 
                 </div>
               </div>
             </a>
