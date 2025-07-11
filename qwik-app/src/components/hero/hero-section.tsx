@@ -33,10 +33,9 @@ export default component$(() => {
 
             <div class="hero__right">
               <div class="hero__video-wrapper">
-
                 <iframe
                   class="hero__video"
-                  src="https://www.youtube.com/watch?v=hB1f1QsPDXI"
+                  src="https://www.youtube.com/embed/hB1f1QsPDXI"
                   title="Visit card for Fiverr profile"
                   style="border: none"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
