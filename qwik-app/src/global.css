@@ -1,4 +1,4 @@
-// 1. Сброс стилей и нормализация
+/* 1. Сброс стилей и нормализация */
 *,
 *::before,
 *::after {
@@ -6,7 +6,6 @@
   margin: 0;
   padding: 0;
 }
-
 
 html,
 body {
@@ -16,7 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// 2. Базовые переменные (цвета, отступы)
+/* 2. Базовые переменные (цвета, отступы) */
 :root {
   --font-main: 'Onest', sans-serif;
 
@@ -30,7 +29,7 @@ body {
   --radius: 20px;
 }
 
-// 3. Базовые теги
+/* 3. Базовые теги */
 body {
   font-family: var(--font-main);
   font-size: 16px;
@@ -42,20 +41,21 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  font-weight: 500;
 }
 
 ul,
 ol {
   list-style: none;
+  font-weight: 300;
 }
 
 button {
   font: inherit;
   cursor: pointer;
-  background: none;
+  background: var(--color-green);
   border: none;
   padding: 0;
-background-color: var(--color-green);
 }
 
 img {
@@ -63,7 +63,7 @@ img {
   display: block;
 }
 
-// 4. Контейнер
+/* 4. Контейнер */
 .container {
   width: 100%;
   max-width: var(--container-width);
@@ -71,9 +71,9 @@ img {
   margin: 0 auto;
 }
 
-// 5. Тексты и заголовки
+/* 5. Тексты и заголовки */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   margin-bottom: 0.5em;
   color: var(--color-black);
@@ -81,5 +81,6 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-bottom: 1em;
+  font-weight: 300;
   color: var(--color-text);
 }

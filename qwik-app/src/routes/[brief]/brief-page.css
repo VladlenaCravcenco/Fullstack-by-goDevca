@@ -1,0 +1,120 @@
+/* brief-page.css */
+
+.brief {
+  padding: 60px 0;
+}
+
+.brief h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.brief__subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--color-muted);
+  max-width: 800px;
+}
+
+form#brief-form {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+fieldset h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  color: var(--color-black);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 500;
+}
+
+input,
+textarea,
+select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  color: #000;
+  transition: border-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-green);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-group,
+.brief-form__group,
+.brief__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.brief__checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.submit-brief {
+  background-image: url(../../../public/images/blog-filter-bg.jpg);
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  width: max-content;
+}
+
+@media (max-width: 768px) {
+  .brief {
+    padding: 40px 0;
+  }
+
+  .brief__subtitle {
+    font-size: 1rem;
+  }
+
+  fieldset h2 {
+    font-size: 1.3rem;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 0.95rem;
+  }
+
+  .submit-brief {
+    font-size: 1rem;
+    padding: 14px 24px;
+  }
+}

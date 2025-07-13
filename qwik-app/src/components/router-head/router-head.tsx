@@ -13,7 +13,7 @@ export const RouterHead = component$(() => {
     <>
       <title>{head.title}</title>
       <link
-        href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Onest:wght@300;500&display=swap"
         rel="stylesheet"
       />
       <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"></link>

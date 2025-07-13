@@ -1,5 +1,5 @@
 .hero {
-  padding: 100px 0;
+  padding: 200px 0 100px;
 }
 
 .hero .container {
@@ -99,7 +99,7 @@ background-position: center;
 @media (max-width: 768px) {
 
   .hero{
-    padding-bottom: 50px;
+    padding:150px 0 50px;
   }
   .hero__content {
     flex-direction: column;
