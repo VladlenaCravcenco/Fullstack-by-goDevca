@@ -21,11 +21,14 @@ export default component$(() => {
 
         const updateSlider = () => {
             const value = parseFloat(input.value);
-            const percent = ((value - 1) / 9) * 100; // от 1 до 10
-            const handleOffset = 1.5 * (1 - (percent / 100)) - 1.125;
-            const percentStyle = `calc(${percent}% + ${handleOffset}em)`;
-            input.parentElement?.style.setProperty('--percent', percentStyle);
-            input.style.backgroundSize = percentStyle + " 100%";
+            const percent = ((value - 1) / 9); // значение от 0 до 1
+            const scale = percent.toFixed(2); // чтобы не было длинных float'ов
+
+            // Новый способ: меняем scale, а не width
+            input.parentElement?.style.setProperty('--scale', scale);
+
+            // Опционально: если ты хочешь сохранить градиент в самой полосе
+            input.style.backgroundSize = `${percent * 100}% 100%`;
         };
 
         input.addEventListener('input', updateSlider);

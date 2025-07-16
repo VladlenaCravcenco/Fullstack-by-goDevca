@@ -110,13 +110,15 @@ textarea {
   position: absolute;
   top: 50%;
   left: 0;
-  width: var(--percent);
+  width: 100%; /* фиксировано */
   height: 50%;
   background: var(--gradient);
   filter: blur(20px);
-  transform: translateY(-50%);
+  transform: translateY(-50%) scaleX(var(--scale, 0.5));
+  transform-origin: left;
   border-radius: 2em;
   z-index: 0;
+  transition: transform 0.2s ease;
 }
 .gr-input {
   position: relative;
