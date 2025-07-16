@@ -1,7 +1,7 @@
 /* brief-page.css */
 
 .brief {
-  padding: 60px 0;
+  padding: 150px 15%;
 }
 
 .brief h1 {
@@ -94,9 +94,65 @@ textarea {
   width: max-content;
 }
 
+.gr-glow {
+  --gradient: linear-gradient(90deg, #ff9900, #ffcc33, #4aff4a);
+  --percent: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 2.5em;
+  width: 100%;
+  margin: 1em 0;
+  border-radius: 2em;
+}
+.gr-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--percent);
+  height: 50%;
+  background: var(--gradient);
+  filter: blur(20px);
+  transform: translateY(-50%);
+  border-radius: 2em;
+  z-index: 0;
+}
+.gr-input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 1em;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--gradient);
+  background-size: var(--percent) 100%;
+  background-repeat: no-repeat;
+  border-radius: 2em;
+  outline: none;
+}
+.gr-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2em;
+  height: 2em;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.gr-input::-moz-range-thumb {
+  width: 2em;
+  height: 2em;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .brief {
-    padding: 40px 0;
+    padding: 100px 5%;
   }
 
   .brief__subtitle {

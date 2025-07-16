@@ -12,11 +12,25 @@ export default component$(() => {
         script.src = 'https://cdn.emailjs.com/dist/email.min.js';
         script.onload = () => {
             // @ts-expect-error Calendly is loaded dynamically from external script
-            emailjs.init('ri4YXprL5WW09Yl-B');
+            emailjs.init('ri4YXprL5WW09Y1-B');
         };
         document.body.appendChild(script);
-    });
 
+
+        const input = document.querySelector('.gr-input') as HTMLInputElement;
+
+        const updateSlider = () => {
+            const value = parseFloat(input.value);
+            const percent = ((value - 1) / 9) * 100; // от 1 до 10
+            const handleOffset = 1.5 * (1 - (percent / 100)) - 1.125;
+            const percentStyle = `calc(${percent}% + ${handleOffset}em)`;
+            input.parentElement?.style.setProperty('--percent', percentStyle);
+            input.style.backgroundSize = percentStyle + " 100%";
+        };
+
+        input.addEventListener('input', updateSlider);
+        updateSlider();
+    });
     const handleSubmit = $((e: Event) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -42,7 +56,9 @@ export default component$(() => {
                     Чем подробнее вы заполните форму — тем точнее я пойму ваши задачи и смогу предложить подходящее решение.
                 </p>
 
-                <form id="brief-form" onSubmit$={handleSubmit}>
+                <form id="brief-form"
+                    preventdefault:submit
+                    onSubmit$={handleSubmit}>
                     <fieldset>
                         <h2>Контактная информация</h2>
 
@@ -164,10 +180,7 @@ export default component$(() => {
                             <textarea name="values" rows={2}></textarea>
                         </label>
 
-                        <label>
-                            Характер компании (если представить как человека)
-                            <input type="text" name="character" />
-                        </label>
+
 
                         <label>
                             Сайт компании
@@ -195,17 +208,17 @@ export default component$(() => {
                         <div class="form-group">
                             <label for="knowAudience">Знаете ли вы свою целевую аудиторию?</label>
                             <label>
-                            <input type="radio" name="целевую аудитори" value="да" required />
-                            да
-                        </label>
-                        <label>
-                            <input type="radio" name="целевую аудитори" value="нет" />
-                            нет
-                        </label>
-                        <label>
-                            <input type="radio" name="целевую аудитори" value="E-нужна проработка" />
-                           нужна проработка
-                        </label>
+                                <input type="radio" name="целевую аудитори" value="да" required />
+                                да
+                            </label>
+                            <label>
+                                <input type="radio" name="целевую аудитори" value="нет" />
+                                нет
+                            </label>
+                            <label>
+                                <input type="radio" name="целевую аудитори" value="E-нужна проработка" />
+                                нужна проработка
+                            </label>
                         </div>
 
                         <div class="form-group">
@@ -363,10 +376,18 @@ export default component$(() => {
                             <input name="forbiddenColors" type="text" placeholder="Укажите цвета, которые точно не хотите видеть." />
                         </label>
 
-                        <label>
-                            Готовность к экспериментам (от 1 до 10):
-                            <input name="flexibility" type="number" min="1" max="10" defaultValue="5" />
-                        </label>
+                        <label for="exp-range">Готовность к экспериментам (1–10):</label>
+                        <div class="gr-glow">
+                            <input
+                                id="exp-range"
+                                name="experiment"
+                                class="gr-input"
+                                type="range"
+                                min="1"
+                                max="10"
+                                step="0.01"
+                            />
+                        </div>
 
                         <label>
                             Какие разделы хотите видеть на сайте:
@@ -562,13 +583,7 @@ export default component$(() => {
                             <input type="text" id="budget" name="budget" placeholder="например: 100–200 т.р." />
                         </div>
 
-                        <div class="brief__field">
-                            <label for="techSpec">Есть ли у вас техническое задание (ТЗ)?</label>
-                            <select id="techSpec" name="techSpec">
-                                <option>Да</option>
-                                <option>Нет</option>
-                            </select>
-                        </div>
+
 
                         <div class="brief__field">
                             <label for="admin">Требуется ли администрирование сайта после запуска?</label>
@@ -580,19 +595,32 @@ export default component$(() => {
                         </div>
 
                         <div class="brief__field">
-                            <label for="extraInfo">Дополнительная информация</label>
+                            <label for="admin">Будет ли участие маркетолога или других специалистов с вашей стороны?</label>
+                            <select id="admin" name="admin">
+                                <option>Да</option>
+                                <option>Нет</option>
+                                <option>Пока неизвестно</option>
+                            </select>
+                        </div>
+                        <div class="brief__field">
+                            <label for="extraInfo">Ожидания от работы с дизайнером / разработчиком</label>
+                            <textarea id="extraInfo" name="extraInfo" placeholder="бывало ли негативное сотрудничество, что важно в общении?" />
+                        </div>
+                        <div class="brief__field">
+                            <label for="extraInfo">Предпочтительный способ сдачи проекта</label>
+                            <textarea id="extraInfo" name="extraInfo" placeholder="одним файлом, поэтапно, через платформу и т.д." />
+                        </div>
+
+                        <div class="brief__field">
+                            <label for="extraInfo">Есть ли у вас техническое задание (ТЗ)?</label>
                             <textarea id="extraInfo" name="extraInfo" placeholder="Напишите здесь всё, что считаете нужным" />
                         </div>
 
                         <div class="brief__field">
-                            <label for="contactMethod">Как с вами связаться?</label>
-                            <input type="text" id="contactMethod" name="contactMethod" />
+                            <label for="extraInfo">Есть ли ограничения по стилю?</label>
+                            <textarea id="extraInfo" name="extraInfo" placeholder="например: “не используйте шаблонные иконки”, “не хочу фиолетовый цвет”, “не использовать фото людей”" />
                         </div>
 
-                        <div class="brief__field">
-                            <label for="partnerCode">Код партнёра (если есть)</label>
-                            <input type="text" id="partnerCode" name="partnerCode" />
-                        </div>
 
                         <div class="brief__field">
                             <label for="files">Файлы, которые у вас есть</label>
