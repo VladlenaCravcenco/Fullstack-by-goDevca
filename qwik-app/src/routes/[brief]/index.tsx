@@ -53,7 +53,7 @@ export default component$(() => {
     return (
         <>
             <Header />
-            <section class="brief container">
+            <section class="brief_container">
                 <h1>Бриф на разработку сайта</h1>
                 <p class="brief__subtitle">
                     Чем подробнее вы заполните форму — тем точнее я пойму ваши задачи и смогу предложить подходящее решение.
@@ -208,91 +208,91 @@ export default component$(() => {
 
                     <fieldset>
                         <h2>Целевая аудитория</h2>
-                        <div class="form-group">
-                            <label for="knowAudience">Знаете ли вы свою целевую аудиторию?</label>
-                            <label>
-                                <input type="radio" name="целевую аудитори" value="да" required />
-                                да
-                            </label>
-                            <label>
-                                <input type="radio" name="целевую аудитори" value="нет" />
-                                нет
-                            </label>
-                            <label>
-                                <input type="radio" name="целевую аудитори" value="E-нужна проработка" />
-                                нужна проработка
-                            </label>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="gender">Пол целевой аудитории</label>
-                            <input type="text" id="gender" name="gender" placeholder="например, 70% женщин, 30% мужчин" />
-                        </div>
+                        <label for="knowAudience">Знаете ли вы свою целевую аудиторию?</label>
+                        <label>
+                            <input type="radio" name="целевую аудитори" value="да" required />
+                            да
+                        </label>
+                        <label>
+                            <input type="radio" name="целевую аудитори" value="нет" />
+                            нет
+                        </label>
+                        <label>
+                            <input type="radio" name="целевую аудитори" value="E-нужна проработка" />
+                            нужна проработка
+                        </label>
 
-                        <div class="form-group">
-                            <label for="age">Возраст целевой аудитории</label>
-                            <input type="text" id="age" name="age" placeholder="например, 25–40 лет" />
-                        </div>
 
-                        <div class="form-group">
-                            <label for="income">Уровень дохода</label>
-                            <input type="text" id="income" name="income" placeholder="средний доход, уровень достатка" />
-                        </div>
 
-                        <div class="form-group">
-                            <label for="interests">Интересы аудитории</label>
-                            <input type="text" id="interests" name="interests" placeholder="например, бизнес, здоровье, семья" />
-                        </div>
+                        <label for="gender">Пол целевой аудитории</label>
+                        <input type="text" id="gender" name="gender" placeholder="например, 70% женщин, 30% мужчин" />
 
-                        <div class="form-group">
-                            <label for="audienceProblems">Проблемы, которые решает ваш продукт</label>
-                            <textarea id="audienceProblems" name="audienceProblems"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="decisionFactors">Что важно для клиента при выборе?</label>
-                            <textarea id="decisionFactors" name="decisionFactors"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="motivation">Что мотивирует клиента воспользоваться продуктом?</label>
-                            <textarea id="motivation" name="motivation"></textarea>
-                        </div>
+                        <label for="age">Возраст целевой аудитории</label>
+                        <input type="text" id="age" name="age" placeholder="например, 25–40 лет" />
 
-                        <div class="form-group">
-                            <label for="barriers">Что останавливает клиента от покупки?</label>
-                            <textarea id="barriers" name="barriers"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="productAwareness">Насколько клиент осведомлён о продукте?</label>
-                            <textarea id="productAwareness" name="productAwareness"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="customerJourney">Путь клиента от знакомства до покупки</label>
-                            <textarea id="customerJourney" name="customerJourney"></textarea>
-                        </div>
+                        <label for="income">Уровень дохода</label>
+                        <input type="text" id="income" name="income" placeholder="средний доход, уровень достатка" />
 
-                        <div class="form-group">
-                            <label for="communicationChannels">Какие каналы коммуникации используете?</label>
-                            <textarea id="communicationChannels" name="communicationChannels"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="loyalty">Возвращаются ли клиенты повторно?</label>
-                            <textarea id="loyalty" name="loyalty"></textarea>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="frequency">Как часто покупают повторно?</label>
-                            <textarea id="frequency" name="frequency"></textarea>
-                        </div>
+                        <label for="interests">Интересы аудитории</label>
+                        <input type="text" id="interests" name="interests" placeholder="например, бизнес, здоровье, семья" />
 
-                        <div class="form-group">
-                            <label for="positioning">Как вы описали бы свою компанию в одном предложении?</label>
-                            <textarea id="positioning" name="positioning"></textarea>
-                        </div>
+
+
+                        <label for="audienceProblems">Проблемы, которые решает ваш продукт</label>
+                        <textarea id="audienceProblems" name="audienceProblems"></textarea>
+
+
+
+                        <label for="decisionFactors">Что важно для клиента при выборе?</label>
+                        <textarea id="decisionFactors" name="decisionFactors"></textarea>
+
+
+
+                        <label for="motivation">Что мотивирует клиента воспользоваться продуктом?</label>
+                        <textarea id="motivation" name="motivation"></textarea>
+
+
+
+                        <label for="barriers">Что останавливает клиента от покупки?</label>
+                        <textarea id="barriers" name="barriers"></textarea>
+
+
+
+                        <label for="productAwareness">Насколько клиент осведомлён о продукте?</label>
+                        <textarea id="productAwareness" name="productAwareness"></textarea>
+
+
+
+                        <label for="customerJourney">Путь клиента от знакомства до покупки</label>
+                        <textarea id="customerJourney" name="customerJourney"></textarea>
+
+
+
+                        <label for="communicationChannels">Какие каналы коммуникации используете?</label>
+                        <textarea id="communicationChannels" name="communicationChannels"></textarea>
+
+
+
+                        <label for="loyalty">Возвращаются ли клиенты повторно?</label>
+                        <textarea id="loyalty" name="loyalty"></textarea>
+
+
+
+                        <label for="frequency">Как часто покупают повторно?</label>
+                        <textarea id="frequency" name="frequency"></textarea>
+
+
+
+                        <label for="positioning">Как вы описали бы свою компанию в одном предложении?</label>
+                        <textarea id="positioning" name="positioning"></textarea>
+
 
                     </fieldset>
 
@@ -446,70 +446,71 @@ export default component$(() => {
                     <fieldset>
                         <h2>Материалы</h2>
 
-                        <div class="brief-form__group">
-                            <label>Логотип *</label>
+
+                        <label>
+                            Логотип
                             <select>
                                 <option>Готов</option>
                                 <option>Нужно обновить</option>
                                 <option>Разработать с нуля</option>
                                 <option>Сделать шаблонный</option>
                             </select>
-                        </div>
+                        </label>
 
-                        <div class="brief-form__group">
-                            <label>Фирменный стиль *</label>
+
+                        <label>Фирменный стиль
                             <select>
                                 <option>Есть</option>
                                 <option>Нужно разработать</option>
                             </select>
-                        </div>
+                        </label>
 
-                        <div class="brief-form__group">
-                            <label>Фотографии по продукту *</label>
+
+                        <label>Фотографии по продукту
                             <select>
                                 <option>Да, всё готово!</option>
                                 <option>Есть, но нужна обработка</option>
                                 <option>Предоставим в процессе</option>
-                                <option>Нужен фотограф (Москва)</option>
+                                <option>Нужен фотограф</option>
                                 <option>Фотографий продукта не будет</option>
                             </select>
-                        </div>
+                        </label>
 
-                        <div class="brief-form__group">
-                            <label>Фотографии команды *</label>
+
+                        <label>Фотографии команды
                             <select>
                                 <option>Да, всё готово!</option>
                                 <option>Есть, но нужна обработка</option>
                                 <option>Предоставим в процессе</option>
-                                <option>Нужен фотограф (Москва)</option>
+                                <option>Нужен фотограф</option>
                                 <option>Фотографий не будет</option>
                             </select>
-                        </div>
 
-                        <div class="brief-form__group">
-                            <label>Фотографии процесса или производства *</label>
+                        </label>
+
+                        <label>Фотографии процесса или производства
                             <select>
                                 <option>Да, всё готово!</option>
                                 <option>Есть, но нужна обработка</option>
                                 <option>Предоставим в процессе</option>
-                                <option>Нужен фотограф (Москва)</option>
+                                <option>Нужен фотограф</option>
                                 <option>Фотографий не будет</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief-form__group">
-                            <label>Иллюстрации *</label>
+
+
+                        <label>Иллюстрации
                             <select>
                                 <option>Да, всё готово!</option>
                                 <option>Нет, нужен подбор или отрисовка</option>
                                 <option>Купим на стоках</option>
                                 <option>Ищем бесплатные</option>
                                 <option>Не нужны</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief-form__group">
-                            <label>Видеоролик *</label>
+
+
+                        <label>Видеоролик
                             <select>
                                 <option>Есть</option>
                                 <option>Нет</option>
@@ -517,129 +518,129 @@ export default component$(() => {
                                 <option>Купим тематический на видео-стоке</option>
                                 <option>Не нужен</option>
                             </select>
-                        </div>
+                        </label>
 
-                        <div class="brief-form__group">
-                            <label>Презентации, тексты, буклеты</label>
+
+                        <label>Презентации, тексты, буклеты
                             <select>
                                 <option>Есть, отправим</option>
                                 <option>Готовим материалы</option>
                                 <option>Ничего нет</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief-form__group">
-                            <label>Акции, скидки, УТП</label>
+
+
+                        <label>Акции, скидки, УТП
                             <textarea placeholder="Укажите частоту, формат, особенности отображения"></textarea>
-                        </div>
+                        </label>
 
-                        <div class="brief-form__group">
-                            <label>Сертификаты, патенты, свидетельства</label>
+
+                        <label>Сертификаты, патенты, свидетельства
                             <select>
                                 <option>Есть</option>
                                 <option>Есть, но не будем размещать</option>
                                 <option>Нет</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief-form__group">
-                            <label>Отзывы или письма благодарности</label>
+
+
+                        <label>Отзывы или письма благодарности
                             <select>
                                 <option>Да, есть в формате текста, письма или видео</option>
                                 <option>Есть, но только скриншоты</option>
                                 <option>Пока нет, но будут</option>
                                 <option>Нет отзывов</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief-form__group">
-                            <label>Дополнительные материалы</label>
+
+
+                        <label>Дополнительные материалы
                             <textarea placeholder="Ссылки на папки в Google Drive, Яндекс.Диск и т.д."></textarea>
-                        </div>
+                        </label>
 
                     </fieldset>
 
                     <fieldset>
                         <h2>Дополнительная информация</h2>
 
-                        <div class="brief__field">
-                            <label for="languages">Количество языковых версий</label>
+
+                        <label for="languages">Количество языковых версий
                             <select id="languages" name="languages">
                                 <option>1 язык</option>
                                 <option>2 языка</option>
                                 <option>Больше 2-х</option>
                             </select>
-                        </div>
+                        </label>
 
-                        <div class="brief__field">
-                            <label for="launchDate">Дата предполагаемого запуска</label>
+
+                        <label for="launchDate">Дата предполагаемого запуска
                             <input type="date" id="launchDate" name="launchDate" />
-                        </div>
+                        </label>
 
-                        <div class="brief__field">
-                            <label for="decisionPeople">Сколько человек будут принимать итоговое решение?</label>
+
+                        <label for="decisionPeople">Сколько человек будут принимать итоговое решение?
                             <input type="text" id="decisionPeople" name="decisionPeople" placeholder="Имена, должности" />
-                        </div>
+                        </label>
 
-                        <div class="brief__field">
-                            <label for="budget">Планируемый или рассчитанный бюджет</label>
+
+                        <label for="budget">Планируемый или рассчитанный бюджет
                             <input type="text" id="budget" name="budget" placeholder="например: 100–200 т.р." />
-                        </div>
+                        </label>
 
 
 
-                        <div class="brief__field">
-                            <label for="admin">Требуется ли администрирование сайта после запуска?</label>
+
+                        <label for="admin">Требуется ли администрирование сайта после запуска?
                             <select id="admin" name="admin">
                                 <option>Да</option>
                                 <option>Нет</option>
                                 <option>Пока неизвестно</option>
-                            </select>
-                        </div>
+                            </select></label>
 
-                        <div class="brief__field">
-                            <label for="admin">Будет ли участие маркетолога или других специалистов с вашей стороны?</label>
+
+
+                        <label for="admin">Будет ли участие маркетолога или других специалистов с вашей стороны?
                             <select id="admin" name="admin">
                                 <option>Да</option>
                                 <option>Нет</option>
                                 <option>Пока неизвестно</option>
-                            </select>
-                        </div>
-                        <div class="brief__field">
-                            <label for="extraInfo">Ожидания от работы с дизайнером / разработчиком</label>
+                            </select></label>
+
+
+                        <label for="extraInfo">Ожидания от работы с дизайнером / разработчиком
                             <textarea id="extraInfo" name="extraInfo" placeholder="бывало ли негативное сотрудничество, что важно в общении?" />
-                        </div>
-                        <div class="brief__field">
-                            <label for="extraInfo">Предпочтительный способ сдачи проекта</label>
+                        </label>
+
+                        <label for="extraInfo">Предпочтительный способ сдачи проекта
                             <textarea id="extraInfo" name="extraInfo" placeholder="одним файлом, поэтапно, через платформу и т.д." />
-                        </div>
+                        </label>
 
-                        <div class="brief__field">
-                            <label for="extraInfo">Есть ли у вас техническое задание (ТЗ)?</label>
+
+                        <label for="extraInfo">Есть ли у вас техническое задание (ТЗ)?
                             <textarea id="extraInfo" name="extraInfo" placeholder="Напишите здесь всё, что считаете нужным" />
-                        </div>
+                        </label>
 
-                        <div class="brief__field">
-                            <label for="extraInfo">Есть ли ограничения по стилю?</label>
+
+                        <label for="extraInfo">Есть ли ограничения по стилю?
                             <textarea id="extraInfo" name="extraInfo" placeholder="например: “не используйте шаблонные иконки”, “не хочу фиолетовый цвет”, “не использовать фото людей”" />
-                        </div>
+                        </label>
 
 
-                        <div class="brief__field">
-                            <label for="files">Файлы, которые у вас есть</label>
+
+                        <label for="files">Файлы, которые у вас есть
                             <input type="file" id="files" name="files" multiple />
-                        </div>
+                        </label>
 
-                        <div class="brief__checkboxes">
-                            <label>
-                                <input type="checkbox" name="policy" required />
-                                Согласен с Политикой конфиденциальности
-                            </label>
-                            <label>
-                                <input type="checkbox" name="terms" required />
-                                Согласен с Пользовательским соглашением
-                            </label>
-                        </div>
+
+                        <label>
+                            <input type="checkbox" name="policy" required />
+                            Согласен с Политикой конфиденциальности
+                        </label>
+                        <label>
+                            <input type="checkbox" name="terms" required />
+                            Согласен с Пользовательским соглашением
+                        </label>
+
                     </fieldset>
 
 

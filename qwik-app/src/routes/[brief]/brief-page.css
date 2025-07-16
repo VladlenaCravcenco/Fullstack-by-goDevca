@@ -1,9 +1,13 @@
 /* brief-page.css */
 
-.brief {
-  padding: 150px 15%;
-}
 
+.brief_container{
+width: 100%;
+  max-width: 1200px;
+  padding: 150px 15%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 .brief h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -43,6 +47,8 @@ label {
   flex-direction: column;
   gap: 6px;
   font-weight: 500;
+  min-width: 0;
+  width: 100%;
 }
 
 input,
@@ -153,7 +159,7 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .brief {
+  .brief_container {
     padding: 100px 5%;
   }
 
@@ -173,6 +179,43 @@ textarea {
 
   .submit-brief {
     font-size: 1rem;
-    padding: 14px 24px;
   }
+}
+/* Глобальный фикс для любых инпутов/селектов */
+input,
+textarea,
+select {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Фикс для контейнера формы */
+form#brief-form {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Фикс для полей в Safari */
+label {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Обёртка для формы */
+.brief {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Отдельно textarea (особенно важно в Safari) */
+textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
