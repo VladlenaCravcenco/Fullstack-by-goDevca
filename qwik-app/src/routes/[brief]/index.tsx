@@ -12,7 +12,7 @@ export default component$(() => {
         const script = document.createElement('script');
         script.src = 'https://cdn.emailjs.com/dist/email.min.js';
         script.onload = () => {
-            // @ts-expect-error
+            // @ts-expect-error: emailjs не имеет тайпингов
             emailjs.init('ri4YXprL5WW09Yl-B');
         };
         document.body.appendChild(script);
