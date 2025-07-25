@@ -21,8 +21,8 @@ body {
 
   --color-black: #000;
   --color-white: #fff;
-  --color-green: #00b403;
-  --color-green-dark: #007714;
+  --color-green: #0e2e08;
+  --color-green-dark: rgb(27, 27, 27)
   --color-text: #222;
   --color-muted: #777;
   --container-width: 1300px;
