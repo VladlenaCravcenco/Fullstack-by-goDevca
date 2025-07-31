@@ -1,7 +1,8 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import './faq-section.scss';
+import './faq-section.css';
 import { CalendlyPopup } from './../CalendlyPopup';
+import { GlassEffect } from '~/components/ui/GlassEffect';
 
 declare global {
   interface Window {
@@ -75,7 +76,7 @@ export default component$(() => {
 
       <div class="faq__cta" id='faq'>
         <p>Не нашли интересующий вас вопрос?</p>
-        <button
+        <GlassEffect
           class="faq__btn"
           onClick$={() => {
             if (typeof window !== 'undefined' && window.Calendly) {
@@ -88,7 +89,7 @@ export default component$(() => {
           }}
         >
           Забронируйте звонок на 15 минут
-        </button>
+        </GlassEffect>
       </div>
     </section>
   );
