@@ -88,7 +88,7 @@ export default component$(() => {
             }
           }}
         >
-          Забронируйте звонок на 15 минут
+          Забронируйте звонок на 30 минут
         </GlassEffect>
       </div>
     </section>
