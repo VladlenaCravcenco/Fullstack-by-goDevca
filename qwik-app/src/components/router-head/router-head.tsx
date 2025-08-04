@@ -21,6 +21,7 @@ export const RouterHead = component$(() => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <meta name="p:domain_verify" content="c8c19c82bc63051e372a28e22f4b74d8"/>
 
 
       {head.meta.map((m) => (
