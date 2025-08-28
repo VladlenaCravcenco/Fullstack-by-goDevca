@@ -1,11 +1,21 @@
-import {component$, useSignal} from '@builder.io/qwik'
-import type {DocumentHead} from '@builder.io/qwik-city'
+import { component$, useSignal, useVisibleTask$, $ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import './StepsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
   const activeStep = useSignal(0);
 
+  // === ТАЙМЕР / ПРОГРЕСС (сигналы) ===
+  const DURATION = 5_000;                 // 5 секунд
+  const remaining = useSignal(DURATION);  // сколько осталось у текущей карточки
+  const startedAt = useSignal(0);
+  const isPaused = useSignal(false);
+  const timerId = useSignal<ReturnType<typeof setTimeout> | null>(null);
+  const barKey = useSignal(0);         // перезапуск CSS-анимации
+
+  // Триггер «перезапустить таймер на ms»
+  const restartMs = useSignal<number | null>(null);
   const steps = [
     {
       title: 'Брифинг',
@@ -46,7 +56,7 @@ export default component$(() => {
     {
       title: 'SEO через код',
       description:
-        'Прописываю мета‑теги, заголовки, alt и структуру — сайт будет понятен Google. Это нужно, чтобы сайт не просто был, а индексировался и приводил клиентов.',
+        'Прописываю мета-теги, заголовки, alt и структуру — сайт будет понятен Google. Это нужно, чтобы сайт не просто был, а индексировался и приводил клиентов.',
       image: '/images/steps/step2.png',
     },
     {
@@ -55,11 +65,69 @@ export default component$(() => {
         'Публикую сайт на хостинге, настраиваю домен, всё проверяю. В результате вы получаете рабочий сайт, доступный в интернете, готовый к продвижению.',
       image: '/images/steps/step2.png',
     },
-  
   ];
 
+  // ==== ТОЛЬКО МЕНЯЕМ СИГНАЛЫ В ОБРАБОТЧИКАХ ====
+  const pause$ = $(() => {
+    if (!isPaused.value) {
+      isPaused.value = true;
+      const elapsed = Date.now() - startedAt.value;
+      remaining.value = Math.max(0, remaining.value - elapsed);
+      if (timerId.value) { clearTimeout(timerId.value); timerId.value = null; }
+      // CSS-анимация тоже стопается классом .paused — это в JSX
+    }
+  });
+
+  const resume$ = $(() => {
+    if (isPaused.value) {
+      isPaused.value = false;
+      // Просим перезапуск на оставшееся время
+      restartMs.value = remaining.value;
+    }
+  });
+
+  const openStep$ = $((index: number) => {
+    activeStep.value = index;
+    isPaused.value = false;
+    remaining.value = DURATION;
+    restartMs.value = DURATION; // новая «пятёрка» для выбранной карточки
+  });
+
+  // ==== ВСЯ ЛОГИКА СТАРТА/АВТОПЕРЕКЛЮЧЕНИЯ — ТОЛЬКО В useVisibleTask$ ====
+  useVisibleTask$(({ track, cleanup }) => {
+    // локальная функция (НЕ QRL), безопасна для клиента
+    const startInternal = (ms: number) => {
+      if (timerId.value) { clearTimeout(timerId.value); timerId.value = null; }
+      remaining.value = ms;
+      startedAt.value = Date.now();
+      barKey.value++; // перезапуск CSS-анимации с 0
+
+      timerId.value = setTimeout(() => {
+        // авто-переход
+        activeStep.value = (activeStep.value + 1) % steps.length;
+        // и новый цикл на полную длительность
+        startInternal(DURATION);
+      }, ms);
+    };
+
+    // 1) первый запуск
+    startInternal(DURATION);
+
+    // 2) следим за запросами перезапуска из обработчиков
+    track(() => restartMs.value);
+    if (restartMs.value !== null) {
+      startInternal(restartMs.value);
+      restartMs.value = null;
+    }
+
+    // 3) на всякий случай чистим таймер при размонтировании
+    cleanup(() => {
+      if (timerId.value) clearTimeout(timerId.value);
+    });
+  });
+
   return (
-    <section class="steps" id='process'>
+    <section class="steps" id="process">
       <div class="container">
         <h2 class="steps__title">Процесс работы по шагам</h2>
         <p class="steps__subtitle">Как я создаю сайт, который работает</p>
@@ -70,7 +138,9 @@ export default component$(() => {
               <div
                 key={index}
                 class={`step-card ${activeStep.value === index ? 'active' : ''}`}
-                onClick$={() => (activeStep.value = index)}
+                onClick$={() => openStep$(index)}
+                onMouseDown$={pause$} onMouseUp$={resume$} onMouseLeave$={resume$}
+                onTouchStart$={pause$} onTouchEnd$={resume$}
               >
                 <div class="step-card__header">
                   <div class="step-card__number">{String(index + 1).padStart(2, '0')}</div>
@@ -80,9 +150,22 @@ export default component$(() => {
 
                 {activeStep.value === index && (
                   <div class="step-card__body">
-                    <img src={steps[activeStep.value].image} alt={steps[activeStep.value].title} />
+                    <img src={step.image} alt={step.title} />
                     <p>{step.description}</p>
-                    <GlassEffect class="step-card__btn">Узнать цены</GlassEffect>
+
+
+                    <div class="buttprog">
+                      <GlassEffect class="step-card__btn">Узнать цены</GlassEffect>
+                      {/* ПРОГРЕСС-БАР — чистая CSS-анимация */}
+                      <div class="step-card__progress">
+                        <div
+                          key={barKey.value}                               /* перезапуск анимации */
+                          class={`step-card__bar ${isPaused.value ? 'paused' : ''}`}
+                          style={{ '--dur': `${remaining.value}ms` }}      /* текущая длительность */
+                        />
+                      </div>
+                    </div>
+
                   </div>
                 )}
               </div>
@@ -99,12 +182,6 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-    title: 'Обо мне',
-    meta: [
-        {
-            name: 'description',
-            content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
-
-        },
-    ],
+  title: 'Обо мне',
+  meta: [{ name: 'description', content: 'Всё началось с желания…' }],
 };
