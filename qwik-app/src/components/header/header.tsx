@@ -4,7 +4,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import './Header.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { Link } from '@builder.io/qwik-city';
-import { glassHover } from '~/utils/sounds';
+import { playGlassHover } from '~/utils/sounds';
 
 
 
@@ -28,6 +28,7 @@ export default component$(() => {
                         <li><a href="#blog">Блог</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#contacts">Контакты</a></li>
+                        <audio controls src="/sounds/glass-tap.wav"></audio>
                     </ul>
                 </nav>
 
@@ -39,11 +40,8 @@ export default component$(() => {
                         </span> ru
                     </div>
                     <GlassEffect class="brief-btn"
-                        onMouseEnter$={() => {
-                            // чтобы звук перезапускался при частых наведениях
-                            glassHover.stop();
-                            glassHover.play();
-                        }}
+                        onMouseEnter$={() => playGlassHover()}
+                        onPointerDown$={() => playGlassHover()}
                     >
                         <Link href="/brief">заполнить бриф</Link>
                     </GlassEffect>
