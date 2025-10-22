@@ -4,9 +4,11 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import './Header.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { Link } from '@builder.io/qwik-city';
+import { glassHover } from '~/utils/sounds';
+
+
 
 export default component$(() => {
-
     const menuOpen = useSignal(false);
 
     return (
@@ -36,7 +38,13 @@ export default component$(() => {
                         </svg>
                         </span> ru
                     </div>
-                    <GlassEffect class="brief-btn">
+                    <GlassEffect class="brief-btn"
+                        onMouseEnter$={() => {
+                            // чтобы звук перезапускался при частых наведениях
+                            glassHover.stop();
+                            glassHover.play();
+                        }}
+                    >
                         <Link href="/brief">заполнить бриф</Link>
                     </GlassEffect>
 
