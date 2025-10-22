@@ -14,11 +14,11 @@ export default component$(() => {
       link: '/projects/intra-assets',
     },
     {
-      title: 'Intra Assets - Regional electricity trading company',
-      tags: ['Prototyping', 'Design', 'React', 'CMS', 'SEO', 'Vercel'],
-      imagePreview: '/images/projects/intraassets-prototype.jpg',
-      imageFinal: '/images/projects/intraassets-final.jpg',
-      link: '/projects/intra-assets',
+      title: 'Verbatranslations - Birou traduceri autorizate MJ',
+      tags: ['Prototyping', 'Design', 'SEO',],
+      imagePreview: '/images/projects/verba-do.png',
+      imageFinal: '/images/projects/verba-posle.png',
+      link: '/projects/verbatraslations',
     },
     {
       title: 'Intra Assets - Regional electricity trading company',

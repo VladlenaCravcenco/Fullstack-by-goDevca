@@ -12,9 +12,9 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                Cravcenco Vladlena —
+                CRAVCENCO VLADLENA
                 <br />
-                веб-дизайнер и fullstack-разработчик
+                web-designer & frontend developer
               </h1>
               <p>
                 Создаю современные сайты под ключ — от идеи и дизайна
@@ -23,9 +23,7 @@ export default component$(() => {
               <p>
                 Разрабатываю адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong> и корпоративные сайты на <strong>React</strong>, полностью готовые к индексации в поисковых системах.
               </p>
-              <p>
-                Без шаблонов. Только чистый код, понятная структура и максимальная производительность.
-              </p>
+              
               <div class="hero__buttons">
                 <GlassEffect class="btn btn--primary">Посмотреть кейсы</GlassEffect>
                 <GlassEffect class="btn btn--secondary">Обсудить проект</GlassEffect>
