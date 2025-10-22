@@ -27,6 +27,7 @@
     "@builder.io/qwik": "^1.14.1",
     "@builder.io/qwik-city": "^1.14.1",
     "@eslint/js": "latest",
+    "@types/howler": "^2.2.12",
     "@types/minimatch": "^5.1.2",
     "@types/node": "20.14.11",
     "eslint": "9.25.1",
