@@ -28,7 +28,6 @@ export default component$(() => {
                         <li><a href="#blog">Блог</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#contacts">Контакты</a></li>
-                        <audio controls src="/sounds/glass-tap.wav"></audio>
                     </ul>
                 </nav>
 
@@ -40,10 +39,10 @@ export default component$(() => {
                         </span> ru
                     </div>
                     <GlassEffect class="brief-btn"
-                        
+                        onMouseEnter$={() => playGlassHover()}
+                        onPointerDown$={() => playGlassHover()}
                     >
-                        <Link href="/brief"onMouseEnter$={() => playGlassHover()}
-                        onPointerDown$={() => playGlassHover()}>заполнить бриф</Link>
+                        <Link href="/brief">заполнить бриф</Link>
                     </GlassEffect>
 
 
