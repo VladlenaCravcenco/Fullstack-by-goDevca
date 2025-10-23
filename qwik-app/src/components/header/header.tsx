@@ -39,10 +39,12 @@ export default component$(() => {
                         </span> ru
                     </div>
                     <GlassEffect class="brief-btn"
+                        
+                    >
+                        <Link href="/brief"
                         onMouseEnter$={() => playGlassHover()}
                         onPointerDown$={() => playGlassHover()}
-                    >
-                        <Link href="/brief">заполнить бриф</Link>
+                        >заполнить бриф</Link>
                     </GlassEffect>
 
 
