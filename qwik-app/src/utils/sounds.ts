@@ -23,7 +23,7 @@ export function playGlassHover() {
 
   if (!glass) {
     glass = new Howl({
-      src: ['/sounds/glass-bottle-tap.wav'],
+      src: ['/sounds/glass-tap3.aiff'],
       volume: 0.45,
       preload: true,
       html5: true,
