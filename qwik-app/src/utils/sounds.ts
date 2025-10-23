@@ -24,7 +24,7 @@ export function playGlassHover() {
   if (!glass) {
     glass = new Howl({
       src: ['/sounds/glass-tap3.aiff'],
-      volume: 0.45,
+      volume: 0.1,
       preload: true,
       html5: true,
     });
