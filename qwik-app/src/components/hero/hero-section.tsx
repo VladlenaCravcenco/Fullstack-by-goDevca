@@ -3,6 +3,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { CalendlyBadge } from './../CalendlyBadge';
 import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import { playGlassHover } from '~/utils/sounds';
 
 export default component$(() => {
   return (
@@ -12,21 +13,19 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                CRAVCENCO VLADLENA
-                <br />
-                web-designer & frontend developer
+                От идеи и дизайна до полноценного запуска Вашего сайта
               </h1>
-              <p>
-                Создаю современные сайты под ключ — от идеи и дизайна
-                до полноценного запуска с SEO-оптимизацией.
-              </p>
+              <h3>Cravcenco Vladlena</h3>
+              <h5>web-designer & frontend developer</h5>
               <p>
                 Разрабатываю адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong> и корпоративные сайты на <strong>React</strong>, полностью готовые к индексации в поисковых системах.
               </p>
-              
+
               <div class="hero__buttons">
-                <GlassEffect class="btn btn--primary">Посмотреть кейсы</GlassEffect>
-                <GlassEffect class="btn btn--secondary">Обсудить проект</GlassEffect>
+                <GlassEffect class="btn btn--primary" onMouseEnter$={() => playGlassHover()}
+                  onPointerDown$={() => playGlassHover()}>Посмотреть кейсы</GlassEffect>
+                <GlassEffect class="btn btn--secondary" onMouseEnter$={() => playGlassHover()}
+                  onPointerDown$={() => playGlassHover()}>Обсудить проект</GlassEffect>
               </div>
             </div>
 
