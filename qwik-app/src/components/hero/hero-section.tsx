@@ -4,6 +4,7 @@ import { CalendlyBadge } from './../CalendlyBadge';
 import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
+import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
   return (
@@ -22,10 +23,10 @@ export default component$(() => {
               </p>
 
               <div class="hero__buttons">
-                <GlassEffect class="btn btn--primary" onMouseEnter$={() => playGlassHover()}
-                  onPointerDown$={() => playGlassHover()}>Посмотреть кейсы</GlassEffect>
-                <GlassEffect class="btn btn--secondary" onMouseEnter$={() => playGlassHover()}
-                  onPointerDown$={() => playGlassHover()}>Обсудить проект</GlassEffect>
+                <GlassEffect class="btn btn--primary"> <Link href="/projects" onMouseEnter$={() => playGlassHover()}
+                  onPointerDown$={() => playGlassHover()}>Посмотреть кейсы</Link></GlassEffect>
+                <GlassEffect class="btn btn--secondary" ><Link href="/faq" onMouseEnter$={() => playGlassHover()}
+                  onPointerDown$={() => playGlassHover()}>Обсудить проект</Link></GlassEffect>
               </div>
             </div>
 
