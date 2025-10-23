@@ -1,20 +1,35 @@
-// src/utils/sounds.ts
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 let glass: Howl | null = null;
 
+function unlockAudio() {
+  const ctx = (Howler as any).ctx as AudioContext | undefined;
+  if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
+}
+
+export function attachAudioUnlockOnce() {
+  if (typeof window === 'undefined') return;
+  const handler = () => {
+    unlockAudio();
+    window.removeEventListener('pointerdown', handler);
+    window.removeEventListener('keydown', handler);
+  };
+  window.addEventListener('pointerdown', handler, { once: true });
+  window.addEventListener('keydown', handler, { once: true });
+}
+
 export function playGlassHover() {
-  // не делать ничего на сервере
   if (typeof window === 'undefined') return;
 
   if (!glass) {
     glass = new Howl({
-      src: ['/sounds/glass-tap.wav'], // файл лежит в public/sounds/
-      volume: 0.35,
+      src: ['/sounds/glass-tap.wav'],
+      volume: 0.45,
       preload: true,
-      html5: true, // стабильнее в Safari/iOS
+      html5: true,
     });
   }
+  unlockAudio();
   glass.stop();
   glass.play();
 }

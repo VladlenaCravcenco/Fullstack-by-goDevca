@@ -40,10 +40,10 @@ export default component$(() => {
                         </span> ru
                     </div>
                     <GlassEffect class="brief-btn"
-                        onMouseEnter$={() => playGlassHover()}
-                        onPointerDown$={() => playGlassHover()}
+                        
                     >
-                        <Link href="/brief">заполнить бриф</Link>
+                        <Link href="/brief"onMouseEnter$={() => playGlassHover()}
+                        onPointerDown$={() => playGlassHover()}>заполнить бриф</Link>
                     </GlassEffect>
 
 
