@@ -5,7 +5,7 @@ import { urlFor } from '~/lib/imageUrl';
 
 // ↓↓↓ подключи готовые блоки, которые уже есть в проекте
 import Cta from '~/components/form/brief-cta';                    // твой призыв к действию
-import BlogPreview from '~/components/blog/blog-section';          // мини-лента постов, если есть
+
 
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
@@ -77,7 +77,7 @@ export default component$(() => {
 
             {/* твои готовые блоки ниже — просто вставляем как компоненты */}
             <Cta />
-            {/* <BlogPreview limit={3} />   если надо показать 3 последних поста */}
+   
 
             <style>{`
         .projects-page{max-width:1300px;margin:0 auto;padding:clamp(24px,4vw,48px) 20px;}
