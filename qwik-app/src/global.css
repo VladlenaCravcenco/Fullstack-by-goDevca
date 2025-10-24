@@ -1,4 +1,5 @@
 /* 1. Сброс стилей и нормализация */
+
 *,
 *::before,
 *::after {
@@ -20,7 +21,7 @@ body {
   --font-main: 'Onest', sans-serif;
 
   --color-black: #000;
-  --color-white: #fff;
+  --color-white: #F6F6F6;
   --color-green: #0e2e08;
   --color-green-dark: rgb(27, 27, 27)
   --color-text: #222;

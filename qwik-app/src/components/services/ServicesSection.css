@@ -1,13 +1,14 @@
 .services {
   padding: 100px 0;
-  background: #f9f9f9;
-  border-radius: 60px 60px 0 0;
+  background: #FFF;
+  border-radius: 60px 60px 0 0 ;
+
 }
 
 .services .container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 }
 
 .services__title {
@@ -36,7 +37,6 @@
 .service-card {
   flex: 0 0 auto;
   width: 280px;
-  background: #e8e8e8;
   scroll-snap-align: start;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   transition: transform 0.3s ease;

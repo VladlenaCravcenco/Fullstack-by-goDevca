@@ -14,10 +14,10 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                От идеи и дизайна до полноценного запуска Вашего сайта
+                Сайты, которые двигают бизнес
               </h1>
-              <h3>Cravcenco Vladlena</h3>
-              <h5>web-designer & frontend developer</h5>
+              <h2>Cravcenco Vladlena</h2>
+              <h4>web-designer & frontend developer</h4>
               <p>
                 Разрабатываю адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong> и корпоративные сайты на <strong>React</strong>, полностью готовые к индексации в поисковых системах.
               </p>
@@ -41,6 +41,10 @@ export default component$(() => {
                   allowFullscreen
                 ></iframe>
               </div>
+              <div class="simple-form">
+
+              </div>
+          
             </div>
           </div>
         </div>
