@@ -6,11 +6,11 @@ import '~/global.css';                                   // если есть г
 export default component$(() => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
         <Slot />      {/* сюда рендерятся все страницы: /, /projects, /blog и т.д. */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 });
