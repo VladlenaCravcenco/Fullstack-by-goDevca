@@ -28,6 +28,13 @@ body {
   --color-muted: #777;
   --container-width: 1300px;
   --radius: 20px;
+
+    /* время/кривая для всех ховеров на сайте */
+  --anim--hover-time: .25s;
+  --anim--hover-ease: cubic-bezier(.2,.8,.2,1);
+
+  /* если используешь углы/градиенты */
+  --angle-1: 135deg;
 }
 
 /* 3. Базовые теги */
