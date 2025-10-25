@@ -66,4 +66,52 @@ export default defineType({
       by: [{ field: 'publishedAt', direction: 'desc' }],
     },
   ],
+  
+});
+
+defineField({
+  name: 'content',
+  title: 'Case content',
+  type: 'array',
+  of: [
+    // 1) Бенто-карточки
+    {
+      type: 'object',
+      name: 'bento',
+      title: 'Bento grid',
+      fields: [
+        {
+          name: 'items',
+          title: 'Cards',
+          type: 'array',
+          of: [{
+            type: 'object',
+            fields: [
+              { name: 'title', type: 'string' },
+              { name: 'text',  type: 'text' },
+              { name: 'image', type: 'image', options: { hotspot: true } },
+              // как карточка растягивается в гриде
+              { name: 'colSpan', type: 'number', initialValue: 1, validation: r => r.min(1).max(2) },
+              { name: 'rowSpan', type: 'number', initialValue: 1, validation: r => r.min(1).max(2) },
+            ],
+          }],
+        },
+      ],
+    },
+
+    // 2) До/после
+    {
+      type: 'object',
+      name: 'beforeAfter',
+      title: 'Before / After slider',
+      fields: [
+        { name: 'title', type: 'string' },
+        { name: 'before', type: 'image', options: { hotspot: true } },
+        { name: 'after',  type: 'image', options: { hotspot: true } },
+        { name: 'caption', type: 'string' },
+      ],
+      preview: { select: { title: 'title' } }
+    },
+  ],
 })
+
