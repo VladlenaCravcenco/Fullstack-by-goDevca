@@ -6,6 +6,7 @@ import './projects-page.css';
 
 // ↓↓↓ подключи готовые блоки, которые уже есть в проекте
 import Cta from '~/components/form/brief-cta';                    // твой призыв к действию
+import Blog from '~/components/blog/blog-section';                    // твой призыв к действию
 
 
 const QUERY = `
@@ -85,6 +86,7 @@ export default component$(() => {
             </div>
 
             {/* твои готовые блоки ниже — просто вставляем как компоненты */}
+            <Blog />
             <Cta />
    
         </section>
