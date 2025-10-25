@@ -7,6 +7,7 @@
   display: grid;
   gap: 14px;
   margin-bottom: 16px;
+  text-align: center;
 }
 .tags {
   display: flex;
