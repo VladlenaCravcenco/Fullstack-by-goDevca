@@ -13,15 +13,23 @@ const QUERY = `
 }
 `;
 
-export const useProjects = routeLoader$(async () => {
+export const useProjects = routeLoader$(async (ctx) => {
+  try {
     const items = await sanity.fetch(QUERY);
-    return items ?? [];
+    // фильтруем на случай пустых slug
+    return Array.isArray(items) ? items.filter(p => p?.slug) : [];
+  } catch (e: any) {
+    console.error('Sanity fetch failed:', e?.message || e);
+    ctx.status(200); // не даём 500
+    return [];
+  }
 });
 
 export default component$(() => {
     const items = useProjects().value as any[];
     const loc = useLocation();
     const activeTag = (loc.url.searchParams.get('tag') ?? '').trim();
+    
 
     // собрать счётчики по тегам
     const counts = new Map<string, number>();
