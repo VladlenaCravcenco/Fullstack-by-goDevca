@@ -79,7 +79,12 @@
     inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
     0 0.25em 0.125em -0.125em rgba(0, 8, 0, 0.2),
     0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2);
-  transition: all var(--anim--hover-time) var(--anim--hover-ease);
+  /* transition: all var(--anim--hover-time) var(--anim--hover-ease); */
+  transition:
+    transform var(--anim--hover-time, .25s) var(--anim--hover-ease, cubic-bezier(.2,.8,.2,1)),
+    box-shadow var(--anim--hover-time, .25s) var(--anim--hover-ease, cubic-bezier(.2,.8,.2,1)),
+    background var(--anim--hover-time, .25s) var(--anim--hover-ease, cubic-bezier(.2,.8,.2,1)),
+    color var(--anim--hover-time, .25s) var(--anim--hover-ease, cubic-bezier(.2,.8,.2,1));
 }
 
 .glass-btn span {
