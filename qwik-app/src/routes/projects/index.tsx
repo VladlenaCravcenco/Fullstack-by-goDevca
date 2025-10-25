@@ -2,6 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
+import 'projects-page.css';
 
 // ↓↓↓ подключи готовые блоки, которые уже есть в проекте
 import Cta from '~/components/form/brief-cta';                    // твой призыв к действию
@@ -86,25 +87,6 @@ export default component$(() => {
             {/* твои готовые блоки ниже — просто вставляем как компоненты */}
             <Cta />
    
-
-            <style>{`
-        .projects-page{max-width:1300px;margin:0 auto;padding:clamp(24px,4vw,48px) 20px;}
-        .projects-head{display:grid;gap:14px;margin-bottom:16px;}
-        .tags{display:flex;flex-wrap:wrap;gap:10px}
-        .tag{padding:6px 10px;border-radius:999px;background:#f2f2f2;text-decoration:none;color:#333;font-size:14px}
-        .tag:hover{background:#e9e9e9}
-        .tag.active{background:#111;color:#fff}
-        .tag .count{opacity:.7;margin-left:6px}
-        .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
-        .card{grid-column:span 12;text-decoration:none;color:inherit;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden;background:#fff;transition:transform .2s, box-shadow .2s}
-        .card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
-        .card img{width:100%;height:300px;object-fit:cover;display:block}
-        .card .body{padding:16px 18px 20px;display:grid;gap:8px}
-        .mini-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-        .mini-tags li{font-size:12px;color:#666;background:#f2f2f2;padding:4px 8px;border-radius:999px}
-        @media (min-width:720px){.card{grid-column:span 6}}
-        @media (min-width:1100px){.card{grid-column:span 4}.card img{height:240px}}
-      `}</style>
         </section>
     );
 });
