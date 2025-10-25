@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
 
 export const sanity = createClient({
-  projectId: '81wtguf',
+  projectId: '81wvtguf',
   dataset: 'production',
   apiVersion: '2025-01-01',
   useCdn: false,           // ← на время диагностики лучше выключить кеш CDN
