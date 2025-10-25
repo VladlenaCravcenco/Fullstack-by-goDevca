@@ -2,7 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
-import 'projects-page.css';
+import './projects-page.css';
 
 // ↓↓↓ подключи готовые блоки, которые уже есть в проекте
 import Cta from '~/components/form/brief-cta';                    // твой призыв к действию
