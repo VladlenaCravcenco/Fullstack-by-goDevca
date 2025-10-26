@@ -4,6 +4,7 @@ import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import BentoGrid from '~/components/case/BentoGrid';
 import BeforeAfter from '~/components/case/BeforeAfter';
+import './project-page.css';
 
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
@@ -57,13 +58,6 @@ export default component$(() => {
         return null;
       })}
 
-      <style>{`
-        .case{max-width:1200px;margin:0 auto;padding:clamp(24px,4vw,48px) 20px}
-        .case-hero{display:grid;gap:14px;margin-bottom:24px}
-        .case-hero img{width:100%;height:auto;border-radius:20px}
-        .tags{display:flex;gap:8px;flex-wrap:wrap}
-        .tags li{font-size:12px;background:#f2f2f2;border-radius:999px;padding:4px 8px;color:#555}
-      `}</style>
     </article>
   );
 });
