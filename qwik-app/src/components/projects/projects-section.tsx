@@ -41,7 +41,7 @@ export default component$(() => {
           </p>
           
           <GlassEffect class="projects__btn">
-            <Link href="/projects" rel="external">проекты</Link>
+           <a href="/projects" rel="external">проекты</a>
           </GlassEffect>
         </div>
 
