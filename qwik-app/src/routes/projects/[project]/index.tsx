@@ -24,7 +24,7 @@ const QUERY = `
 `;
 
 export const useProject = routeLoader$(async ({ params, status }) => {
-  const doc = await sanity.fetch(QUERY, { slug: params.slug });
+  const doc = await sanity.fetch(QUERY, { slug: params.project });
   if (!doc) status(404);
   return doc;
 });
