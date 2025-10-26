@@ -2,7 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './ProjectsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
-import { Link } from '@builder.io/qwik-city';
+
 
 export default component$(() => {
   const projects = [
