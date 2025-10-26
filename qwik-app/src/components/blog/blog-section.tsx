@@ -46,7 +46,8 @@ export default component$(() => {
             <li class={selectedTag.value === 'soft' ? 'active' : ''} onClick$={() => selectedTag.value = 'soft'}>Софты</li>
             <li class={selectedTag.value === 'ai' ? 'active' : ''} onClick$={() => selectedTag.value = 'ai'}>ИИ-шки</li>
           </ul>
-          <GlassEffect class="blog__all-posts-btn">Перейти к постам</GlassEffect>
+          <GlassEffect class="blog__all-posts-btn">
+            <a href="/blog" rel="external">Перейти к постам</a></GlassEffect>
         </div>
 
         {posts.filter(post => post.tag === selectedTag.value).map(post => (
