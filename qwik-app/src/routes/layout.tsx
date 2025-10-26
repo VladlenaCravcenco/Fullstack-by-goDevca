@@ -7,21 +7,41 @@ import '~/global.css';                                   // если есть г
 export default component$(() => {
   const loc = useLocation();
 
-  // плавный скролл при каждом переходе
-  useVisibleTask$(({ track }) => {
-    track(() => loc.url.pathname); // следим за изменением маршрута
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
+  // Отключаем восстановление скролла (важно для Safari)
+  useVisibleTask$(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    // если страница вернулась из bfcache (Safari/Firefox), тоже поднимем наверх
+    window.addEventListener('pageshow', (e: any) => {
+      if (e?.persisted) window.scrollTo({ top: 0, left: 0 });
     });
   });
+
+  // На каждый переход — наверх (или к якорю)
+  useVisibleTask$(({ track }) => {
+    track(() => loc.url.pathname);
+    track(() => loc.url.search);
+    track(() => loc.url.hash);
+
+    const toHash = () => {
+      const el = loc.url.hash ? document.querySelector(loc.url.hash) : null;
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return true; }
+      return false;
+    };
+
+    // ждём отрисовку, чтобы ничего не "дотолкнуло" вниз
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!toHash()) {
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        }
+      });
+    });
+  });
+
   return (
     <>
       <Header />
-      <main>
-        <Slot />      {/* сюда рендерятся все страницы: /, /projects, /blog и т.д. */}
-      </main>
+      <main><Slot /></main>
       <Footer />
     </>
   );
