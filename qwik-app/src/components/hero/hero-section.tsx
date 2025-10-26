@@ -14,7 +14,7 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                Сайты, которые двигают бизнес
+                 Разрабатываю сайты, которые двигают бизнес
               </h1>
               <h2>Cravcenco Vladlena</h2>
               <h4>web-designer & frontend developer</h4>
