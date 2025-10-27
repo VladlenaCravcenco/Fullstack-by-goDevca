@@ -294,14 +294,14 @@
 }
 
 .custom-form__btn-inner{
-  all: unset;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 18px 22px;
+  padding: 10px 22px;
   border-radius: 18px;
-  font-size: clamp(18px, 2vw, 22px);
+  font-size: clamp(12px, 2vw, 18px);
   font-weight: 700;
   cursor: pointer;
 }
