@@ -302,7 +302,6 @@
   padding: 10px 22px;
   border-radius: 18px;
   font-size: clamp(12px, 2vw, 18px);
-  font-weight: 700;
   cursor: pointer;
 }
 

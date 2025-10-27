@@ -5,6 +5,7 @@ import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
 import { Link } from '@builder.io/qwik-city';
+import ProjectBriefForm from '~/components/forms/ProjectBriefForm';
 
 export default component$(() => {
   return (
@@ -14,7 +15,7 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                 Разрабатываю сайты, которые двигают бизнес
+                Разрабатываю сайты, которые двигают бизнес
               </h1>
               <h2>Cravcenco Vladlena</h2>
               <h4>web-designer & frontend developer</h4>
@@ -42,9 +43,9 @@ export default component$(() => {
                 ></iframe>
               </div>
               <div class="simple-form">
-
+                <ProjectBriefForm action="https://formspree.io/f/xdkpaeke" />
               </div>
-          
+
             </div>
           </div>
         </div>
