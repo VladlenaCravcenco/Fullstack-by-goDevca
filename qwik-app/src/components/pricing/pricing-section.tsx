@@ -141,7 +141,14 @@ export default component$(() => {
               ) : (
                 <section class="custom-brief">
                   <Form action={useCustomBrief()} class="custom-brief__form">
-                    <input name="hp" aria-hidden="true" tabIndex={-1} class="hp" />
+                    <input
+                      type="text"
+                      name="hp"
+                      aria-hidden="true"
+                      tabIndex={-1}      // ← camelCase
+                      class="hp"
+                      autoComplete="off"
+                    />
 
                     <label class="custom-brief__label">
                       Направление
