@@ -4,7 +4,7 @@ export const onPost: RequestHandler = async ({ request, json, env }) => {
   try {
     const fd = await request.formData();
 
-    // антиспам (скрытое поле в форме)
+    // honeypot: если заполнено скрытое поле — тихо выходим
     if (String(fd.get('_gotcha') || '')) {
       json(200, { ok: true, skipped: 'honeypot' });
       return;
@@ -40,7 +40,8 @@ export const onPost: RequestHandler = async ({ request, json, env }) => {
 
     const tg = await resp.json();
     json(200, { ok: !!tg?.ok });
-  } catch (e: any) {
+  } catch (err) {
+    console.error('telegram-notify failed:', err);
     json(200, { ok: false, reason: 'exception' });
   }
 };
