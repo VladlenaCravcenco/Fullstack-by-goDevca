@@ -203,6 +203,7 @@
 .chip-group {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: unset;
   gap: 12px;
   align-items: center;
 }
@@ -220,7 +221,7 @@
 }
 
 .chip label {
-  display: inline-flex;
+  display: table;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
@@ -228,6 +229,7 @@
   background: #f3f3f5;
   color: #111;
   font-weight: 600;
+  font-size: 12px;
   line-height: 1;
   border: 1px solid transparent;
   cursor: pointer;
@@ -290,18 +292,7 @@
 .custom-form__btn {
   margin-top: 8px;
 }
-.custom-form__btn-inner {
-  all: unset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 18px 22px;
-  border-radius: 18px;
-  font-size: clamp(18px, 2vw, 22px);
-  font-weight: 700;
-  cursor: pointer;
-}
+
 
 /* чтобы форма выглядела как на макете внутри твоей карточки */
 .pricing-card .custom-form {

@@ -143,7 +143,7 @@ export default component$(() => {
                 <section class="custom-brief">
                   <form action="/brief" method="get" class="custom-form" noValidate>
                     <fieldset class="chip-group">
-                      <legend class="visually-hidden">What do you need help with?</legend>
+                      <legend class="visually-hidden">Выберите направление</legend>
 
                      
                       {services.map(s => (
@@ -180,7 +180,7 @@ export default component$(() => {
 
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
-                    <GlassEffect class="custom-form__btn">
+                    <GlassEffect class="pricing-card__btn">
                       <button type="submit" class="custom-form__btn-inner">Отправить</button>
                     </GlassEffect>
 
