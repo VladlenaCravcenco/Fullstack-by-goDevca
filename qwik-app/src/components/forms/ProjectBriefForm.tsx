@@ -1,7 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import './ProjectBriefForm.css';
 
-export default component$(({ action }: { action: string }) => {
+export default component$(() => {
   return (
     <form action="/api/telegram-notify" method="POST" class="custom-form">
       {/* чекбоксы можно выбирать несколько — одно и то же имя fields */}

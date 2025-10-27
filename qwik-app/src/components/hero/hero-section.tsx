@@ -43,7 +43,7 @@ export default component$(() => {
                 ></iframe>
               </div>
               <div class="simple-form">
-                <ProjectBriefForm action="/api/telegram-notify/" />
+                <ProjectBriefForm/>
               </div>
 
             </div>
