@@ -170,7 +170,7 @@ export default component$(() => {
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
                     
-                      <button type="submit">Отправить</button>
+                      <button class='custom-form__btn-inner' type="submit">Отправить</button>
                     
 
                   </form>
