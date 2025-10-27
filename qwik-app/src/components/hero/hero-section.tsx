@@ -43,7 +43,7 @@ export default component$(() => {
                 ></iframe>
               </div>
               <div class="simple-form">
-                <ProjectBriefForm action="https://formspree.io/f/xdkpaeke" />
+                <ProjectBriefForm action="/api/telegram-notify/" />
               </div>
 
             </div>

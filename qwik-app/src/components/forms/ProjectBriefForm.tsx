@@ -3,7 +3,7 @@ import './ProjectBriefForm.css';
 
 export default component$(({ action }: { action: string }) => {
   return (
-    <form action={action} method="POST" class="custom-form">
+    <form action="/api/telegram-notify" method="POST" class="custom-form">
       {/* чекбоксы можно выбирать несколько — одно и то же имя fields */}
       <fieldset class="chip-group">
         <label><input type="checkbox" name="services" value="Design" /> 🎨 Design</label>
@@ -33,3 +33,5 @@ export default component$(({ action }: { action: string }) => {
     </form>
   );
 });
+
+
