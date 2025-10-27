@@ -1,51 +1,144 @@
-.brief { display: grid; gap: 16px; }
-.brief--compact { gap: 12px; }
+/* === ProjectBriefForm.css (новый каскад) === */
 
-.brief__title { font-size: 24px; font-weight: 700; }
-.brief__hp { position:absolute; left:-9999px; top:-9999px; }
+/* Контейнер формы */
+.custom-form{
+  --chip-bg: #f1f2f4;
+  --chip-bg-hover:#e9eaee;
+  --chip-on:#0f0f11;
+  --chip-on-text:#fff;
+  --ring:#7c8cff;
+  --field-bg:#fff;
+  --field-border:#e5e7eb;
+  --field-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
 
-.chip-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 14px;
-  align-items: center;
+  display:grid;
+  gap:16px;
+  max-width:720px;
 }
 
-.chip { position: relative; }
-.chip__input { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
-.chip-group label {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: #efefef;
-  box-shadow: inset 0 -1px rgba(0,0,0,.06);
-  cursor: pointer;
-  transition: transform .15s ease, background .15s ease, color .15s ease;
-  user-select: none;
-  white-space: nowrap;
-}
-.chip__emoji { font-size: 18px; line-height: 1; }
-
-.chip__input:checked + .chip__label {
-  background: #111;
-  color: #fff;
+/* Группа “пилюлек” */
+.chip-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  border:0;
+  padding:4px 0;
+  margin:0;
+  min-width:0;
 }
 
-.brief__label { display: grid; gap: 8px; }
-.brief__input,
-.brief__textarea {
-  width: 100%;
-  border-radius: 16px;
-  border: 1px solid rgba(0,0,0,.08);
-  background: #fff;
-  padding: 14px 16px;
-  font-size: 16px;
-  outline: none;
+/* Пилюлька (label) */
+.chip-group label{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 18px;
+  border-radius:9999px;
+  background:var(--chip-bg);
+  color:#0b0b0b;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:.2px;
+  cursor:pointer;
+  user-select:none;
+  transition:background .2s ease, transform .15s ease, box-shadow .2s ease;
 }
-.brief__input:focus,
-.brief__textarea:focus { box-shadow: 0 0 0 3px rgba(0,0,0,.08); }
+.chip-group label:hover{ background:var(--chip-bg-hover); transform:translateY(-1px); }
 
-.brief__submit { margin-top: 4px; }
-.brief__hint { color:#666; font-size: 14px; }
+/* Скрываем чекбокс, но оставляем доступность */
+.chip-group label > input[type="checkbox"]{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* Выбранная “пилюлька” (используем :has — современный и поддерживается) */
+.chip-group label:has(input:checked){
+  background:var(--chip-on);
+  color:var(--chip-on-text);
+  box-shadow:0 10px 24px rgba(15,15,17,.28);
+}
+.chip-group label:has(input:focus-visible){
+  outline:2px solid var(--ring);
+  outline-offset:2px;
+}
+
+/* Поля */
+.custom-form__label{ font-weight:700; font-size:14px; color:#0b0b0b; }
+.custom-form__input,
+.custom-form__textarea{
+  width:100%;
+  box-sizing:border-box;
+  background:var(--field-bg);
+  border:1px solid var(--field-border);
+  border-radius:18px;
+  padding:14px 16px;
+  font-size:16px;
+  color:#0b0b0b;
+  box-shadow:var(--field-shadow);
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.custom-form__textarea{ resize:vertical; min-height:120px; }
+.custom-form__input:focus,
+.custom-form__textarea:focus{
+  outline:none;
+  border-color:var(--ring);
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--ring) 20%, transparent);
+}
+
+/* Кнопка */
+.custom-form__btn-inner{
+  --btn-glow:rgba(255,255,255,.06);
+
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  padding:18px 28px;
+  border-radius:28px;
+  border:1px solid var(--btn-glow);
+  background:
+    radial-gradient(120% 140% at 20% -40%, rgba(255,255,255,.12), transparent 60%),
+    linear-gradient(180deg, #141516, #0b0b0b);
+  color:#fff;
+  font-weight:700;
+  letter-spacing:.2px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+/* “Стрелочки” (микро-анимация без JS) */
+.custom-form__btn-inner::before,
+.custom-form__btn-inner::after{
+  position:absolute;
+  top:50%;
+  translate:0 -50%;
+  font-weight:800;
+  letter-spacing:.15em;
+  opacity:.25;
+  transition:transform .35s cubic-bezier(.2,.9,.2,1), opacity .2s ease;
+  pointer-events:none;
+}
+.custom-form__btn-inner::before{ content:"›››"; left:22px; transform:translateX(-8px); }
+.custom-form__btn-inner::after { content:"‹‹‹"; right:22px; transform:translateX(8px);  }
+
+.custom-form__btn-inner:hover{
+  transform:translateY(-1px);
+  box-shadow:0 26px 54px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.custom-form__btn-inner:hover::before{ transform:translateX(6px);  opacity:.4; }
+.custom-form__btn-inner:hover::after { transform:translateX(-6px); opacity:.4; }
+.custom-form__btn-inner:active{ transform:translateY(0); }
+
+/* Адаптив */
+@media (max-width:640px){
+  .chip-group{ gap:10px; }
+  .chip-group label{ padding:10px 14px; }
+  .custom-form__btn-inner{ padding:16px 22px; border-radius:24px; }
+}
