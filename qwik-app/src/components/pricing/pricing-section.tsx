@@ -2,13 +2,9 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { component$ } from '@builder.io/qwik';
-import { Form, routeAction$ } from '@builder.io/qwik-city';
+
 import './PricingSection.css';
 
-export const useCustomBrief = routeAction$(async (data) => {
-  if (data.hp) return { ok: true }; // honeypot антиспам
-  return { ok: true };
-});
 
 const plans = [
   {
@@ -137,44 +133,32 @@ export default component$(() => {
                 </div>
               ) : (
                 <section class="custom-brief">
-                  <Form action={useCustomBrief()} class="custom-brief__form">
-                    <input
-                      type="text"
-                      name="hp"
-                      aria-hidden="true"
-                      tabIndex={-1}      // ← camelCase
-                      class="hp"
-                      autoComplete="off"
-                    />
-
-                    <label class="custom-brief__label">
+                  <form action="/brief" method="get" class="custom-form" noValidate>
+                    <label>
                       Направление
-                      <select name="topic" required class="custom-brief__field">
+                      <select name="type" required>
                         <option value="landing">Лендинг</option>
-                        <option value="multipage">Многостраничный</option>
-                        <option value="seo">SEO / структура</option>
-                        <option value="3d">3D / WebGL</option>
-                        <option value="crm">CRM / калькулятор</option>
-                        <option value="custom">Другое</option>
+                        <option value="business">Многостраничник</option>
+                        <option value="seo">SEO</option>
+                        <option value="custom">Кастом</option>
                       </select>
                     </label>
 
-                    <label class="custom-brief__label">
+                    <label>
                       Email
-                      <input type="email" name="email" required placeholder="you@email.com" class="custom-brief__field" />
+                      <input type="email" name="email" required />
                     </label>
 
-                    <label class="custom-brief__label">
-                      Коротко о задаче
-                      <textarea name="idea" rows={4} placeholder="Опишите идею или задачу…" class="custom-brief__field" />
+                    <label>
+                      Идея
+                      <textarea name="idea" rows={4} />
                     </label>
 
-                    <GlassEffect class="custom-brief__submit">
-                      <button type="submit">{plan.button}</button>
-                    </GlassEffect>
+                    {/* honeypot антиспам */}
+                    <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
 
-                    <p class="custom-brief__note">Отвечу в течение 30 минут (будни 09:00–18:00).</p>
-                  </Form>
+                    <button type="submit" class="glass-btn">Отправить</button>
+                  </form>
                 </section>
               )}
 
