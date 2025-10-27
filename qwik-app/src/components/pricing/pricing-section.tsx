@@ -134,30 +134,53 @@ export default component$(() => {
               ) : (
                 <section class="custom-brief">
                   <form action="/brief" method="get" class="custom-form" noValidate>
-                    <label>
-                      Направление
-                      <select name="type" required>
-                        <option value="landing">Лендинг</option>
-                        <option value="business">Многостраничник</option>
-                        <option value="seo">SEO</option>
-                        <option value="custom">Кастом</option>
-                      </select>
+                    <fieldset class="chip-group">
+                      <legend class="sr-only">What do you need help with?</legend>
+
+                      {[
+                        ['design', 'Design', '🎨'],
+                        ['marketing', 'Marketing', '📈'],
+                        ['dev', 'Software Development', '⚙️'],
+                        ['nocode', 'No-code dev', '🧩'],
+                        ['copy', 'Copywriting', '✍️'],
+                        ['qa', 'QA', '🐞'],
+                        ['unknown', 'Not sure', '❓'],
+                      ].map(([value, label, icon]) => (
+                        <span class="chip" key={value}>
+                          <input
+                            type="radio"
+                            id={`need-${value}`}
+                            name="type"
+                            value={value}
+                            checked={value === 'design'}
+                          />
+                          <label for={`need-${value}`}><i aria-hidden="true">{icon}</i>{label}</label>
+                        </span>
+                      ))}
+                    </fieldset>
+                    <label class="custom-form__label">
+                      Ваша почта
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="you@email.com"
+                        inputMode="email"
+                        autoComplete="email"
+                      />
                     </label>
 
                     <label>
-                      Email
-                      <input type="email" name="email" required />
-                    </label>
-
-                    <label>
-                      Идея
+                      Пару слов об идее
                       <textarea name="idea" rows={4} />
                     </label>
 
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
-
-                    <button type="submit" class="glass-btn">Отправить</button>
+                    <GlassEffect class="custom-form__btn">
+                      <button type="submit" class="custom-form__btn-inner">Отправить</button>
+                    </GlassEffect>
+                    
                   </form>
                 </section>
               )}
