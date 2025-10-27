@@ -1,7 +1,9 @@
 
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import  BigCTA  from '~/components/ui/BigCTA';
 import { component$ } from '@builder.io/qwik';
+
 
 import './PricingSection.css';
 
@@ -170,7 +172,7 @@ export default component$(() => {
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
                     
-                      <button class='custom-form__btn-inner' type="submit">Отправить</button>
+                      <BigCTA type="submit">Отправить</BigCTA>
                     
 
                   </form>
