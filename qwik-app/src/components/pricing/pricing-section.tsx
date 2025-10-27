@@ -96,18 +96,7 @@ const plans = [
     description: 'Под задачи без ограничений. Напишите, что нужно — подберу решение и вернусь с идеей и бюджетом.',
     type: 'custom',
     button: 'Рассчитать мой проект',
-    included: [
-      'Любое количество страниц',
-      'Любой дизайн и логика',
-      '3D / WebGL',
-      'CRM, боты, калькуляторы',
-      'SEO-структура (теги, OG, alt, ...)',
-      'Многоязычие (RU, RO, EN…)',
-      'Анимации и микроинтерактив',
-      '3D, интерактив, WebGL',
-      'SEO + Оптимизация скорости',
-      'Поддержка и сопровождение'
-    ],
+    included: [],
     excluded: []
   }
 ];
@@ -181,7 +170,7 @@ export default component$(() => {
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
                     <GlassEffect class="pricing-card__btn">
-                      <button type="submit" class="custom-form__btn-inner">Отправить</button>
+                      <button type="submit">Отправить</button>
                     </GlassEffect>
 
                   </form>
