@@ -200,24 +200,16 @@
   letter-spacing: -0.01em;
 }
 
-/* группа чипов */
 .chip-group {
   display: flex;
   flex-wrap: wrap;
-
-  align-items: center;
-  justify-content: flex-start;
   gap: 12px;
-  border: 0;
-  padding: 0;
-  margin: 0;
+  align-items: center;
 }
 
-/* отдельно чип */
 .chip {
   position: relative;
-  display: inline-flex; /* обязательно */
-  flex: 0 0 auto; /* не растягивается */
+  flex: 0 0 auto;
 }
 
 .chip input {
@@ -228,43 +220,38 @@
 }
 
 .chip label {
-  display: inline-flex; /* сбиваем block/grid от общих стилей */
-  width: auto; /* !! */
-  max-width: none; /* на всякий */
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: 9999px;
   background: #f3f3f5;
   color: #111;
   font-weight: 600;
   line-height: 1;
-  white-space: nowrap; /* чтобы слова не переносились */
   border: 1px solid transparent;
   cursor: pointer;
   user-select: none;
   transition:
     transform 0.12s ease,
     background-color 0.12s ease,
-    color 0.12s ease;
-}
-
-.chip label i {
-  font-style: normal;
-  opacity: 0.85;
-}
-
-.chip input:focus-visible + label {
-  outline: 2px solid #000;
-  outline-offset: 2px;
+    color 0.12s ease,
+    border-color 0.12s;
 }
 
 .chip input:checked + label {
   background: #111;
   color: #fff;
-  border-color: #111;
   transform: translateY(-1px);
+}
+
+.chip label:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+.chip-emoji {
+  font-size: 18px;
+  line-height: 1;
 }
 
 /* email */

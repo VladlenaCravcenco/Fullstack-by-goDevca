@@ -5,7 +5,15 @@ import { component$ } from '@builder.io/qwik';
 
 import './PricingSection.css';
 
-
+const services = [
+  { id: 'design', label: 'Design', emoji: '🎨' },
+  { id: 'marketing', label: 'Marketing', emoji: '📈' },
+  { id: 'dev', label: 'Software Development', emoji: '⚙️' },
+  { id: 'nocode', label: 'No-code dev', emoji: '🧩' },
+  { id: 'copy', label: 'Copywriting', emoji: '✍️' },
+  { id: 'qa', label: 'QA', emoji: '🐞' },
+  { id: 'ns', label: 'Not sure', emoji: '❓' },
+];
 const plans = [
   {
     name: 'Starter',
@@ -135,27 +143,22 @@ export default component$(() => {
                 <section class="custom-brief">
                   <form action="/brief" method="get" class="custom-form" noValidate>
                     <fieldset class="chip-group">
-                      <legend class="sr-only">What do you need help with?</legend>
+                      <legend class="visually-hidden">What do you need help with?</legend>
 
-                      {[
-                        ['design', 'Design', '🎨'],
-                        ['marketing', 'Marketing', '📈'],
-                        ['dev', 'Software Development', '⚙️'],
-                        ['nocode', 'No-code dev', '🧩'],
-                        ['copy', 'Copywriting', '✍️'],
-                        ['qa', 'QA', '🐞'],
-                        ['unknown', 'Not sure', '❓'],
-                      ].map(([value, label, icon]) => (
-                        <span class="chip" key={value}>
+                     
+                      {services.map(s => (
+                        <div class="chip" key={s.id}>
                           <input
-                            type="radio"
-                            id={`need-${value}`}
-                            name="type"
-                            value={value}
-                            checked={value === 'design'}
+                            type="checkbox"
+                            id={`srv-${s.id}`}
+                            name="services"
+                            value={s.id}
                           />
-                          <label for={`need-${value}`}><i aria-hidden="true">{icon}</i>{label}</label>
-                        </span>
+                          <label for={`srv-${s.id}`}>
+                            <span class="chip-emoji">{s.emoji}</span>
+                            {s.label}
+                          </label>
+                        </div>
                       ))}
                     </fieldset>
                     <label class="custom-form__label">
@@ -180,7 +183,7 @@ export default component$(() => {
                     <GlassEffect class="custom-form__btn">
                       <button type="submit" class="custom-form__btn-inner">Отправить</button>
                     </GlassEffect>
-                    
+
                   </form>
                 </section>
               )}
