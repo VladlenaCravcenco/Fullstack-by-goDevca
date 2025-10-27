@@ -177,8 +177,15 @@
 
 /* доступность */
 .sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 1px 1px); white-space: nowrap; border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 1px 1px);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* карточка-форма */
@@ -197,6 +204,9 @@
 .chip-group {
   display: flex;
   flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: flex-start;
   gap: 12px;
   border: 0;
   padding: 0;
@@ -206,6 +216,8 @@
 /* отдельно чип */
 .chip {
   position: relative;
+  display: inline-flex; /* обязательно */
+  flex: 0 0 auto; /* не растягивается */
 }
 
 .chip input {
@@ -216,22 +228,30 @@
 }
 
 .chip label {
-  display: inline-flex;
+  display: table-cell;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 4px 8px;
   border-radius: 9999px;
   background: #f3f3f5;
   color: #111;
   font-weight: 600;
+  font-size: 12px;
   border: 1px solid transparent;
   line-height: 1;
   cursor: pointer;
   user-select: none;
-  transition: transform .12s ease, background-color .12s ease, color .12s ease, border-color .12s ease;
+  transition:
+    transform 0.12s ease,
+    background-color 0.12s ease,
+    color 0.12s ease,
+    border-color 0.12s ease;
 }
 
-.chip label i { font-style: normal; opacity: .85; }
+.chip label i {
+  font-style: normal;
+  opacity: 0.85;
+}
 
 .chip input:focus-visible + label {
   outline: 2px solid #000;
@@ -258,23 +278,29 @@
   height: 56px;
   padding: 0 16px;
   border-radius: 14px;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   font-size: 16px;
-  transition: box-shadow .15s ease, border-color .15s ease;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .custom-form__label input[type="email"]:focus {
   outline: none;
-  border-color: rgba(0,0,0,.2);
-  box-shadow: 0 0 0 4px rgba(0,0,0,.06);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
 }
 
 /* honeypot */
-.hp { display:none !important; }
+.hp {
+  display: none !important;
+}
 
 /* большая кнопка — под твой GlassEffect */
-.custom-form__btn { margin-top: 8px; }
+.custom-form__btn {
+  margin-top: 8px;
+}
 .custom-form__btn-inner {
   all: unset;
   display: flex;
