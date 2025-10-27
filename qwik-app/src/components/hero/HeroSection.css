@@ -1,6 +1,6 @@
 .hero {
-  padding: 300px 0;
-  height: 1000px;
+  padding: 300px 0 100px;
+  height: fit-content;
 }
 
 .hero .container {
@@ -25,7 +25,7 @@
 }
 
 .hero__left h1 {
-  font-size: 54px;
+  font-size: 44px;
   font-weight: 800;
   text-transform: uppercase;
   color: #1d1d1d;
@@ -101,7 +101,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .hero {
-    padding: 200px 0;
+    padding: 200px 0 50px;
     
   }
   .hero__content {
@@ -121,7 +121,7 @@
   }
 
   .hero__left h1 {
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
   }
   .hero__buttons{

@@ -46,6 +46,7 @@
     scroll-snap-type: x mandatory;
     gap: 16px;
     padding-bottom: 16px;
+    border-radius: 20px;
   }
 
   .projects__list::-webkit-scrollbar {
