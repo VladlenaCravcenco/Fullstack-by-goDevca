@@ -169,9 +169,9 @@ export default component$(() => {
 
                     {/* honeypot антиспам */}
                     <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
-                    <GlassEffect class="pricing-card__btn">
+                    
                       <button type="submit">Отправить</button>
-                    </GlassEffect>
+                    
 
                   </form>
                 </section>
