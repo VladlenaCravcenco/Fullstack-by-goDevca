@@ -12,7 +12,11 @@
   --field-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
 
   display:grid;
-  gap:16px;
+  gap:10px;
+  gap: 10px;
+border: 10px rgba(247, 249, 253, 0.1) solid;
+border-radius: 30px;
+padding: 16px;
   max-width:720px;
 }
 
@@ -29,13 +33,15 @@
 
 /* Пилюлька (label) */
 .chip-group label{
+    width: fit-content;
   position:relative;
   display:inline-flex;
   align-items:center;
   gap:10px;
-  padding:12px 18px;
+  font-size: 12px;
+  padding:10px 14px;
   border-radius:9999px;
-  background:var(--chip-bg);
+  background:white;
   color:#0b0b0b;
   line-height:1;
   font-weight:600;

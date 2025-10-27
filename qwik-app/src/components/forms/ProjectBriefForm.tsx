@@ -19,13 +19,10 @@ export default component$(() => {
       <input class="custom-form__input" type="email" name="email" required />
 
       <label class="custom-form__label">Пару слов об идее</label>
-      <textarea class="custom-form__textarea" name="idea" rows={4} />
+      <textarea class="custom-form__textarea" name="idea" rows={2} />
 
       {/* honeypot (антиспам) */}
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" hidden />
-
-      {/* красиво в письме */}
-      <input type="hidden" name="_subject" value="New brief from godevca.com" />
 
       <button class="custom-form__btn-inner" type="submit">
         Отправить
