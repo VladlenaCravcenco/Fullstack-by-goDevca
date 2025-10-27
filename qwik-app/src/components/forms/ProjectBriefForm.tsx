@@ -3,12 +3,28 @@ import './ProjectBriefForm.css';
 
 export default component$(() => {
   return (
-    <form action="/api/telegram-notify" method="POST" class="custom-form">
-      {/* чекбоксы можно выбирать несколько — одно и то же имя fields */}
+    <form
+      action="/api/telegram-notify"
+      method="POST"
+      class="custom-form"
+      preventdefault:submit
+      onSubmit$={async (ev) => {
+        const form = ev.target as HTMLFormElement;
+        const fd = new FormData(form);
+        const res = await fetch(form.action, { method: 'POST', body: fd });
+        const out = await res.json();
+        if (out.ok) {
+          form.reset();
+          alert('✅ Отправлено! Я свяжусь в ближайшее время.');
+        } else {
+          alert('⚠️ Не отправлено. Проверь токен/CHAT_ID на Vercel и .env.local');
+        }
+      }}
+    >
       <fieldset class="chip-group">
         <label><input type="checkbox" name="services" value="Design" /> 🎨 Design</label>
         <label><input type="checkbox" name="services" value="Marketing" /> 📈 Marketing</label>
-        <label><input type="checkbox" name="services" value="Software Development" /> ⚙️ Software Dev</label>
+        <label><input type="checkbox" name="services" value="Software Dev" /> ⚙️ Software Dev</label>
         <label><input type="checkbox" name="services" value="No-code dev" /> 🧩 No-code dev</label>
         <label><input type="checkbox" name="services" value="Copywriting" /> ✍️ Copywriting</label>
         <label><input type="checkbox" name="services" value="QA" /> 🐞 QA</label>
@@ -19,16 +35,12 @@ export default component$(() => {
       <input class="custom-form__input" type="email" name="email" required />
 
       <label class="custom-form__label">Пару слов об идее</label>
-      <textarea class="custom-form__textarea" name="idea" rows={2} />
+      <textarea class="custom-form__textarea" name="idea" rows={4} />
 
-      {/* honeypot (антиспам) */}
+      {/* это то самое "пустое поле" — оно скрыто, оставь как есть, это антиспам */}
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" hidden />
 
-      <button class="custom-form__btn-inner" type="submit">
-        Отправить
-      </button>
+      <button class="custom-form__btn-inner" type="submit">Отправить</button>
     </form>
   );
 });
-
-
