@@ -21,14 +21,14 @@ export default component$(() => {
         }
       }}
     >
-        <label class="custom-form__label">Выберите направление</label>
+        <label class="custom-form__title">Чем я могу Вам помочь?</label>
       <fieldset class="chip-group">
-        <label><input type="checkbox" name="services" value="Design" /> 🎨 Design</label>
-        <label><input type="checkbox" name="services" value="Marketing" /> 📈 Marketing</label>
-        <label><input type="checkbox" name="services" value="Software Dev" /> ⚙️ Software Dev</label>
-        <label><input type="checkbox" name="services" value="No-code dev" /> 🧩 No-code dev</label>
-        <label><input type="checkbox" name="services" value="Copywriting" /> ✍️ Copywriting</label>
-        <label><input type="checkbox" name="services" value="Not sure" /> ❓ Not sure</label>
+        <label><input type="checkbox" name="services" value="Design" /> 🎨 Дизайн</label>
+        <label><input type="checkbox" name="services" value="Marketing" /> 📈 Маркетинг</label>
+        <label><input type="checkbox" name="services" value="Software Dev" /> ⚙️ Разработка</label>
+        <label><input type="checkbox" name="services" value="No-code dev" /> 🧩 Готовый шаблон</label>
+        <label><input type="checkbox" name="services" value="Copywriting" /> ✍️ Сео</label>
+        <label><input type="checkbox" name="services" value="Not sure" /> ❓ Не знаю</label>
       </fieldset>
 
       <label class="custom-form__label">Ваш имэйл</label>

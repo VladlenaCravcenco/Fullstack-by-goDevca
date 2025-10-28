@@ -83,6 +83,12 @@ input[name="_gotcha"] {
   outline-offset: 2px;
 }
 
+.custom-form__title{
+  font-weight: 700;
+  font-size: 18px;
+  color: #0b0b0b;
+}
+
 /* Поля */
 .custom-form__label {
   font-weight: 700;
