@@ -31,11 +31,9 @@ export default component$(() => {
         <label><input type="checkbox" name="services" value="Not sure" /> ❓ Not sure</label>
       </fieldset>
 
-      <label class="custom-form__label">Ваша почта</label>
+      <label class="custom-form__label">Ваш имэйл</label>
       <input class="custom-form__input" type="email" name="email" required />
 
-      <label class="custom-form__label">Пару слов об идее</label>
-      <textarea class="custom-form__textarea" name="idea" rows={4} />
 
       {/* это то самое "пустое поле" — оно скрыто, оставь как есть, это антиспам */}
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" hidden />
