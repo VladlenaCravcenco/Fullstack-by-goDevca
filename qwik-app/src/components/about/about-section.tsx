@@ -28,7 +28,7 @@ export default component$(() => {
             <p>Telegram: @Cravcenco_frontend</p>
             <p>Instagram: vladlenacravcenco</p>
             <p>Помимо сайтов я также создаю рекламные креативы, презентации, 3D-анимации в Blender и дизайн-шаблоны.</p>
-            <GlassEffect class="design-portfolio-btn">Открыть дизайн-портфолио</GlassEffect>
+            <GlassEffect class="design-portfolio-btn"><a href="https://go-de-vca.vercel.app">Открыть дизайн-портфолио</a></GlassEffect>
           </div>
 
           <div class="card education">
