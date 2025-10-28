@@ -28,7 +28,6 @@ export default component$(() => {
         <label><input type="checkbox" name="services" value="Software Dev" /> ⚙️ Software Dev</label>
         <label><input type="checkbox" name="services" value="No-code dev" /> 🧩 No-code dev</label>
         <label><input type="checkbox" name="services" value="Copywriting" /> ✍️ Copywriting</label>
-        <label><input type="checkbox" name="services" value="QA" /> 🐞 QA</label>
         <label><input type="checkbox" name="services" value="Not sure" /> ❓ Not sure</label>
       </fieldset>
 
