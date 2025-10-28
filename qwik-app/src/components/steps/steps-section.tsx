@@ -181,7 +181,10 @@ export default component$(() => {
           </div>
 
           <div class="steps__right">
-            <img src={steps[activeStep.value].image} alt={steps[activeStep.value].title} />
+            <div class='steps__right-wraper'>
+              <img src={steps[activeStep.value].image} alt={steps[activeStep.value].title} />
+            </div>
+            
           </div>
         </div>
       </div>
