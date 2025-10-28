@@ -35,42 +35,42 @@ export default component$(() => {
       title: 'Прототипирование',
       description:
         'Создаю логическую схему сайта и размещение блоков без визуала. Нужно, чтобы проверить структуру до погружения в дизайн — это экономит время и правки.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step3.png',
       button: 'узнать больше',
     },
     {
       title: 'Дизайн',
       description:
         'Делаю индивидуальный, адаптивный и визуально продуманный интерфейс в Figma. На этом этапе рождается лицо сайта — красиво, удобно, узнаваемо.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step4.png',
       button: 'узнать цены',
     },
     {
       title: 'Вёрстка',
       description:
         'Переношу дизайн в код: адаптивно, быстро и чисто на Qwik или React. Сайт начинает “жить” и работать во всех браузерах и на всех устройствах.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step5.png',
       button: 'подробнее',
     },
     {
       title: 'CMS в Sanity',
       description:
         'Подключаю админку Sanity, чтобы вы могли менять контент через интерфейс. Вы больше не зависите от программиста — меняйте тексты и проекты сами.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step6.png',
       button: 'узнать больше',
     },
     {
       title: 'SEO через код',
       description:
         'Прописываю мета-теги, заголовки, alt и структуру — сайт будет понятен Google. Это нужно, чтобы сайт не просто был, а индексировался и приводил клиентов.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step7.png',
       button: 'узнать цены',
     },
     {
       title: 'Запуск на Vercel',
       description:
         'Публикую сайт на хостинге, настраиваю домен, всё проверяю. В результате вы получаете рабочий сайт, доступный в интернете, готовый к продвижению.',
-      image: '/images/steps/step2.png',
+      image: '/images/steps/step8.png',
       button: 'запросить звонок',
     },
   ];
