@@ -45,10 +45,10 @@ input[name="_gotcha"] {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 10px 12px;
   border-radius: 9999px;
-  background: rgb(235, 235, 235);
+  background: #f7f7f7;
   color: #0b0b0b;
   line-height: 1;
   font-weight: 600;

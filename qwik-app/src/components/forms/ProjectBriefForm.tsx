@@ -21,6 +21,7 @@ export default component$(() => {
         }
       }}
     >
+        <label class="custom-form__label">Выберите направление</label>
       <fieldset class="chip-group">
         <label><input type="checkbox" name="services" value="Design" /> 🎨 Design</label>
         <label><input type="checkbox" name="services" value="Marketing" /> 📈 Marketing</label>
