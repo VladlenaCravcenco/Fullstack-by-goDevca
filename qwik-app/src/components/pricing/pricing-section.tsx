@@ -1,19 +1,12 @@
 
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import ProjectBriefForm from '~/components/forms/ProjectBriefForm';
 import { component$ } from '@builder.io/qwik';
 
 import './PricingSection.css';
 
-const services = [
-  { id: 'design', label: 'Design', emoji: '🎨' },
-  { id: 'marketing', label: 'Marketing', emoji: '📈' },
-  { id: 'dev', label: 'Software Development', emoji: '⚙️' },
-  { id: 'nocode', label: 'No-code dev', emoji: '🧩' },
-  { id: 'copy', label: 'Copywriting', emoji: '✍️' },
-  { id: 'qa', label: 'QA', emoji: '🐞' },
-  { id: 'ns', label: 'Not sure', emoji: '❓' },
-];
+
 const plans = [
   {
     name: 'Starter',
@@ -134,45 +127,9 @@ export default component$(() => {
                     <fieldset class="chip-group">
                       <legend class="visually-hidden">Выберите направление</legend>
 
-                     
-                      {services.map(s => (
-                        <div class="chip" key={s.id}>
-                          <input
-                            type="checkbox"
-                            id={`srv-${s.id}`}
-                            name="services"
-                            value={s.id}
-                          />
-                          <label for={`srv-${s.id}`}>
-                            <span class="chip-emoji">{s.emoji}</span>
-                            {s.label}
-                          </label>
-                        </div>
-                      ))}
+
+                      <ProjectBriefForm />
                     </fieldset>
-                    <label class="custom-form__label">
-                      Ваша почта
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        placeholder="you@email.com"
-                        inputMode="email"
-                        autoComplete="email"
-                      />
-                    </label>
-
-                    <label>
-                      Пару слов об идее
-                      <textarea name="idea" rows={4} />
-                    </label>
-
-                    {/* honeypot антиспам */}
-                    <input type="text" name="hp" tabIndex={-1} autoComplete="off" style="display:none" />
-                    
-                      <button class='custom-form__btn-inner' type="submit">Отправить</button>
-                    
-
                   </form>
                 </section>
               )}
