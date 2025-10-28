@@ -90,7 +90,8 @@ const plans = [
     type: 'custom',
     button: 'Рассчитать мой проект',
     included: [],
-    excluded: []
+    excluded: [],
+    postSlug: 'custom-examples'
   }
 ];
 
@@ -108,7 +109,7 @@ export default component$(() => {
           {plans.map((plan, index) => (
             <div class="pricing-card" key={index}>
               <div class="pricing_top-info">
-                <h3 class="pricing-card__name">{plan.name}</h3>
+                <h2 class="pricing-card__name">{plan.name}</h2>
                 <p class="pricing-card__desc">{plan.description}</p>
               </div>
 
@@ -124,12 +125,8 @@ export default component$(() => {
               ) : (
                 <section class="custom-brief">
                   <form action="/brief" method="get" class="custom-form" noValidate>
-                    <fieldset class="chip-group">
-                      <legend class="visually-hidden">Выберите направление</legend>
-
-
-                      <ProjectBriefForm />
-                    </fieldset>
+                    <legend class="visually-hidden">Выберите направление</legend>
+                    <ProjectBriefForm />
                   </form>
                 </section>
               )}

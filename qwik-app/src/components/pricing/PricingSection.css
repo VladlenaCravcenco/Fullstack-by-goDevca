@@ -311,6 +311,11 @@
   padding: 0;
 }
 
+.more-link{
+  height: 100%;
+  align-content: end;
+}
+
 /* Tablet */
 @media (max-width: 1400px) {
   .pricing__grid {
