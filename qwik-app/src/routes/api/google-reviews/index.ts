@@ -10,7 +10,7 @@ type Review = {
 };
  
 export const onGet: RequestHandler = async ({ json, env, request }) => {
-  const API_KEY = env.get('GOOGLE_MAPS_API_KEY');
+  const API_KEY = env.get('GOOGLE_MAPS_API_KEY'); 
   const PLACE_ID = env.get('GOOGLE_PLACE_ID');
 
   if (!API_KEY || !PLACE_ID) {
