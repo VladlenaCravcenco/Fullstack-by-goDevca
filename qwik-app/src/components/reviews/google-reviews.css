@@ -1,0 +1,58 @@
+.g-reviews {
+  display: grid;
+  gap: 16px;
+}
+.g-reviews__title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+.g-reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.g-reviews__stars {
+  color: #f59e0b;
+  letter-spacing: 2px;
+  font-size: 18px;
+}
+.g-reviews__score {
+  color: #52525b;
+}
+.g-reviews__list {
+  display: grid;
+  gap: 14px;
+}
+.g-reviews__item {
+  background: #f6f7f9;
+  border-radius: 16px;
+  padding: 14px;
+}
+.g-reviews__head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.g-reviews__avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.g-reviews__author {
+  line-height: 1.2;
+}
+.g-reviews__row {
+  color: #71717a;
+  font-size: 0.9rem;
+}
+.g-reviews__when {
+  color: #9ca3af;
+}
+.g-reviews__text {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+}
+.g-reviews__loading,
+.g-reviews__empty,
+.g-reviews__error {
+  color: #71717a;
+}

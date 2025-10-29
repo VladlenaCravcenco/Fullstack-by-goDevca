@@ -6,6 +6,7 @@ import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
 import { Link } from '@builder.io/qwik-city';
 import ProjectBriefForm from '~/components/forms/ProjectBriefForm';
+import GoogleReviews from '~/components/reviews/GoogleReviews';
 
 export default component$(() => {
   return (
@@ -29,6 +30,7 @@ export default component$(() => {
                 <GlassEffect class="btn btn--secondary" ><Link href="/faq" onMouseEnter$={() => playGlassHover()}
                   onPointerDown$={() => playGlassHover()}>Обсудить проект</Link></GlassEffect>
               </div>
+              <GoogleReviews limit={6} />
             </div>
 
             <div class="hero__right">
