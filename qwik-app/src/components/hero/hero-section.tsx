@@ -30,7 +30,7 @@ export default component$(() => {
                 <GlassEffect class="btn btn--secondary" ><Link href="/faq" onMouseEnter$={() => playGlassHover()}
                   onPointerDown$={() => playGlassHover()}>Обсудить проект</Link></GlassEffect>
               </div>
-              <GoogleReviews limit={6} />
+              <GoogleReviews placeId="ChIJCc4IYn5LMYsRype3iidGuFY" />
             </div>
 
             <div class="hero__right">
