@@ -1,6 +1,7 @@
 .reviews {
   display: grid;
   gap: 14px;
+  padding: 30px 0;
 }
 .reviews__head {
   display: flex;
