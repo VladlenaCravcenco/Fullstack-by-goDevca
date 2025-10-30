@@ -1,7 +1,9 @@
 .pricing {
   padding: 100px 0;
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
   border-radius: 60px 60px 0 0;
+  z-index: 2;
+  position: relative;
 }
 
 .pricing .container {
