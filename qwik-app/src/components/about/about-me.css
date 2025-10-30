@@ -1,6 +1,10 @@
 .about-me {
   padding: 100px 0;
-  background: #f9f9f9;
+  background: white;
+  border-radius: 60px 60px 0 0;
+  position: relative;
+  z-index: 1;
+  bottom: -60px;
 }
 
 .about-me .container {
@@ -58,7 +62,7 @@
 
 .design-portfolio-btn {
   margin-top: 16px;
-  background-image: url('../../../public/images/blog-filter-bg.jpg');
+  background-image: url("../../../public/images/blog-filter-bg.jpg");
   background-size: cover;
   background-position: center;
   border: none;
