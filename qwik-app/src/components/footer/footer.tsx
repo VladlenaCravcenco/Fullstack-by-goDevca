@@ -54,9 +54,6 @@ export default component$(() => {
 
       <div class="footer__bottom">
         <p>© 2025 Cravcenco Vladlena. Все права защищены.</p>
-        <button class="footer__top-btn" onClick$={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          ↑
-        </button>
       </div>
     </footer>
   );

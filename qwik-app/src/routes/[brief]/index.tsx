@@ -1,8 +1,7 @@
 import { component$, useVisibleTask$, $ } from '@builder.io/qwik';
 import './brief-page.css';
-import Header from '~/components/header/header';
 import { DocumentHead } from '@builder.io/qwik-city';
-import Footer from '~/components/footer/footer';
+
 
 import { GlassEffect } from '~/components/ui/GlassEffect';
 
@@ -57,7 +56,6 @@ export default component$(() => {
 
     return (
         <>
-            <Header />
             <section class="brief_container">
                 <h1>Бриф на разработку сайта</h1>
                 <p class="brief__subtitle">
@@ -1006,8 +1004,6 @@ export default component$(() => {
                     <GlassEffect class="submit-brief">Отправить бриф</GlassEffect>
                 </form>
             </section>
-
-            <Footer />
         </>
 
     );
