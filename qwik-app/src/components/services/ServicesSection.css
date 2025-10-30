@@ -2,7 +2,9 @@
   padding: 100px 0;
   background: #FFF;
   border-radius: 60px 60px 0 0 ;
-
+position: relative;
+z-index: 1;
+bottom: -60px;
 }
 
 .services .container {

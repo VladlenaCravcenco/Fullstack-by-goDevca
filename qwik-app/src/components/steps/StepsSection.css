@@ -1,7 +1,9 @@
 .steps {
   padding: 80px 0;
   background: #f9f9f9;
-
+border-radius: 60px 60px 0 0 ;
+position: relative;
+z-index: 2;
 }
 
 .steps .container {
