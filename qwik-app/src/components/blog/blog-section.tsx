@@ -18,7 +18,7 @@ export default component$(() => {
   const selectedTag = useSignal<'design' | 'framework' | 'soft' | 'ai'>('design');
 
   // временный путь к фону, потом заменится на fetch из Sanity
-  const backgroundImageUrl = 'qwik-app/public/images/form-cta-bg.jpg';
+  const backgroundImageUrl = '/images/form-cta-bg.jpg';
 
   return (
     <section class="blog" id='blog'>
