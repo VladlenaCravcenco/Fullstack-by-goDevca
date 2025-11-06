@@ -26,7 +26,7 @@ export default component$(() => {
             <h3>Кравченко Владлена Александровна</h3>
             <p>email: godevca@gmail.com</p>
             <p>Telegram: @Cravcenco_frontend</p>
-            <p>Instagram: vladlenacravcenco</p>
+            <a href="https://bento.me/godevca">bento.me</a>
             <p>Помимо сайтов я также создаю рекламные креативы, презентации, 3D-анимации в Blender и дизайн-шаблоны.</p>
             <GlassEffect class="design-portfolio-btn"><a href="https://go-de-vca.vercel.app">Открыть дизайн-портфолио</a></GlassEffect>
           </div>
