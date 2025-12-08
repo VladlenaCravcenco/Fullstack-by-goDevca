@@ -21,7 +21,7 @@ export default component$(() => {
   const backgroundImageUrl = '/images/form-cta-bg.jpg';
 
   return (
-    <section class="blog" id='blog'>
+    <section class="blog" id="blog">
       <div class="blog__grid container">
         <div class="blog__text">
           <h2>Dev-блог</h2>
@@ -40,21 +40,48 @@ export default component$(() => {
             backgroundRepeat: 'no-repeat',
           }}
         >
-          <ul>
-            <li class={selectedTag.value === 'design' ? 'active' : ''} onClick$={() => selectedTag.value = 'design'}>Дизайн</li>
-            <li class={selectedTag.value === 'framework' ? 'active' : ''} onClick$={() => selectedTag.value = 'framework'}>Фреймворки</li>
-            <li class={selectedTag.value === 'soft' ? 'active' : ''} onClick$={() => selectedTag.value = 'soft'}>Софты</li>
-            <li class={selectedTag.value === 'ai' ? 'active' : ''} onClick$={() => selectedTag.value = 'ai'}>ИИ-шки</li>
+          {/* ul получает модификатор по активному тегу — по нему двигаем белую плашку */}
+          <ul class={`blog__tabs blog__tabs--${selectedTag.value}`}>
+            <li
+              class={selectedTag.value === 'design' ? 'active' : ''}
+              onClick$={() => (selectedTag.value = 'design')}
+            >
+              Дизайн
+            </li>
+            <li
+              class={selectedTag.value === 'framework' ? 'active' : ''}
+              onClick$={() => (selectedTag.value = 'framework')}
+            >
+              Фреймворки
+            </li>
+            <li
+              class={selectedTag.value === 'soft' ? 'active' : ''}
+              onClick$={() => (selectedTag.value = 'soft')}
+            >
+              Инструменты
+            </li>
+            <li
+              class={selectedTag.value === 'ai' ? 'active' : ''}
+              onClick$={() => (selectedTag.value = 'ai')}
+            >
+              AI-технологии
+            </li>
           </ul>
+
           <GlassEffect class="blog__all-posts-btn">
-            <a href="/blog" rel="external">Перейти к постам</a></GlassEffect>
+            <a href="/blog" rel="external">
+              Перейти к постам
+            </a>
+          </GlassEffect>
         </div>
 
-        {posts.filter(post => post.tag === selectedTag.value).map(post => (
-          <a key={post.id} href={post.url} class="blog__post-card">
-            {post.title}
-          </a>
-        ))}
+        {posts
+          .filter((post) => post.tag === selectedTag.value)
+          .map((post) => (
+            <a key={post.id} href={post.url} class="blog__post-card">
+              {post.title}
+            </a>
+          ))}
       </div>
     </section>
   );
