@@ -1,92 +1,114 @@
-
-import { component$, useSignal, } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
-import './Header.css';
+import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
 import { GlassEffect } from '~/components/ui/GlassEffect';
-import { Link } from '@builder.io/qwik-city';
-import { playGlassHover } from '~/utils/sounds';
-
-
+import { MusicToggle } from '~/components/ui/MusicToggle';
+import './Header.css';
 
 export default component$(() => {
-    const menuOpen = useSignal(false);
+  const isOpen = useSignal(false);
 
-    return (
-        <header class="header">
-            <div class="container">
-                <div class="header__left">
-                    <a href='/' class="logo">godevca</a>
-                </div>
+  const open$ = $(() => (isOpen.value = true));
+  const close$ = $(() => (isOpen.value = false));
 
-                <nav class="header__nav">
-                    <ul>
-                        <li><a href="#services">Услуги</a></li>
-                        <li><a href="#process">Процесс</a></li>
-                        <li><a href="#projects">Проекты</a></li>
-                        <li><a href="#pricing">Цены</a></li>
-                        <li><a href="#about">Обо мне</a></li>
-                        <li><a href="#blog">Блог</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contacts">Контакты</a></li>
-                    </ul>
-                </nav>
+  // Блокируем скролл страницы когда меню открыто
+  useVisibleTask$(({ track, cleanup }) => {
+    track(() => isOpen.value);
+    if (typeof document === 'undefined') return;
 
-                <div class="header__right">
-                    <div class="lang-switch">
-                        <span class="icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.75 7.5C13.75 10.9518 10.9518 13.75 7.5 13.75M13.75 7.5C13.75 4.04822 10.9518 1.25 7.5 1.25M13.75 7.5H1.25M7.5 13.75C4.04822 13.75 1.25 10.9518 1.25 7.5M7.5 13.75C9.0633 12.0385 9.95172 9.81748 10 7.5C9.95172 5.18252 9.0633 2.96147 7.5 1.25M7.5 13.75C5.9367 12.0385 5.04828 9.81748 5 7.5C5.04828 5.18252 5.9367 2.96147 7.5 1.25M1.25 7.5C1.25 4.04822 4.04822 1.25 7.5 1.25" stroke="#1E1E1E" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        </span> ru
-                    </div>
-                    <GlassEffect class="brief-btn"
-                        
-                    >
-                        <Link href="/brief"
-                        onMouseEnter$={() => playGlassHover()}
-                        onPointerDown$={() => playGlassHover()}
-                        >заполнить бриф</Link>
-                    </GlassEffect>
+    const prev = document.body.style.overflow;
+    if (isOpen.value) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = prev;
 
+    cleanup(() => {
+      document.body.style.overflow = prev;
+    });
+  });
 
-                    <button
-                        class="burger"
-                        onClick$={() => (menuOpen.value = !menuOpen.value)}
-                    >
-                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect y="0.5" width="12.5" height="2" rx="1" fill="#18181B" />
-                            <rect y="5" width="12.5" height="2" rx="1" fill="#18181B" />
-                            <rect y="9.5" width="12.5" height="2" rx="1" fill="#18181B" />
-                        </svg>
+  const nav = [
+    { label: 'Услуги', href: '/#services' },
+    { label: 'Проекты', href: '/projects' },
+    { label: 'Обо мне', href: '/about' },
+    { label: 'Блог', href: '/blog' },
+    { label: 'Контакты', href: '/contact' },
+  ];
 
-                    </button>
-                </div>
+  return (
+    <header class="h">
+      <div class="h__inner">
+        {/* LEFT */}
+        <div class="h__left">
+          <a class="h__logo" href="/">
+            <span class="h__dot" />
+            <span class="h__brand">godevca</span>
+          </a>
+
+          <div class="h__status">
+            <span class="h__status-dot" />
+            <span>Avaible to Work</span>
+          </div>
+        </div>
+
+        {/* CENTER (desktop) */}
+        <nav class="h__nav" aria-label="Навигация">
+          {nav.map((i) => (
+            <a key={i.href} class="h__link" href={i.href}>
+              {i.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* RIGHT */}
+        <div class="h__right">
+          <div class="h__sound">
+            <MusicToggle />
+          </div>
+
+          <a class="h__cta" href="/brief">
+            <GlassEffect class="btn btn--primary">заполнить бриф</GlassEffect>
+          </a>
+
+          {/* burger (mobile) */}
+          <button class="h__burger" type="button" onClick$={open$} aria-label="Открыть меню">
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
+
+      {/* MOBILE MENU OVERLAY */}
+      <div class={`m ${isOpen.value ? 'm--open' : ''}`} aria-hidden={!isOpen.value}>
+        <div class="m__backdrop" onClick$={close$} />
+
+        <div class="m__panel" role="dialog" aria-modal="true" aria-label="Меню">
+          <button class="m__close" type="button" onClick$={close$} aria-label="Закрыть меню">
+            ✕
+          </button>
+
+          <div class="m__content">
+            <div class="m__links">
+              {nav
+                .filter((x) => x.label !== 'Блог') /* на твоём моб.скрине блога нет */
+                .map((i) => (
+                  <a key={i.href} class="m__link" href={i.href} onClick$={close$}>
+                    {i.label}
+                  </a>
+                ))}
             </div>
 
-            {menuOpen.value && (
-                <div class="mobile-menu">
-                    <ul>
-                        <li><a href="#services">Услуги</a></li>
-                        <li><a href="#process">Процесс</a></li>
-                        <li><a href="#projects">Проекты</a></li>
-                        <li><a href="#pricing">Цены</a></li>
-                        <li><a href="#about">Обо мне</a></li>
-                        <li><a href="#blog">Блог</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#contacts">Контакты</a></li>
-                    </ul>
-                </div>
-            )}
-        </header>
-    );
+            <a class="m__cta" href="/brief" onClick$={close$}>
+              <GlassEffect class="m__ctaGlass">заполнить бриф</GlassEffect>
+            </a>
+
+            <div class="m__social">
+              <a class="m__soc" href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                in
+              </a>
+              <a class="m__soc" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                ⌁
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
 });
-
-export const head: DocumentHead = {
-    title: 'Обо мне',
-    meta: [
-        {
-            name: 'description',
-            content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
-
-        },
-    ],
-};

@@ -1,6 +1,5 @@
 import { component$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { CalendlyBadge } from './../CalendlyBadge';
 import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
@@ -16,12 +15,12 @@ export default component$(() => {
           <div class="hero__content">
             <div class="hero__left">
               <h1>
-                Разрабатываю сайты, которые двигают бизнес
+                Cайты, которые двигают бизнес
               </h1>
               <h2>Cravcenco Vladlena</h2>
               <h4>web-designer & frontend developer</h4>
               <p>
-                Разрабатываю адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong> и корпоративные сайты на <strong>React</strong>, полностью готовые к индексации в поисковых системах.
+                Адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong>,<br/> полностью готовые к индексации в Google.
               </p>
 
               <div class="hero__buttons">
@@ -52,7 +51,6 @@ export default component$(() => {
           </div>
         </div>
       </section>
-      <CalendlyBadge />
     </>
   );
 

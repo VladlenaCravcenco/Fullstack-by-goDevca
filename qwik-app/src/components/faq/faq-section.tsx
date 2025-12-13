@@ -1,16 +1,8 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './faq-section.css';
-import { CalendlyPopup } from './../CalendlyPopup';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
 
 const faqs = [
   {
@@ -71,23 +63,11 @@ export default component$(() => {
         ))}
       </ul>
 
-      {/* Подключаем внешний скрипт Calendly один раз */}
-      <CalendlyPopup />
+
 
       <div class="faq__cta" id='faq'>
         <p>Не нашли интересующий вас вопрос?</p>
-        <GlassEffect
-          class="faq__btn"
-          onClick$={() => {
-            if (typeof window !== 'undefined' && window.Calendly) {
-              window.Calendly.initPopupWidget({
-                url: 'https://calendly.com/godevca/30min',
-              });
-            } else {
-              console.error('Calendly не загружен');
-            }
-          }}
-        >
+        <GlassEffect class="faq__btn" >
           Забронируйте звонок на 30 минут
         </GlassEffect>
       </div>

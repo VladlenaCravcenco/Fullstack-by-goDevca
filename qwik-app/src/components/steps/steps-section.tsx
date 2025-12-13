@@ -1,198 +1,159 @@
-import { component$, useSignal, useVisibleTask$, $ } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { component$, useSignal, useStore, $ } from '@builder.io/qwik';
 import './StepsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
-  const activeStep = useSignal(0);
+  const index = useSignal(0);
 
-  // === ТАЙМЕР / ПРОГРЕСС (сигналы) ===
-  const DURATION = 5_000;                 // 5 секунд
-  const remaining = useSignal(DURATION);  // сколько осталось у текущей карточки
-  const startedAt = useSignal(0);
-  const isPaused = useSignal(false);
-  const timerId = useSignal<ReturnType<typeof setTimeout> | null>(null);
-  const barKey = useSignal(0);         // перезапуск CSS-анимации
+  // подгони под свою верстку карточек (ширина + gap)
+  const cardWidth = 360;
+  const gap = 18;
+  const stepPx = cardWidth + gap;
 
-  // Триггер «перезапустить таймер на ms»
-  const restartMs = useSignal<number | null>(null);
   const steps = [
     {
       title: 'Брифинг',
       description:
-        'Собираю информацию о вашем бизнесе, целях и задачах сайта. Это нужно, чтобы сайт решал реальные задачи, а не просто “красиво выглядел”.',
-      image: '/images/steps/step1.png',
+        'Собираю информацию о вашем бизнесе, целях и задачах сайта.',
       button: 'заполнить бриф',
+      image: '/images/steps/step1.png',
     },
     {
       title: 'Анализ и поиск решений',
       description:
-        'Исследую конкурентов, целевую аудиторию и предлагаю лучшие подходы к структуре и подаче. Без этого сайт будет “в никуда” — я строю стратегию, а не просто интерфейс.',
-      image: '/images/steps/step2.png',
+        'Исследую конкурентов, целевую аудиторию и предлагаю лучшие подходы к структуре и подаче.',
       button: 'забронировать звонок',
+      image: '/images/steps/step2.png',
     },
     {
       title: 'Прототипирование',
       description:
-        'Создаю логическую схему сайта и размещение блоков без визуала. Нужно, чтобы проверить структуру до погружения в дизайн — это экономит время и правки.',
-      image: '/images/steps/step3.png',
+        'Создаю логическую схему сайта и размещение блоков без визуала.',
       button: 'узнать больше',
+      image: '/images/steps/step3.png',
     },
     {
       title: 'Дизайн',
       description:
-        'Делаю индивидуальный, адаптивный и визуально продуманный интерфейс в Figma. На этом этапе рождается лицо сайта — красиво, удобно, узнаваемо.',
-      image: '/images/steps/step4.png',
+        'Делаю индивидуальный, адаптивный и визуально продуманный интерфейс в Figma.',
       button: 'узнать цены',
+      image: '/images/steps/step4.png',
     },
     {
       title: 'Вёрстка',
       description:
-        'Переношу дизайн в код: адаптивно, быстро и чисто на Qwik или React. Сайт начинает “жить” и работать во всех браузерах и на всех устройствах.',
-      image: '/images/steps/step5.png',
+        'Переношу дизайн в код: адаптивно, быстро и чисто на Qwik или React.',
       button: 'подробнее',
+      image: '/images/steps/step5.png',
     },
     {
       title: 'CMS в Sanity',
       description:
-        'Подключаю админку Sanity, чтобы вы могли менять контент через интерфейс. Вы больше не зависите от программиста — меняйте тексты и проекты сами.',
-      image: '/images/steps/step6.png',
+        'Подключаю админку Sanity, чтобы вы могли менять контент через интерфейс.',
       button: 'узнать больше',
+      image: '/images/steps/step6.png',
     },
     {
       title: 'SEO через код',
       description:
-        'Прописываю мета-теги, заголовки, alt и структуру — сайт будет понятен Google. Это нужно, чтобы сайт не просто был, а индексировался и приводил клиентов.',
-      image: '/images/steps/step7.png',
+        'Прописываю мета-теги, заголовки, alt и структуру — сайт будет понятен Google.',
       button: 'узнать цены',
+      image: '/images/steps/step7.png',
     },
     {
       title: 'Запуск на Vercel',
       description:
-        'Публикую сайт на хостинге, настраиваю домен, всё проверяю. В результате вы получаете рабочий сайт, доступный в интернете, готовый к продвижению.',
-      image: '/images/steps/step8.png',
+        'Публикую сайт на хостинге, настраиваю домен, всё проверяю.',
       button: 'запросить звонок',
+      image: '/images/steps/step8.png',
     },
   ];
 
-  // ==== ТОЛЬКО МЕНЯЕМ СИГНАЛЫ В ОБРАБОТЧИКАХ ====
-  const pause$ = $(() => {
-    if (!isPaused.value) {
-      isPaused.value = true;
-      const elapsed = Date.now() - startedAt.value;
-      remaining.value = Math.max(0, remaining.value - elapsed);
-      if (timerId.value) { clearTimeout(timerId.value); timerId.value = null; }
-      // CSS-анимация тоже стопается классом .paused — это в JSX
-    }
+  const maxIndex = steps.length - 1;
+
+  const prev$ = $(() => {
+    index.value = Math.max(0, index.value - 1);
   });
 
-  const resume$ = $(() => {
-    if (isPaused.value) {
-      isPaused.value = false;
-      // Просим перезапуск на оставшееся время
-      restartMs.value = remaining.value;
-    }
+  const next$ = $(() => {
+    index.value = Math.min(maxIndex, index.value + 1);
   });
 
-  const openStep$ = $((index: number) => {
-    activeStep.value = index;
-    isPaused.value = false;
-    remaining.value = DURATION;
-    restartMs.value = DURATION; // новая «пятёрка» для выбранной карточки
+  // свайп на мобилке
+  const touch = useStore({ x: 0, down: false });
+
+  const onTouchStart$ = $((e: TouchEvent) => {
+    touch.down = true;
+    touch.x = e.touches[0]?.clientX ?? 0;
   });
 
-  // ==== ВСЯ ЛОГИКА СТАРТА/АВТОПЕРЕКЛЮЧЕНИЯ — ТОЛЬКО В useVisibleTask$ ====
-  useVisibleTask$(({ track, cleanup }) => {
-    // локальная функция (НЕ QRL), безопасна для клиента
-    const startInternal = (ms: number) => {
-      if (timerId.value) { clearTimeout(timerId.value); timerId.value = null; }
-      remaining.value = ms;
-      startedAt.value = Date.now();
-      barKey.value++; // перезапуск CSS-анимации с 0
+  const onTouchEnd$ = $((e: TouchEvent) => {
+    if (!touch.down) return;
+    touch.down = false;
 
-      timerId.value = setTimeout(() => {
-        // авто-переход
-        activeStep.value = (activeStep.value + 1) % steps.length;
-        // и новый цикл на полную длительность
-        startInternal(DURATION);
-      }, ms);
-    };
+    const endX = e.changedTouches[0]?.clientX ?? 0;
+    const dx = endX - touch.x;
 
-    // 1) первый запуск
-    startInternal(DURATION);
+    if (Math.abs(dx) < 40) return;
 
-    // 2) следим за запросами перезапуска из обработчиков
-    track(() => restartMs.value);
-    if (restartMs.value !== null) {
-      startInternal(restartMs.value);
-      restartMs.value = null;
-    }
-
-    // 3) на всякий случай чистим таймер при размонтировании
-    cleanup(() => {
-      if (timerId.value) clearTimeout(timerId.value);
-    });
+    if (dx > 0) prev$();
+    else next$();
   });
 
   return (
     <section class="steps" id="process">
-      <div class="container">
-        <h2 class="steps__title">Процесс работы по шагам</h2>
-        <p class="steps__subtitle">Как я создаю сайт, который работает</p>
+      <div class="container steps__layout">
+        {/* LEFT */}
+        <div class="steps__meta">
+          <h2 class="steps__title">Процесс работы по шагам</h2>
+          <p class="steps__subtitle"> В результате вы получаете рабочий сайт, доступный в интернете, готовый к продвижению.</p>
 
-        <div class="steps__content">
-          <div class="steps__left">
-            {steps.map((step, index) => (
-              <div
-                key={index}
-                class={`step-card ${activeStep.value === index ? 'active' : ''}`}
-                onClick$={() => openStep$(index)}
-                onMouseDown$={pause$} onMouseUp$={resume$} onMouseLeave$={resume$}
-                onTouchStart$={pause$} onTouchEnd$={resume$}
-              >
-                <div class="step-card__header">
-                  <div class="step-card__number">{String(index + 1).padStart(2, '0')}</div>
-                  <div class="step-card__title">{step.title}</div>
-                  <div class="step-card__toggle">⌵</div>
+          <div class="steps__controls">
+            <button class="steps__btn" onClick$={prev$} disabled={index.value === 0} aria-label="Назад">
+              ‹
+            </button>
+            <button class="steps__btn" onClick$={next$} disabled={index.value === maxIndex} aria-label="Вперёд">
+              ›
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT */}
+        <div class="steps__rail" onTouchStart$={onTouchStart$} onTouchEnd$={onTouchEnd$}>
+          {/* fade/blur справа */}
+          <div class="steps__fade" aria-hidden="true" />
+
+          <div
+            class="steps__track"
+            style={{
+              transform: `translateX(-${index.value * stepPx}px)`,
+              '--cardW': `${cardWidth}px`,
+              '--gap': `${gap}px`,
+            }}
+          >
+            {steps.map((s, i) => (
+              <article key={i} class="steps__card">
+                <div class="steps__card-top">
+                  <div class="steps__num">{String(i + 1).padStart(2, '0')}</div>
+                  <h3 class="steps__card-title">{s.title}</h3>
                 </div>
 
-                {activeStep.value === index && (
-                  <div class="step-card__body">
-                    <img src={step.image} alt={step.title} />
-                    <p>{step.description}</p>
-
-
-                    <div class="buttprog">
-                      <GlassEffect class="step-card__btn">{step.button}</GlassEffect>
-                      {/* ПРОГРЕСС-БАР — чистая CSS-анимация */}
-                      <div class="step-card__progress">
-                        <div
-                          key={barKey.value}                               /* перезапуск анимации */
-                          class={`step-card__bar ${isPaused.value ? 'paused' : ''}`}
-                          style={{ '--dur': `${remaining.value}ms` }}      /* текущая длительность */
-                        />
-                      </div>
-                    </div>
-
+                {steps[i].image && (
+                  <div class="steps__decor" aria-hidden="true">
+                    <img class="steps__decor-img" src={s.image} alt="" />
                   </div>
                 )}
-              </div>
-            ))}
-          </div>
 
-          <div class="steps__right">
-            <div class='steps__right-wraper'>
-              <img src={steps[activeStep.value].image} alt={steps[activeStep.value].title} />
-            </div>
-            
+                <p class="steps__card-text">{s.description}</p>
+
+                <div class="steps__card-actions">
+                  <GlassEffect class="steps__cta">{s.button}</GlassEffect>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>
     </section>
   );
 });
-
-export const head: DocumentHead = {
-  title: 'Обо мне',
-  meta: [{ name: 'description', content: 'Всё началось с желания…' }],
-};

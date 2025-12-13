@@ -6,7 +6,6 @@ import HeroSection from './../components/hero/hero-section';
 import ServicesSection from '~/components/services/services-section';
 import StepsSection from '~/components/steps/steps-section';
 import ProjectsSection from '~/components/projects/projects-section';
-import PricingSection from '~/components/pricing/pricing-section';
 import AboutSection from '~/components/about/about-section';
 import BlogSection from '~/components/blog/blog-section';
 import FaqSection from '~/components/faq/faq-section';
@@ -21,7 +20,6 @@ export default component$(() => {
       <ServicesSection />
       <StepsSection />
       <ProjectsSection />
-      <PricingSection />
       <AboutSection />
       <BlogSection />
       <FaqSection />

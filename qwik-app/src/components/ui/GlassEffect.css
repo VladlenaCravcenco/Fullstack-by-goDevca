@@ -65,13 +65,14 @@
   position: relative;
   pointer-events: auto;
   height: 100%;
+  
   z-index: 3;
   border-radius: 20px;
   background: linear-gradient(
     var(--angle-1),
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.05)
+    rgba(0, 0, 0, 0.059),
+    rgba(0, 0, 0, 0.049),
+    rgba(0, 0, 0, 0.035)
   );
   backdrop-filter: blur(clamp(1px, 0.125em, 4px));
   box-shadow:
