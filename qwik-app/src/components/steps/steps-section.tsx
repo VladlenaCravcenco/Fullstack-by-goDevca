@@ -1,6 +1,5 @@
 import { component$, useSignal, useStore, $ } from '@builder.io/qwik';
 import './StepsSection.css';
-import { GlassEffect } from '~/components/ui/GlassEffect';
 
 export default component$(() => {
   const index = useSignal(0);
@@ -146,9 +145,7 @@ export default component$(() => {
 
                 <p class="steps__card-text">{s.description}</p>
 
-                <div class="steps__card-actions">
-                  <GlassEffect class="steps__cta">{s.button}</GlassEffect>
-                </div>
+                
               </article>
             ))}
           </div>

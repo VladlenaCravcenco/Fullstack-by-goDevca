@@ -9,7 +9,7 @@ import ProjectsSection from '~/components/projects/projects-section';
 import AboutSection from '~/components/about/about-section';
 import BlogSection from '~/components/blog/blog-section';
 import FaqSection from '~/components/faq/faq-section';
-import FormSection from '~/components/form/brief-cta';
+
 
 
 export default component$(() => {
@@ -23,7 +23,7 @@ export default component$(() => {
       <AboutSection />
       <BlogSection />
       <FaqSection />
-      <FormSection />
+      
       
     </>
   );

@@ -5,7 +5,6 @@ import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
 import { Link } from '@builder.io/qwik-city';
 import ProjectBriefForm from '~/components/forms/ProjectBriefForm';
-import GoogleReviews from '~/components/reviews/GoogleReviews';
 
 export default component$(() => {
   return (
@@ -22,14 +21,13 @@ export default component$(() => {
               <p>
                 Адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong>,<br/> полностью готовые к индексации в Google.
               </p>
-
+      
               <div class="hero__buttons">
                 <GlassEffect class="btn btn--primary"> <Link href="/projects" onMouseEnter$={() => playGlassHover()}
                   onPointerDown$={() => playGlassHover()}>Посмотреть кейсы</Link></GlassEffect>
                 <GlassEffect class="btn btn--secondary" ><Link href="/faq" onMouseEnter$={() => playGlassHover()}
                   onPointerDown$={() => playGlassHover()}>Обсудить проект</Link></GlassEffect>
               </div>
-              <GoogleReviews placeId="ChIJCc4IYn5LMYsRype3iidGuFY" />
             </div>
 
             <div class="hero__right">

@@ -1,16 +1,18 @@
-import { component$, Slot, } from '@builder.io/qwik';
-import Header from '~/components/header/header';   // ← замени на свой компонент хедера
-import Footer from '~/components/footer/footer';         // ← замени на свой компонент футера
-import '~/global.css';             
+import { component$, Slot } from '@builder.io/qwik';
+
+import Header from '~/components/header/header';
+import Footer from '~/components/footer/footer';
+import '~/global.css';
+
+
 
 export default component$(() => {
-   
-
   return (
     <>
       <Header />
-
-      <main><Slot /></main>
+      <main>
+        <Slot />
+      </main>
       <Footer />
     </>
   );

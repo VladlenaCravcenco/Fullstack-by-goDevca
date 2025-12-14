@@ -1,7 +1,9 @@
 
-import type {DocumentHead} from '@builder.io/qwik-city';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { component$ } from '@builder.io/qwik';
+import GoogleReviews from '~/components/reviews/GoogleReviews';
+
 import './about-me.css';
 
 export default component$(() => {
@@ -16,16 +18,14 @@ export default component$(() => {
 
           <div class="card about-text">
             <h2>Давайте знакомиться</h2>
-            <p>Всё началось с желания сделать сайт для своей анимационной студии uhappy.md. Теперь дизайн — это не просто моя работа, а часть моего образа мышления.</p>
-            <p>Я в профессии более 2 лет и сейчас работаю графическим дизайнером в маркетинговом агентстве GrowUp Agency и студии Mornin Digital. Занимаюсь всем понемногу: от брендбуков и баннеров до полноценных лендингов с кастомным кодом и WordPress-интеграцией.</p>
-            <p>С детства я в творчестве: 10 лет занималась танцами, 11 лет работала детским аниматором (4 года — руководителем команды), увлекаюсь японской и китайской культурой, философией и эстетикой. А ещё — люблю кататься на роликах и исследовать 3D визуализацию: от UI-анимаций до Blender-сцен.</p>
-            <p>Больше всего ценю состояние потока: музыка включена, ум чист, идеи льются прямо в Figma. Мне нравится оживлять сайты, делать их тактильными и интерактивными — чтобы проект был не просто “норм”, а “вау”.</p>
+            <p>Я занимаюсь дизайном и разработкой сайтов, которые помогают брендам становиться понятнее, сильнее и заметнее в цифровой среде.</p>
+            <p>Более 2 лет я работаю в сфере дизайна и разработки, сотрудничая с маркетинговым агентством GrowUp Agency и студией Mornin Digital. За это время я прошла путь от первых проектов до комплексных решений для бизнеса — с фокусом на структуру, UX и вовлечённость пользователей.</p>
+            <p>Вне работы я исследую 3D-визуализацию, UI-анимации и Blender-сцены, вдохновляюсь восточной эстетикой и философией. Эти интересы напрямую влияют на мой визуальный язык и помогают находить нестандартные решения для проектов.</p>
           </div>
 
           <div class="card contact">
-            <h3>Кравченко Владлена Александровна</h3>
-            <p>email: godevca@gmail.com</p>
-            <p>Telegram: @Cravcenco_frontend</p>
+            <h2>Кравченко Владлена</h2>
+            <h3>web-designer & frontend developer</h3>
             <a href="https://bento.me/godevca">bento.me</a>
             <p>Помимо сайтов я также создаю рекламные креативы, презентации, 3D-анимации в Blender и дизайн-шаблоны.</p>
             <GlassEffect class="design-portfolio-btn"><a href="https://go-de-vca.vercel.app">Открыть дизайн-портфолио</a></GlassEffect>
@@ -56,7 +56,10 @@ export default component$(() => {
               <span>Tilda</span>
             </div>
           </div>
-
+          <div class="card review">
+            <GoogleReviews placeId="ChIJCc4IYn5LMYsRype3iidGuFY" />
+          </div>
+          
         </div>
       </div>
     </section>
@@ -64,12 +67,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-    title: 'Обо мне',
-    meta: [
-        {
-            name: 'description',
-            content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
+  title: 'Обо мне',
+  meta: [
+    {
+      name: 'description',
+      content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
 
-        },
-    ],
+    },
+  ],
 };

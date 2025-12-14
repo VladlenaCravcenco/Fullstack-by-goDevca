@@ -43,10 +43,9 @@
   grid-column: span 12;
   text-decoration: none;
   color: inherit;
-  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 16px;
   overflow: hidden;
-  background: #ffffff3a;
+  background: #ffffff;
   transition:
     transform 0.2s,
     box-shadow 0.2s;

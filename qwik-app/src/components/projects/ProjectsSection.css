@@ -147,11 +147,8 @@
 }
 
 .projects__btn {
-  background-image: url(../../../public/images/blog-filter-bg.jpg);
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
+ color: #ffffff;
+  background-color: rgb(0, 0, 0);
+    border-radius: 30px;
+  border: 10px solid #ffffff;
 }

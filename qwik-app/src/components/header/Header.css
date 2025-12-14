@@ -1,7 +1,8 @@
 /* ====== DESKTOP HEADER ====== */
 .h {
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   z-index: 2000;
   padding: 18px 0;
   background: transparent;
@@ -245,6 +246,7 @@
 
 .m__cta {
   text-decoration: none;
+  display: none;
 }
 
 .m__social {
