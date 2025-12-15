@@ -46,6 +46,20 @@ body {
 
   /* если используешь углы/градиенты */
   --angle-1: 135deg;
+
+    /* запас сверху для статус-бара/выреза */
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+/* если у тебя хедер fixed */
+.header{
+  padding-top: var(--safe-top);
+}
+
+/* если первый экран (hero) должен начинаться ниже */
+.hero,
+.page-first-screen{
+  padding-top: calc(16px + var(--safe-top));
 }
 
 /* 3. Базовые теги */
