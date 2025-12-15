@@ -104,7 +104,7 @@ export default component$(() => {
       <div class="container steps__layout">
         {/* LEFT */}
         <div class="steps__meta">
-          <h2 class="steps__title">Процесс работы по шагам</h2>
+          <h2 class="steps__title">Процесс работы<br/>по шагам</h2>
           <p class="steps__subtitle"> В результате вы получаете рабочий сайт, доступный в интернете, готовый к продвижению.</p>
 
           <div class="steps__controls">

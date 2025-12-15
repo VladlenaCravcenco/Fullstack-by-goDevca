@@ -1,6 +1,7 @@
 .hero {
-  padding: 200px 0 50px;
-  height: fit-content;
+  display: flex;
+
+  height: 80vh;
 }
 
 .hero .container {
@@ -9,6 +10,7 @@
   padding: 0 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .hero__content {

@@ -34,14 +34,13 @@ export default component$(() => {
     <section class="projects" id='projects'>
       <div class="container">
         <div class="projects__head">
-          <h2 class="projects__title">Реальные проекты — от идеи до результата</h2>
+          <h2 class="projects__title">От идеи<br/>до результата</h2>
           <p class="projects__desc">
             Каждый кейс — это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.
-            При клике вы переходите на страницу проекта, где подробно рассказано, что и как было сделано.
           </p>
           
           <GlassEffect class="projects__btn">
-           <a href="/projects" rel="external">проекты</a>
+           <a href="/projects" rel="external">посмотреть проекты</a>
           </GlassEffect>
         </div>
 

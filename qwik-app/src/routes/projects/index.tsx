@@ -2,11 +2,9 @@ import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
-import './projects-page.css';
+import Blog from '~/components/blog/blog-section';  
 
-// ↓↓↓ подключи готовые блоки, которые уже есть в проекте
-import Cta from '~/components/form/brief-cta';                    // твой призыв к действию
-import Blog from '~/components/blog/blog-section';                    // твой призыв к действию
+import './projects-page.css';
 
 
 const QUERY = `
@@ -87,7 +85,7 @@ export default component$(() => {
 
             {/* твои готовые блоки ниже — просто вставляем как компоненты */}
             <Blog />
-            <Cta />
+     
    
         </section>
     );
