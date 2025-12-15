@@ -70,7 +70,7 @@
 .footer__bottom {
   position: relative;
   z-index: 2;
-  width: 1400px;
+  width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1.35fr;
@@ -195,13 +195,10 @@
 
 /* адаптив */
 @media (max-width: 900px) {
-  .footer {
-    min-height: 860px;
-  }
+  
   .footer__bottom {
     grid-template-columns: 1fr;
     margin-top: 70px;
-    width: 100%;
   }
   .glass-card__grid {
     grid-template-columns: 1fr;
