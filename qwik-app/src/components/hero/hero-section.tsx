@@ -1,51 +1,43 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useVisibleTask$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { playGlassHover } from '~/utils/sounds';
 import { Link } from '@builder.io/qwik-city';
-import ProjectBriefForm from '~/components/forms/ProjectBriefForm';
 
 export default component$(() => {
+
+  useVisibleTask$(() => {
+  const el = document.querySelector<HTMLElement>('[data-reveal]');
+  if (!el) return;
+
+  requestAnimationFrame(() => {
+    el.classList.add('is-in');
+  });
+});
   return (
     <>
       <section class="hero">
         <div class="container">
           <div class="hero__content">
             <div class="hero__left">
-              <h1>
-                Cайты, которые двигают бизнес
+              <h1 class="hero-title" data-reveal>
+                <span class="line" style="--d: 0ms">Сайты,</span>
+                <span class="line" style="--d: 220ms">которые двигают бизнес</span>
               </h1>
               <h2>Cravcenco Vladlena</h2>
               <h4>web-designer & frontend developer</h4>
               <p>
-                Адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong>,<br/> полностью готовые к индексации в Google.
+                Адаптивные лендинги с маркетинговой структурой на <strong>Qwik</strong>,<br /> полностью готовые к индексации в Google.
               </p>
-      
+
               <div class="hero__buttons">
                 <GlassEffect class="btn btn--primary"> <Link href="/projects" onMouseEnter$={() => playGlassHover()}
                   onPointerDown$={() => playGlassHover()}>Посмотреть кейсы</Link></GlassEffect>
-                <GlassEffect class="btn btn--secondary" ><Link href="/faq" onMouseEnter$={() => playGlassHover()}
-                  onPointerDown$={() => playGlassHover()}>Обсудить проект</Link></GlassEffect>
               </div>
             </div>
 
-            <div class="hero__right">
-              <div class="hero__video-wrapper">
-                <iframe
-                  class="hero__video"
-                  src="https://www.youtube.com/embed/hB1f1QsPDXI"
-                  title="Visit card for Fiverr profile"
-                  style="border: none"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullscreen
-                ></iframe>
-              </div>
-              <div class="simple-form">
-                <ProjectBriefForm />
-              </div>
 
-            </div>
           </div>
         </div>
       </section>

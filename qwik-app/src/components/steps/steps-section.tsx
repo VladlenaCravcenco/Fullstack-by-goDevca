@@ -119,8 +119,7 @@ export default component$(() => {
 
         {/* RIGHT */}
         <div class="steps__rail" onTouchStart$={onTouchStart$} onTouchEnd$={onTouchEnd$}>
-          {/* fade/blur справа */}
-          <div class="steps__fade" aria-hidden="true" />
+         
 
           <div
             class="steps__track"

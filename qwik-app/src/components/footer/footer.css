@@ -10,6 +10,14 @@
   justify-content: space-evenly;
 }
 
+.footer-flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 90vh;
+
+}
+
 .footer__bg {
   position: absolute;
   inset: 0;

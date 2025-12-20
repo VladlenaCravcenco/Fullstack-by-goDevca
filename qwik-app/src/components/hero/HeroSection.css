@@ -1,7 +1,6 @@
 .hero {
   display: flex;
-
-  height: 80vh;
+  height: 100vh;
 }
 
 .hero .container {
@@ -28,7 +27,61 @@
   text-align: center;
 }
 
-.hero__left h1 {
+.hero-title {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.hero-title .line {
+  display: block;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+.hero-title.is-in .line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-title .line > span {
+  display: inline-block;
+
+  /* старт: чуть выше, размыт, прозрачный */
+  transform: translate3d(0, -18px, 0);
+  opacity: 0;
+  filter: blur(14px);
+
+  /* супер мягкое движение */
+  transition:
+    transform 1400ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  will-change: transform, opacity, filter;
+}
+
+.hero-title.show .line > span {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* поочередно по строчкам */
+.hero-title.show .line:nth-child(1) > span {
+  transition-delay: 80ms;
+}
+.hero-title.show .line:nth-child(2) > span {
+  transition-delay: 220ms;
+}
+/* если будет 3-я строка — добавишь */
+
+/* .hero__left h1 {
   font-size: 80px;
   font-weight: 800;
   color: #1d1d1d;
@@ -36,11 +89,11 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
- line-height: 80px;
-  text-shadow:0 2px 2px rgba(43, 43, 43, 0.1),
+  line-height: 80px;
+  text-shadow:
+    0 2px 2px rgba(43, 43, 43, 0.1),
     0 1px 4px rgba(0, 0, 0, 0.1);
-    
-}
+} */
 
 .hero__left p {
   font-size: 16px;
@@ -82,8 +135,6 @@
   display: none;
 }
 
-
-
 .hero__right {
   flex: 1 1 500px;
   display: none;
@@ -112,7 +163,6 @@
 @media (max-width: 768px) {
   .hero {
     padding: 200px 0 50px;
-    
   }
   .hero__content {
     flex-direction: column;
@@ -136,12 +186,11 @@
     line-height: 40px;
     text-align: center;
   }
-  .hero__buttons{
+  .hero__buttons {
     justify-content: center;
   }
   .btn {
     font-size: smaller;
-    
   }
 }
 

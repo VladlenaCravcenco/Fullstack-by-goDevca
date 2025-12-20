@@ -1,6 +1,9 @@
 .steps {
   padding: 100px 0;
   position: relative;
+  height: 60vh;
+display: flex;
+align-items: center;
 }
 
 .steps .container {

@@ -1,7 +1,7 @@
 /* ====== DESKTOP HEADER ====== */
 .h {
   position: fixed;
-  top: 0;
+  top: 16px;
   width: 100%;
   z-index: 2000;
   padding: 18px 0;
