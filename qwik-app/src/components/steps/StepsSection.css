@@ -1,8 +1,6 @@
 .steps {
-  padding: 80px 0;
-  border-radius: 60px 60px 0 0;
+  padding: 100px 0;
   position: relative;
-  z-index: 2;
 }
 
 .steps .container {
@@ -67,7 +65,7 @@
 .steps__rail {
   position: relative;
   overflow: hidden;
-  padding: 6px 0;
+  border-radius: 20px;
 }
 
 /* правый “заблюренный” край */
