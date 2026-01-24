@@ -1,4 +1,4 @@
-import { Howl, Howler } from 'howler';
+import { Howl, Howler } from "howler";
 
 let glass: Howl | null = null;
 let music: Howl | null = null;
@@ -9,31 +9,31 @@ let musicEnabled = false;
 ========================= */
 function unlockAudio() {
   const ctx = (Howler as any).ctx as AudioContext | undefined;
-  if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
+  if (ctx && ctx.state !== "running") ctx.resume().catch(() => {});
 }
 
 export function attachAudioUnlockOnce() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   const handler = () => {
     unlockAudio();
-    window.removeEventListener('pointerdown', handler);
-    window.removeEventListener('keydown', handler);
+    window.removeEventListener("pointerdown", handler);
+    window.removeEventListener("keydown", handler);
   };
 
-  window.addEventListener('pointerdown', handler, { once: true });
-  window.addEventListener('keydown', handler, { once: true });
+  window.addEventListener("pointerdown", handler, { once: true });
+  window.addEventListener("keydown", handler, { once: true });
 }
 
 /* =========================
    UI SOUND — ВСЕГДА ИГРАЕТ
 ========================= */
 export function playGlassHover() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   if (!glass) {
     glass = new Howl({
-      src: ['/sounds/glass-tap3.aiff'],
+      src: ["/sounds/glass-tap3.aiff"],
       volume: 0.1,
       preload: true,
       html5: true,
@@ -51,16 +51,16 @@ export function playGlassHover() {
 function initMusic() {
   if (!music) {
     music = new Howl({
-      src: ['/sounds/lofi.mp3'],
+      src: ["/sounds/lofi.mp3"],
       loop: true,
-      volume: 0.25,
+      volume: 0.12, // 🔥 ~50% от твоего текущего 0.25
       html5: true,
     });
   }
 }
 
 export function toggleMusic() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   unlockAudio();
   initMusic();
@@ -76,7 +76,7 @@ export function toggleMusic() {
   }
 
   musicEnabled = !musicEnabled;
-  localStorage.setItem('musicEnabled', String(musicEnabled));
+  localStorage.setItem("musicEnabled", String(musicEnabled));
 }
 
 export function isMusicEnabled() {
@@ -87,10 +87,10 @@ export function isMusicEnabled() {
    RESTORE STATE
 ========================= */
 export function restoreMusicState() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
-  const saved = localStorage.getItem('musicEnabled');
-  if (saved === 'true') {
+  const saved = localStorage.getItem("musicEnabled");
+  if (saved === "true") {
     unlockAudio();
     initMusic();
     music?.play();
