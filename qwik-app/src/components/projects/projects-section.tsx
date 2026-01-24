@@ -1,89 +1,86 @@
 import { component$ } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
 import './ProjectsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import { urlFor } from '~/lib/imageUrl';
 
+type HomeProject = {
+  _id: string;
+  title: string;
+  slug: string;
+  tags?: string[];
+  imagePreview?: any;
+  imageFinal?: any;
+};
 
-export default component$(() => {
-  const projects = [
-    {
-      title: 'Intra Assets - Regional electricity trading company',
-      tags: ['Prototyping', 'Design', 'React', 'CMS', 'SEO', 'Vercel'],
-      imagePreview: '/images/projects/intraassets-prototype.jpg',
-      imageFinal: '/images/projects/intraassets-final.jpg',
-      link: '/projects/intra-assets',
-    },
-    {
-      title: 'Verbatranslations - Birou traduceri autorizate MJ',
-      tags: ['Prototyping', 'Design', 'SEO',],
-      imagePreview: '/images/projects/verba-do.png',
-      imageFinal: '/images/projects/verba-posle.png',
-      link: '/projects/verbatraslations',
-    },
-    {
-      title: 'Intra Assets - Regional electricity trading company',
-      tags: ['Prototyping', 'Design', 'React', 'CMS', 'SEO', 'Vercel'],
-      imagePreview: '/images/projects/intraassets-prototype.jpg',
-      imageFinal: '/images/projects/intraassets-final.jpg',
-      link: '/projects/intra-assets',
-    },
-
-  ];
-
+export default component$(({ projects }: { projects: HomeProject[] }) => {
   return (
-    <section class="projects" id='projects'>
+    <section class="projects" id="projects">
       <div class="container">
         <div class="projects__head">
-          <h2 class="projects__title">От идеи<br/>до результата</h2>
+          <h2 class="projects__title">
+            От идеи<br />до результата
+          </h2>
+
           <p class="projects__desc">
             Каждый кейс — это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.
           </p>
-          
+
           <GlassEffect class="projects__btn">
-           <a href="/projects" rel="external">посмотреть проекты</a>
+            <a href="/projects" rel="external">посмотреть проекты</a>
           </GlassEffect>
         </div>
 
         <div class="projects__list">
-          {projects.map((project, index) => (
-            <a href={project.link} key={index} class="project-card">
-              <div class="project-card__wrapper">
-                <img
-                  src={project.imagePreview}
-                  alt="Черновой вариант"
-                  class="project-card__image project-card__image--initial"
-                />
-                <img
-                  src={project.imageFinal}
-                  alt="Финальный вариант"
-                  class="project-card__image project-card__image--final"
-                />
+          {(projects || []).map((p) => {
+            const previewUrl =
+              p.imagePreview?.asset?._ref
+                ? urlFor(p.imagePreview).width(1100).height(700).fit('crop').auto('format').url()
+                : '';
 
-                <div class="project-card__info">
-                  <h3>{project.title}</h3>
-                  <div class="tags">
-                    {project.tags.map((tag, i) => (
-                      <span key={i}>{tag}</span>
-                    ))}<div class="btn">→</div>
+            const finalUrl =
+              p.imageFinal?.asset?._ref
+                ? urlFor(p.imageFinal).width(1100).height(700).fit('crop').auto('format').url()
+                : '';
+
+            return (
+              <a href={`/projects/${p.slug}`} key={p._id} class="project-card">
+                <div class="project-card__wrapper">
+                  {previewUrl ? (
+                    <img
+                      src={previewUrl}
+                      alt="До"
+                      class="project-card__image project-card__image--initial"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+
+                  {finalUrl ? (
+                    <img
+                      src={finalUrl}
+                      alt="После"
+                      class="project-card__image project-card__image--final"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+
+                  <div class="project-card__info">
+                    <h3>{p.title}</h3>
+
+                    <div class="tags">
+                      {(p.tags || []).slice(0, 6).map((t, i) => (
+                        <span key={`${p._id}-${t}-${i}`}>{t}</span>
+                      ))}
+                      <div class="btn">→</div>
+                    </div>
                   </div>
-                  
-                 
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 });
-
-export const head: DocumentHead = {
-  title: 'Обо мне',
-  meta: [
-    {
-      name: 'description',
-      content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
-    },
-  ],
-};
