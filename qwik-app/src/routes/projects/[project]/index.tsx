@@ -1,4 +1,4 @@
-import { component$, useSignal, $ } from '@builder.io/qwik';
+import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
@@ -46,56 +46,90 @@ export const useProject = routeLoader$(async ({ params, status }) => {
   return doc;
 });
 
-/** ✅ ВАЖНО: компонент объявлен СНАРУЖИ default component */
+/** ✅ BEFORE/AFTER — drag ТОЛЬКО за кнопку по центру */
 export const BeforeAfter = component$(
   ({ before, after }: { before: any; after: any }) => {
-    const containerRef = useSignal<HTMLElement>();
-    const pos = useSignal(50);
+    const wrapRef = useSignal<HTMLElement>();
+    const pos = useSignal(50); // %
+    const dragging = useSignal(false);
 
-    const onMove = $((e: PointerEvent) => {
-      const el = containerRef.value;
+    const setFromClientX = $((clientX: number) => {
+      const el = wrapRef.value;
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percent = Math.min(100, Math.max(0, (x / rect.width) * 100));
-      pos.value = percent;
+      const x = clientX - rect.left;
+      const next = Math.min(100, Math.max(0, (x / rect.width) * 100));
+      pos.value = next;
+    });
+
+    const onDown = $((e: PointerEvent) => {
+      dragging.value = true;
+      (e.currentTarget as HTMLElement)?.setPointerCapture?.(e.pointerId);
+      setFromClientX(e.clientX);
+    });
+
+    const onMove = $((e: PointerEvent) => {
+      if (!dragging.value) return;
+      setFromClientX(e.clientX);
+    });
+
+    const onUp = $(() => {
+      dragging.value = false;
+    });
+
+    // страховка: если отпустили мышь вне кнопки
+    useVisibleTask$(({ cleanup }) => {
+      const stop = () => (dragging.value = false);
+      window.addEventListener('pointerup', stop);
+      window.addEventListener('pointercancel', stop);
+      cleanup(() => {
+        window.removeEventListener('pointerup', stop);
+        window.removeEventListener('pointercancel', stop);
+      });
     });
 
     return (
       <div
-        ref={containerRef}
+        ref={wrapRef}
         class="ba"
-        /* ✅ чтобы TS не ругался на CSS var */
         style={`--pos:${pos.value}%`}
-        onPointerMove$={onMove}
+        aria-label="до/после"
       >
-        {/* AFTER */}
+        {/* AFTER (низ) */}
         <img
-          class="ba__img"
-          src={urlFor(after).width(1800).auto('format').url()}
+          class="ba__img ba__after"
+          src={urlFor(after).width(2400).auto('format').url()}
           alt="after"
           loading="lazy"
           decoding="async"
         />
 
-        {/* BEFORE (обрезка по ширине) */}
-        <div class="ba__before" style={`width:${pos.value}%`}>
-          <img
-            class="ba__img"
-            src={urlFor(before).width(1800).auto('format').url()}
-            alt="before"
-            loading="lazy"
-            decoding="async"
+        {/* BEFORE (верх) — статичная, просто обрезается */}
+        <img
+          class="ba__img ba__beforeImg"
+          src={urlFor(before).width(2400).auto('format').url()}
+          alt="before"
+          loading="lazy"
+          decoding="async"
+          style={`clip-path: inset(0 calc(100% - var(--pos)) 0 0);`}
+        />
+
+        {/* HANDLE */}
+        <div class="ba__handle" style={`left:var(--pos);`}>
+          <div class="ba__line" aria-hidden="true" />
+          <button
+            type="button"
+            class="ba__knob"
+            aria-label="перетянуть"
+            onPointerDown$={onDown}
+            onPointerMove$={onMove}
+            onPointerUp$={onUp}
+            onPointerCancel$={onUp}
           />
         </div>
 
-        {/* DIVIDER */}
-        <div class="ba__divider" style={`left:${pos.value}%`}>
-          <span class="ba__knob" />
-        </div>
-
-        {/* RANGE для мобилки */}
+        {/* RANGE для мобилки / доступности */}
         <input
           class="ba__range"
           type="range"

@@ -291,19 +291,21 @@
 }
 
 /* real slider container */
-.ba {
-  --pos: 50%;
+/* BEFORE/AFTER interactive */
+.ba{
   position: relative;
+  width: 100%;
+  height: clamp(320px, 48vw, 560px);
   border-radius: 34px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.12);
-  height: clamp(260px, 48vw, 520px);
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 26px 70px rgba(0,0,0,.12);
+  user-select: none;
   touch-action: none;
 }
 
-.ba__img {
+.ba__img{
   position: absolute;
   inset: 0;
   width: 100%;
@@ -312,44 +314,73 @@
   display: block;
 }
 
-.ba__before {
-  position: absolute;
-  inset: 0;
-  width: var(--pos);
-  overflow: hidden;
-}
-
-.ba__divider {
+.ba__handle{
   position: absolute;
   top: 0;
   bottom: 0;
-  left: var(--pos);
-  width: 1px;
-  transform: translateX(-0.5px);
-  background: rgba(0, 0, 0, 0.10);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.ba__knob {
+.ba__line{
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 44px;
-  height: 44px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0,0,0,.14);
+  backdrop-filter: blur(2px);
+}
+
+.ba__knob{
+  pointer-events: auto;
+  width: 52px;
+  height: 52px;
   border-radius: 999px;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  cursor: grab;
+  position: relative;
 }
 
-.ba__range {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: ew-resize;
+.ba__knob:active{
+  cursor: grabbing;
 }
+
+.ba__knob::before,
+.ba__knob::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-top:2px solid rgba(0,0,0,.35);
+  border-right:2px solid rgba(0,0,0,.35);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.ba__knob::before{
+  left: 16px;
+  transform: translateY(-50%) rotate(225deg);
+}
+.ba__knob::after{
+  right: 16px;
+}
+
+/* range: только на мобилке */
+.ba__range{
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  width: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 /* =========================
    RELATED
@@ -462,9 +493,11 @@
     font-size: 36px;
   }
 
-  /* mobile: можно скрыть knob/линию, если хочешь — но слайдер всё равно работает через range */
-  .ba__divider { display: none; }
-  .ba__knob { display: none; }
+  .ba{ height: 420px; }
+  .ba__range{
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 @media (max-width: 520px) {
