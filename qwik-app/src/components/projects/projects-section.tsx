@@ -8,15 +8,10 @@ export type HomeProject = {
   title: string;
   slug: string;
   tags?: string[];
-
-  // изображения из Sanity (например from beforeAfter)
-  imagePreview?: any;
-  imageFinal?: any;
+  cover?: any;
 };
 
-export default component$((props: { projects: HomeProject[] }) => {
-  const projects = props.projects ?? [];
-
+export default component$(({ projects }: { projects: HomeProject[] }) => {
   return (
     <section class="projects" id="projects">
       <div class="container">
@@ -35,37 +30,28 @@ export default component$((props: { projects: HomeProject[] }) => {
         </div>
 
         <div class="projects__list">
-          {projects.map((p) => {
-            const previewUrl = p.imagePreview
-              ? urlFor(p.imagePreview).width(1100).height(700).fit('crop').auto('format').url()
-              : '';
-
-            const finalUrl = p.imageFinal
-              ? urlFor(p.imageFinal).width(1100).height(700).fit('crop').auto('format').url()
-              : '';
+          {(projects || []).map((p) => {
+            const coverUrl =
+              p.cover?.asset?._ref
+                ? urlFor(p.cover).width(1200).height(800).fit('crop').auto('format').url()
+                : '';
 
             return (
               <a href={`/projects/${p.slug}`} key={p._id} class="project-card">
                 <div class="project-card__wrapper">
-                  {previewUrl ? (
+                  {coverUrl ? (
                     <img
-                      src={previewUrl}
-                      alt="Черновой вариант"
-                      class="project-card__image project-card__image--initial"
+                      src={coverUrl}
+                      alt={p.title}
+                      class="project-card__image"
                       loading="lazy"
                       decoding="async"
+                      width={1200}
+                      height={800}
                     />
-                  ) : null}
-
-                  {finalUrl ? (
-                    <img
-                      src={finalUrl}
-                      alt="Финальный вариант"
-                      class="project-card__image project-card__image--final"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
+                  ) : (
+                    <div class="project-card__placeholder" aria-hidden="true" />
+                  )}
 
                   <div class="project-card__info">
                     <h3>{p.title}</h3>
