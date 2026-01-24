@@ -46,117 +46,121 @@ export const useProject = routeLoader$(async ({ params, status }) => {
   return doc;
 });
 
-// ✅ BEFORE/AFTER — drag ТОЛЬКО за кнопку, с pointer capture
-export const BeforeAfter = component$((props: { before: any; after: any }) => {
-  const wrapRef = useSignal<HTMLElement>();
-  const pos = useSignal(50); // %
-  const dragging = useSignal(false);
+export const BeforeAfter = component$(
+  ({ before, after }: { before: any; after: any }) => {
+    const wrapRef = useSignal<HTMLElement>();
+    const pos = useSignal(50);
+    const dragging = useSignal(false);
 
-  const clamp = (v: number) => Math.min(100, Math.max(0, v));
+    const setFromClientX = $((clientX: number) => {
+      const el = wrapRef.value;
+      if (!el) return;
 
-  const setFromClientX = $((clientX: number) => {
-    const el = wrapRef.value;
-    if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (!rect.width) return;
 
-    const rect = el.getBoundingClientRect();
-    if (!rect.width) return;
+      const x = clientX - rect.left;
 
-    const x = clientX - rect.left;
-    pos.value = clamp((x / rect.width) * 100);
-  });
+      // ✅ clamp ВНУТРИ $()
+      let percent = (x / rect.width) * 100;
+      if (percent < 0) percent = 0;
+      if (percent > 100) percent = 100;
 
-  const onDown = $((e: PointerEvent) => {
-    dragging.value = true;
-
-    const btn = e.currentTarget as HTMLElement | null;
-    if (btn?.setPointerCapture) btn.setPointerCapture(e.pointerId);
-
-    setFromClientX(e.clientX);
-  });
-
-  const onMove = $((e: PointerEvent) => {
-    if (!dragging.value) return;
-    setFromClientX(e.clientX);
-  });
-
-  const onUp = $((e: PointerEvent) => {
-    dragging.value = false;
-
-    const btn = e.currentTarget as HTMLElement | null;
-    if (btn?.releasePointerCapture) {
-      try {
-        btn.releasePointerCapture(e.pointerId);
-      } catch {}
-    }
-  });
-
-  // ✅ страховка: если по какой-то причине pointerup пришёл не на кнопку
-  useVisibleTask$(({ cleanup }) => {
-    const stop = () => (dragging.value = false);
-    window.addEventListener('pointerup', stop);
-    window.addEventListener('pointercancel', stop);
-
-    cleanup(() => {
-      window.removeEventListener('pointerup', stop);
-      window.removeEventListener('pointercancel', stop);
+      pos.value = percent;
     });
-  });
 
-  return (
-    <div
-      ref={wrapRef}
-      class="ba"
-      style={`--pos:${pos.value}%;`}
-      aria-label="до/после"
-    >
-      {/* AFTER (низ) */}
-      <img
-        class="ba__img ba__after"
-        src={urlFor(props.after).width(2400).auto('format').url()}
-        alt="after"
-        loading="lazy"
-        decoding="async"
-        draggable={false}
-      />
+    const onDown = $((e: PointerEvent) => {
+      dragging.value = true;
 
-      {/* BEFORE (верх) — статичная картинка, просто клипается */}
-      <img
-        class="ba__img ba__beforeImg"
-        src={urlFor(props.before).width(2400).auto('format').url()}
-        alt="before"
-        loading="lazy"
-        decoding="async"
-        draggable={false}
-        style="clip-path: inset(0 calc(100% - var(--pos)) 0 0);"
-      />
+      const btn = e.currentTarget as HTMLElement | null;
+      if (btn?.setPointerCapture) {
+        btn.setPointerCapture(e.pointerId);
+      }
 
-      {/* HANDLE */}
-      <div class="ba__handle" style="left: var(--pos);">
-        <div class="ba__line" aria-hidden="true" />
-        <button
-          type="button"
-          class="ba__knob"
-          aria-label="перетянуть"
-          onPointerDown$={onDown}
-          onPointerMove$={onMove}
-          onPointerUp$={onUp}
-          onPointerCancel$={onUp}
+      setFromClientX(e.clientX);
+    });
+
+    const onMove = $((e: PointerEvent) => {
+      if (!dragging.value) return;
+      setFromClientX(e.clientX);
+    });
+
+    const onUp = $((e: PointerEvent) => {
+      dragging.value = false;
+
+      const btn = e.currentTarget as HTMLElement | null;
+      if (btn?.releasePointerCapture) {
+        try {
+          btn.releasePointerCapture(e.pointerId);
+        } catch { 
+          // ignore: pointer capture may already be released
+        }
+      }
+    });
+
+    useVisibleTask$(({ cleanup }) => {
+      const stop = () => (dragging.value = false);
+      window.addEventListener('pointerup', stop);
+      window.addEventListener('pointercancel', stop);
+      cleanup(() => {
+        window.removeEventListener('pointerup', stop);
+        window.removeEventListener('pointercancel', stop);
+      });
+    });
+
+    return (
+      <div
+        ref={wrapRef}
+        class="ba"
+        style={`--pos:${pos.value}%`}
+        aria-label="до/после"
+      >
+        {/* AFTER */}
+        <img
+          class="ba__img ba__after"
+          src={urlFor(after).width(2400).auto('format').url()}
+          alt="after"
+          draggable={false}
+        />
+
+        {/* BEFORE */}
+        <img
+          class="ba__img ba__beforeImg"
+          src={urlFor(before).width(2400).auto('format').url()}
+          alt="before"
+          draggable={false}
+          style="clip-path: inset(0 calc(100% - var(--pos)) 0 0);"
+        />
+
+        {/* HANDLE */}
+        <div class="ba__handle" style="left: var(--pos);">
+          <div class="ba__line" />
+          <button
+            type="button"
+            class="ba__knob"
+            aria-label="перетянуть"
+            onPointerDown$={onDown}
+            onPointerMove$={onMove}
+            onPointerUp$={onUp}
+            onPointerCancel$={onUp}
+          />
+        </div>
+
+        {/* RANGE */}
+        <input
+          class="ba__range"
+          type="range"
+          min="0"
+          max="100"
+          value={pos.value}
+          onInput$={(e) =>
+            (pos.value = +(e.target as HTMLInputElement).value)
+          }
         />
       </div>
-
-      {/* RANGE (мобилка/доступность) */}
-      <input
-        class="ba__range"
-        type="range"
-        min="0"
-        max="100"
-        value={pos.value}
-        onInput$={(e) => (pos.value = +(e.target as HTMLInputElement).value)}
-        aria-label="Before/After slider"
-      />
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default component$(() => {
   const p = useProject().value as any;
