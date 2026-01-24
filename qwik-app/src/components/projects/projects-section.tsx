@@ -3,16 +3,20 @@ import './ProjectsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { urlFor } from '~/lib/imageUrl';
 
-type HomeProject = {
+export type HomeProject = {
   _id: string;
   title: string;
   slug: string;
   tags?: string[];
+
+  // изображения из Sanity (например from beforeAfter)
   imagePreview?: any;
   imageFinal?: any;
 };
 
-export default component$(({ projects }: { projects: HomeProject[] }) => {
+export default component$((props: { projects: HomeProject[] }) => {
+  const projects = props.projects ?? [];
+
   return (
     <section class="projects" id="projects">
       <div class="container">
@@ -31,16 +35,14 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
         </div>
 
         <div class="projects__list">
-          {(projects || []).map((p) => {
-            const previewUrl =
-              p.imagePreview?.asset?._ref
-                ? urlFor(p.imagePreview).width(1100).height(700).fit('crop').auto('format').url()
-                : '';
+          {projects.map((p) => {
+            const previewUrl = p.imagePreview
+              ? urlFor(p.imagePreview).width(1100).height(700).fit('crop').auto('format').url()
+              : '';
 
-            const finalUrl =
-              p.imageFinal?.asset?._ref
-                ? urlFor(p.imageFinal).width(1100).height(700).fit('crop').auto('format').url()
-                : '';
+            const finalUrl = p.imageFinal
+              ? urlFor(p.imageFinal).width(1100).height(700).fit('crop').auto('format').url()
+              : '';
 
             return (
               <a href={`/projects/${p.slug}`} key={p._id} class="project-card">
@@ -48,7 +50,7 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
                   {previewUrl ? (
                     <img
                       src={previewUrl}
-                      alt="До"
+                      alt="Черновой вариант"
                       class="project-card__image project-card__image--initial"
                       loading="lazy"
                       decoding="async"
@@ -58,7 +60,7 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
                   {finalUrl ? (
                     <img
                       src={finalUrl}
-                      alt="После"
+                      alt="Финальный вариант"
                       class="project-card__image project-card__image--final"
                       loading="lazy"
                       decoding="async"
