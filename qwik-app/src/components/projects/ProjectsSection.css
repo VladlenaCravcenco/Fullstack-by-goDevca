@@ -26,13 +26,13 @@
 /* GRID */
 .projects__list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
 }
 
 @media (max-width: 1024px) {
   .projects__list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -50,115 +50,113 @@
   }
 }
 
-/* CARD */
+/* CARD — как в рефе: светлая карточка, картинка сверху + нижний блок */
 .project-card {
-  position: relative;
-  border-radius: 20px;
+  display: block;
+  border-radius: 26px;
   overflow: hidden;
   scroll-snap-align: start;
-  transition: transform 0.25s ease;
-  height: 300px;
   text-decoration: none;
   color: inherit;
+
+  background: #e9ecf1;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.08);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 @media (max-width: 768px) {
   .project-card {
-    flex: 0 0 80%;
+    flex: 0 0 82%;
   }
 }
 
 .project-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.10);
 }
 
-/* WRAPPER */
+/* WRAPPER — теперь НЕ fixed height */
 .project-card__wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
-  background: #eee;
 }
 
-/* IMAGE (ОДНА) */
+/* IMAGE — нормальный блок сверху */
 .project-card__image {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9; /* можешь поменять на 4/3 если хочешь “квадратнее” */
   object-fit: cover;
   display: block;
-  z-index: 1;
 }
 
 /* PLACEHOLDER */
 .project-card__placeholder {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,.02));
 }
 
-/* INFO OVERLAY */
+/* INFO — теперь это нижний светлый блок, не overlay */
 .project-card__info {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: 16px;
-  color: #fff;
+  position: relative;
+  padding: 16px 16px 14px;
 
-  background: rgba(0, 0, 0, 0.10);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  mask: linear-gradient(to bottom, transparent, rgba(0,0,0,1) 55%);
-  transform: translateY(10px);
-  opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.project-card:hover .project-card__info {
-  opacity: 1;
-  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .project-card__info h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-  color: #fff;
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0c0c0f;
 }
 
-/* TAGS */
+/* TAGS — светлые пиллы + стрелка справа */
 .project-card__info .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  font-size: 10px;
-  margin-bottom: 0;
+  gap: 10px;
   align-items: center;
+  margin: 0;
 }
 
+/* сами теги */
 .project-card__info .tags span {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.9);
-  padding: 4px 8px;
-  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(0, 0, 0, 0.80);
+
+  font-size: 12px;
+  line-height: 1;
 }
 
-/* стрелка */
+/* стрелка — как отдельная pill справа */
 .tags .btn {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.9);
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 10px;
+  margin-left: auto;
+  width: 42px;
+  height: 36px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(0, 0, 0, 0.80);
+
+  font-size: 16px;
 }
 
-/* КНОПКУ НЕ ТРОГАЮ — оставляю твой стиль как был */
+/* КНОПКУ НЕ ТРОГАЮ */
 .projects__btn {
   color: #ffffff;
   background-color: rgb(0, 0, 0);

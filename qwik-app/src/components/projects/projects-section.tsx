@@ -9,6 +9,8 @@ export type HomeProject = {
   slug: string;
   tags?: string[];
   cover?: any;
+  // опционально: если позже добавишь duration в Sanity — подключим
+  duration?: string;
 };
 
 export default component$(({ projects }: { projects: HomeProject[] }) => {
@@ -24,44 +26,55 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
             Каждый кейс — это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.
           </p>
 
+          {/* кнопки НЕ трогаю */}
           <GlassEffect class="projects__btn">
             <a href="/projects" rel="external">посмотреть проекты</a>
           </GlassEffect>
         </div>
 
-        <div class="projects__list">
+        <div class="projects__grid">
           {(projects || []).map((p) => {
             const coverUrl =
               p.cover?.asset?._ref
-                ? urlFor(p.cover).width(1200).height(800).fit('crop').auto('format').url()
+                ? urlFor(p.cover).width(1400).height(900).fit('crop').auto('format').url()
                 : '';
 
             return (
-              <a href={`/projects/${p.slug}`} key={p._id} class="project-card">
-                <div class="project-card__wrapper">
+              <a href={`/projects/${p.slug}`} key={p._id} class="pCard">
+                <div class="pCard__media">
                   {coverUrl ? (
                     <img
+                      class="pCard__img"
                       src={coverUrl}
                       alt={p.title}
-                      class="project-card__image"
                       loading="lazy"
                       decoding="async"
-                      width={1200}
-                      height={800}
+                      width={1400}
+                      height={900}
                     />
                   ) : (
-                    <div class="project-card__placeholder" aria-hidden="true" />
+                    <div class="pCard__img pCard__placeholder" aria-hidden="true" />
                   )}
+                </div>
 
-                  <div class="project-card__info">
-                    <h3>{p.title}</h3>
+                <div class="pCard__body">
+                  <h3 class="pCard__title">{p.title}</h3>
 
-                    <div class="tags">
-                      {(p.tags || []).slice(0, 6).map((t, i) => (
-                        <span key={`${p._id}-${t}-${i}`}>{t}</span>
-                      ))}
-                      <div class="btn">→</div>
-                    </div>
+                  <div class="pCard__meta">
+                    {/* если duration нет — просто не показываем */}
+                    {p.duration ? (
+                      <span class="pBadge">
+                        <span class="pBadge__icon" aria-hidden="true">⏱</span>
+                        {p.duration}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <div class="pCard__tags">
+                    {(p.tags || []).slice(0, 4).map((t, i) => (
+                      <span class="pTag" key={`${p._id}-${t}-${i}`}>{t}</span>
+                    ))}
+                    <span class="pArrow" aria-hidden="true">→</span>
                   </div>
                 </div>
               </a>
