@@ -11,35 +11,37 @@ import AboutSection from '~/components/about/about-section';
 import BlogSection from '~/components/blog/blog-section';
 import FaqSection from '~/components/faq/faq-section';
 
-type HomeProject = {
+export type HomeProject = {
   _id: string;
   title: string;
   slug: string;
-  tags?: string[];
-  // будем брать из Sanity реально существующие поля:
-  cover?: any; // твой cover
-  before?: any; // beforeAfter.before
-  after?: any;  // beforeAfter.after
-  mockup?: any; // mockupBlock.mockup
+  tags: string[];
+  cover?: any; // Sanity image object
 };
 
 const HOME_PROJECTS_QUERY = `
-*[_type=="project" && defined(slug.current)]
-| order(coalesce(publishedAt,_createdAt) desc)[0...6]{
+*[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc)[0...6]{
   _id,
   title,
   "slug": slug.current,
-  tags,
-  cover,
-  "before": beforeAfter.before,
-  "after": beforeAfter.after,
-  "mockup": mockupBlock.mockup
+  "tags": coalesce(hero.pills, tags, []),
+  "cover": coalesce(mockupBlock.mockup, cover)
 }
 `;
 
-export const useHomeProjects = routeLoader$<HomeProject[]>(async () => {
-  const items = await sanity.fetch(HOME_PROJECTS_QUERY);
-  return Array.isArray(items) ? items : [];
+export const useHomeProjects = routeLoader$<HomeProject[]>(async (ctx) => {
+  try {
+    const items = await sanity.fetch(HOME_PROJECTS_QUERY);
+
+    if (!Array.isArray(items)) return [];
+
+    // ✅ убираем проекты без slug, чтобы ссылки не ломались
+    return items.filter((p: any) => typeof p?.slug === 'string' && p.slug.length > 0);
+  } catch (e: any) {
+    console.error('Sanity HOME_PROJECTS fetch failed:', e?.message || e);
+    ctx.status(200); // ✅ не даём 500 на главной
+    return [];
+  }
 });
 
 export default component$(() => {
@@ -57,4 +59,3 @@ export default component$(() => {
     </>
   );
 });
-
