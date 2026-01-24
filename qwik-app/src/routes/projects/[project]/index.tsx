@@ -18,19 +18,24 @@ const QUERY = `
     ctaPrimary{label,url},
     ctaSecondary{label,url},
     duration,
-    plan,
-    mockup,
-    agency{logo,name,note}
+    plan
   },
 
-  gallery[],
-  beforeAfter{enabled, before, after},
+  mockupBlock{
+    mockup,
+    agency{enabled, logo, name, note}
+  },
+
+  gallery[]{ image, alt },
+
+  beforeAfter{enabled, label, before, after},
 
   relatedProjects[]->{
     _id,
     title,
     "slug": slug.current,
-    hero{ mockup, pills }
+    hero{ pills },
+    mockupBlock{ mockup }
   }
 }
 `;
@@ -46,12 +51,15 @@ export default component$(() => {
   if (!p) return <section class="case"><h1>Not found</h1></section>;
 
   const hero = p.hero || {};
-  const hasAgency = !!hero?.agency?.name || !!hero?.agency?.note || !!hero?.agency?.logo;
+  const mock = p.mockupBlock || {};
+  const agency = mock.agency || {};
+
+  const showAgency =
+    !!agency?.enabled && (!!agency?.name || !!agency?.note || !!agency?.logo);
 
   return (
     <article class="case">
-
-      {/* HERO TOP (как в макете: теги, заголовок, интро, задача, кнопки + справа duration/plan) */}
+      {/* HERO TOP */}
       <header class="case-hero">
         <div class="case-hero__grid">
           {/* LEFT */}
@@ -59,7 +67,9 @@ export default component$(() => {
             {hero?.pills?.length ? (
               <ul class="case-tags" aria-label="tags">
                 {hero.pills.slice(0, 6).map((t: string) => (
-                  <li class="case-tag" key={t}>{t}</li>
+                  <li class="case-tag" key={t}>
+                    {t}
+                  </li>
                 ))}
               </ul>
             ) : null}
@@ -68,25 +78,41 @@ export default component$(() => {
 
             {hero?.intro ? <p class="case-intro">{hero.intro}</p> : null}
 
-            {(hero?.taskTitle || hero?.taskText) ? (
+            {hero?.taskTitle || hero?.taskText ? (
               <div class="case-task">
-                {hero?.taskTitle ? <div class="case-task__label">{hero.taskTitle}</div> : null}
-                {hero?.taskText ? <div class="case-task__text">{hero.taskText}</div> : null}
+                {hero?.taskTitle ? (
+                  <div class="case-task__label">{hero.taskTitle}</div>
+                ) : null}
+                {hero?.taskText ? (
+                  <div class="case-task__text">{hero.taskText}</div>
+                ) : null}
               </div>
             ) : null}
 
-            {(hero?.ctaPrimary?.url || hero?.ctaSecondary?.url) ? (
+            {hero?.ctaPrimary?.url || hero?.ctaSecondary?.url ? (
               <div class="case-actions">
                 {hero?.ctaPrimary?.url ? (
-                  <a class="btn btn--light" href={hero.ctaPrimary.url} target="_blank" rel="noreferrer">
+                  <a
+                    class="btn btn--light"
+                    href={hero.ctaPrimary.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {hero.ctaPrimary.label || 'перейти на сайт'}
                   </a>
                 ) : null}
 
                 {hero?.ctaSecondary?.url ? (
-                  <a class="btn btn--dark" href={hero.ctaSecondary.url} target="_blank" rel="noreferrer">
+                  <a
+                    class="btn btn--dark"
+                    href={hero.ctaSecondary.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <span>{hero.ctaSecondary.label || 'Заполнить бриф'}</span>
-                    <span class="btn__arrow" aria-hidden="true">→</span>
+                    <span class="btn__arrow" aria-hidden="true">
+                      →
+                    </span>
                   </a>
                 ) : null}
               </div>
@@ -109,63 +135,74 @@ export default component$(() => {
         </div>
       </header>
 
-      {/* BIG MOCKUP (под ним справа — agency badge) */}
-      {hero?.mockup ? (
+      {/* BIG MOCKUP (теперь из mockupBlock) */}
+      {mock?.mockup ? (
         <section class="case-mock">
           <div class="case-mock__card">
             <img
               class="case-mock__img"
-              src={urlFor(hero.mockup).width(2200).auto('format').url()}
+              src={urlFor(mock.mockup).width(2200).auto('format').url()}
               alt={`${p.title} mockup`}
               loading="eager"
               decoding="async"
             />
           </div>
 
-          {hasAgency ? (
+          {showAgency ? (
             <div class="case-agency">
-              {hero?.agency?.logo ? (
+              {agency?.logo ? (
                 <div class="case-agency__logo">
                   <img
-                    src={urlFor(hero.agency.logo).width(160).auto('format').url()}
-                    alt={hero?.agency?.name || 'agency'}
+                    src={urlFor(agency.logo).width(160).auto('format').url()}
+                    alt={agency?.name || 'agency'}
                     loading="lazy"
                     decoding="async"
                   />
                 </div>
               ) : (
-                <div class="case-agency__logo case-agency__logo--placeholder" aria-hidden="true" />
+                <div
+                  class="case-agency__logo case-agency__logo--placeholder"
+                  aria-hidden="true"
+                />
               )}
 
               <div class="case-agency__text">
-                <div class="case-agency__name">{hero?.agency?.name || 'GROWUP AGENCY'}</div>
-                {hero?.agency?.note ? <div class="case-agency__note">{hero.agency.note}</div> : null}
+                <div class="case-agency__name">
+                  {agency?.name || 'GROWUP AGENCY'}
+                </div>
+                {agency?.note ? (
+                  <div class="case-agency__note">{agency.note}</div>
+                ) : null}
               </div>
             </div>
           ) : null}
         </section>
       ) : null}
 
-      {/* GALLERY (вертикальная лента скринов) */}
+      {/* GALLERY (теперь item.image) */}
       {p.gallery?.length ? (
         <section class="case-gallery">
-          {p.gallery.map((img: any, i: number) => (
+          {p.gallery.map((item: any, i: number) => (
             <div class="case-shot" key={i}>
-              <img
-                src={urlFor(img).width(2400).auto('format').url()}
-                alt={img?.alt || `${p.title} screen ${i + 1}`}
-                loading="lazy"
-                decoding="async"
-              />
+              {item?.image ? (
+                <img
+                  src={urlFor(item.image).width(2400).auto('format').url()}
+                  alt={item?.alt || `${p.title} screen ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
             </div>
           ))}
         </section>
       ) : null}
 
-      {/* BEFORE / AFTER (как в макете: "до\\после" и две картинки внутри одного блока) */}
+      {/* BEFORE / AFTER (label из Sanity) */}
       {p.beforeAfter?.enabled && (p.beforeAfter?.before || p.beforeAfter?.after) ? (
         <section class="case-beforeAfter">
-          <div class="case-beforeAfter__label">до\после</div>
+          <div class="case-beforeAfter__label">
+            {p.beforeAfter?.label || 'до\\после'}
+          </div>
 
           <div class="case-beforeAfter__card">
             <div class="case-beforeAfter__grid">
@@ -191,7 +228,6 @@ export default component$(() => {
                 ) : null}
               </div>
 
-              {/* разделитель/хэндл purely visual */}
               <div class="case-beforeAfter__divider" aria-hidden="true">
                 <span class="case-beforeAfter__knob" />
               </div>
@@ -200,7 +236,7 @@ export default component$(() => {
         </section>
       ) : null}
 
-      {/* RELATED PROJECTS (как в макете: "посмотреть" + "ЕЩЕ ПРОЕКТЫ", большие карточки) */}
+      {/* RELATED PROJECTS (mockup теперь rp.mockupBlock.mockup) */}
       {p.relatedProjects?.length ? (
         <section class="case-related">
           <div class="case-related__head">
@@ -212,9 +248,9 @@ export default component$(() => {
             {p.relatedProjects.slice(0, 6).map((rp: any) => (
               <a class="related-card" href={`/projects/${rp.slug}`} key={rp.slug}>
                 <div class="related-card__media">
-                  {rp?.hero?.mockup ? (
+                  {rp?.mockupBlock?.mockup ? (
                     <img
-                      src={urlFor(rp.hero.mockup).width(2000).auto('format').url()}
+                      src={urlFor(rp.mockupBlock.mockup).width(2000).auto('format').url()}
                       alt={rp.title}
                       loading="lazy"
                       decoding="async"
@@ -228,7 +264,9 @@ export default component$(() => {
                   {rp?.hero?.pills?.length ? (
                     <div class="related-card__tags" aria-label="tags">
                       {rp.hero.pills.slice(0, 2).map((t: string) => (
-                        <span class="related-card__tag" key={t}>{t}</span>
+                        <span class="related-card__tag" key={t}>
+                          {t}
+                        </span>
                       ))}
                     </div>
                   ) : null}
