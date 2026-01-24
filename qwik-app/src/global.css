@@ -117,6 +117,7 @@ h6 {
   color: var(--color-black);
   font-family: "Soyuz Grotesk";
   letter-spacing: -0.02em;
+  
 }
 
 p {
@@ -126,15 +127,16 @@ p {
 }
 
 
-h1 {
+h1,
+h2 {
   font-family: "Soyuz Grotesk";
   font-style: normal;
   font-weight: 700;
 
-  font-size: 77.452px;
+  
   line-height: 0.83;
 
-  text-align: center;
+  
   color: #000;
 
   text-shadow:

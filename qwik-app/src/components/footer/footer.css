@@ -50,7 +50,7 @@
 .footer__kicker {
   display: inline-block;
   font-size: 14px;
-  color: rgba(40, 60, 40, 0.85);
+  color: #677A17;
   margin-bottom: 10px;
 }
 
@@ -61,7 +61,7 @@
   letter-spacing: -0.03em;
   font-weight: 800;
   color: #0a0a0a;
-  text-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  
 }
 .footer__title span {
   color: rgba(10, 10, 10, 0.68);

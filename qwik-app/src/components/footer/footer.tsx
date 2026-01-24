@@ -14,13 +14,13 @@ export default component$(() => {
                     <div class="footer__cta">
                         <div class="footer__kicker">Открыта к сотрудничеству</div>
 
-                        <h2 class="footer__title">
+                        <h1 class="footer__title">
                             давайте обсудим
-                        </h2>
+                        </h1>
 
-                        <p class="footer__text">
+                        <h3 class="footer__text">
                             Готова к новым проектам и профессиональным знакомствам.
-                        </p>
+                        </h3>
 
                         <GlassEffect>
                             <a class="footer__btn" href="/brief">заполнить бриф</a>
