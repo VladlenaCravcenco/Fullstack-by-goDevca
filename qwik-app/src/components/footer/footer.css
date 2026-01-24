@@ -49,8 +49,9 @@
 
 .footer__kicker {
   display: inline-block;
-  font-size: 14px;
+  font-size: 18px;
   color: #677A17;
+  font-weight: 800;
   margin-bottom: 10px;
 }
 
@@ -70,7 +71,7 @@
 .footer__text {
   margin: 14px auto 18px;
   max-width: 560px;
-  font-size: 14px;
+  font-size: 18px;
   color: rgba(10, 10, 10, 0.75);
 }
 

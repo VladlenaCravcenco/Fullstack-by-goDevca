@@ -1,268 +1,304 @@
-/* GLOBAL RESET */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* brief-page.css */
+/* КНОПКИ НЕ ТРОГАЮ: .btn / .btn--primary / .glass-btn не переопределяю */
 
-body {
-  margin: 0;
-  font-family: "Onest", sans-serif;
- 
-  color: #000;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* CONTAINER */
+/* ===== BASE ===== */
 .brief_container {
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 150px 15%;
+  padding: 200px 20px 110px;
+  box-sizing: border-box;
 }
 
-.brief {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+/* ===== DESKTOP: 2 колонки + скролл только справа ===== */
+@media (min-width: 1024px) {
+  :global(html),
+  :global(body) {
+    height: 100%;
+    overflow: hidden; /* ВАЖНО: body не скроллится */
+  }
+
+  .brief_container {
+    /* делаем грид по двум оберткам: .brief_left и .brief_right */
+    display: grid;
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+
+    /* фиксируем высоту “экрана” для layout */
+    height: 100vh;
+    padding-bottom: 0; /* снизу не нужно — скролл справа */
+  }
+
+  .brief_left {
+    position: sticky;
+    top: 120px; /* как ты хотела */
+    align-self: start;
+    display: grid;
+    gap: 18px;
+  }
+
+  .brief_right {
+    /* правая колонка сама не скроллится — скролл внутри формы */
+    min-height: 0;
+    height: calc(100vh - 200px); /* 100vh - верхний padding секции */
+  }
+
+  #brief-form {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 44px;
+    padding-right: 14px;
+
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+
+    /* “исчезающий” скролл (fade сверху/снизу) */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      transparent 100%
+    );
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
+  /* аккуратный скроллбар */
+  #brief-form::-webkit-scrollbar {
+    width: 10px;
+  }
+  #brief-form::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  #brief-form::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* чтобы якоря останавливались "под заголовок", а не в самый верх */
+  #brief-form fieldset {
+    scroll-margin-top: 160px; /* подстройка */
+  }
 }
 
-/* TITLES */
-.brief_container h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+/* ===== LEFT NAV ===== */
+.brief_nav {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.brief_nav__link {
+  font-size: 14px;
   font-weight: 600;
+  color: rgba(120, 135, 70, 0.2); /* твой зеленый оттенок из примера */
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: max-content;
+}
+
+.brief_nav__link:hover {
+  color: rgba(120, 135, 70);
+  transform: translateX(2px);
+}
+
+/* активный пункт (мы добавим класс из JS) */
+.brief_nav__link.is-active {
+  color: rgba(120, 135, 70);
+}
+
+/* ===== TYPO ===== */
+.brief_container h1 {
+  margin: 0 0 18px;
+  font-family: "Soyuz Grotesk", var(--font-main, "Onest", sans-serif);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 0.83;
+  text-align: left;
+  color: #000;
+
+  text-shadow:
+    -14.3808px 0px 4.16286px rgba(0, 0, 0, 0.01),
+    -9.0826px 0px 3.78442px rgba(0, 0, 0, 0.05),
+    -5.29818px 0px 3.02753px rgba(0, 0, 0, 0.17),
+    -2.27065px 0px 2.27065px rgba(0, 0, 0, 0.29),
+    -0.756883px 0px 1.13533px rgba(0, 0, 0, 0.33);
 }
 
 .brief__subtitle {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  color: var(--color-muted, #666);
-  max-width: 800px;
+  margin: 0;
+  max-width: 520px;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
-/* FORM */
-form#brief-form {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
+/* ===== FORM / FIELDSETS ===== */
+#brief-form {
   width: 100%;
-  max-width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 300px;
+  padding-top: 50px;
 }
 
-/* FIELDSETS */
-fieldset {
-  border: none;
+#brief-form fieldset {
+  border: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  margin: 0 0 44px;
+  display: grid;
+  gap: 18px;
 }
 
-fieldset h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5em;
-  color: var(--color-black, #000);
+#brief-form fieldset:last-of-type {
+  margin-bottom: 26px;
 }
 
-legend {
-  margin-bottom: 30px;
-  font-weight: 600;
-}
-
-/* LABELS */
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* FORM ELEMENTS */
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-family: inherit;
-  background: #fff;
+#brief-form h2 {
+  margin: 0 0 6px;
+  font-family: "Soyuz Grotesk", var(--font-main, "Onest", sans-serif);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: #000;
-  transition: border-color 0.2s ease;
+
+  text-shadow:
+    -4px 0px 2px rgba(0, 0, 0, 0.06),
+    -2px 0px 2px rgba(0, 0, 0, 0.12);
+}
+
+#brief-form label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+#brief-form input,
+#brief-form textarea,
+#brief-form select {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.03),
+    0 8px 26px rgba(0, 0, 0, 0.06);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #000;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   box-sizing: border-box;
   display: block;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--color-green, #3bbf7f);
-  outline: none;
-}
-
-textarea {
+#brief-form textarea {
+  min-height: 110px;
   resize: vertical;
-  min-height: 100px;
-  max-width: 100%;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 
-/* RADIO CARDS — стеклянный эффект */
-.radio-glass-group {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-  width: 100%;
+#brief-form input::placeholder,
+#brief-form textarea::placeholder {
+  color: rgba(0, 0, 0, 0.35);
 }
 
-label.glass-radio {
-  position: relative;
-  display: flex;
-  justify-content: center;
+#brief-form input:focus,
+#brief-form textarea:focus,
+#brief-form select:focus {
+  border-color: rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.03),
+    0 12px 34px rgba(0, 0, 0, 0.10);
+}
+
+/* ===== SUBMIT AREA (кнопку не трогаю) ===== */
+#brief-form .btn.btn--primary {
+  margin-top: 12px;
+  display: inline-flex;
   align-items: center;
-  padding: 12px 16px;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid #ddd;
-  box-shadow: 0px 20px 24px -20px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: max-content;
-  max-width: 100%;
-  box-sizing: border-box;
+  justify-content: center;
 }
 
-.glass-radio input[type="radio"] {
-  display: none;
-}
+/* ===== TABLET/MOBILE ===== */
+@media (max-width: 1023px) {
+  :global(html),
+  :global(body) {
+    height: auto;
+    overflow: auto;
+  }
 
-.glass-radio span {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-  z-index: 1;
-  transition: all 0.3s ease;
-}
-
-.glass-radio input[type="radio"]:checked + span {
-  background: linear-gradient(135deg, #ff9d2f, #ff6a00);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 600;
-}
-
-/* FORM GROUPS */
-.form-group,
-.brief-form__group,
-.brief__field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* CHECKBOX GROUP */
-.brief__checkboxes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-  font-size: 0.9rem;
-}
-
-/* SUBMIT */
-.submit-brief {
-  background-image: url("/images/blog-filter-bg.jpg");
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  width: max-content;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-}
-
-/* SLIDER (if used) */
-.range-wrapper {
-  width: 100%;
-  max-width: 500px;
-  padding: 16px 0;
-}
-
-input[type='range'] {
-  width: 100%;
-  height: 8px;
-  appearance: none;
-  background: linear-gradient(
-    to right,
-    #4caf50 0%,
-    #4caf50 var(--progress),
-    #e0e0e0 var(--progress),
-    #e0e0e0 100%
-  );
-  border-radius: 9999px;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-  margin-top: 30px;
-}
-
-input[type='range']::-webkit-slider-thumb {
-  appearance: none;
-  width: 48px;
-  height: 30px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  margin-top: -8px; /* центрирование */
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 40px;
-  height: 25px;
-  background: white;
-  border: none;
-  border-radius:20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  z-index: 2;
-}
-
-/* MEDIA QUERIES */
-@media (max-width: 768px) {
   .brief_container {
-    padding: 100px 5%;
+    padding: 110px 16px 80px;
+    display: block;
+    height: auto;
   }
 
-  .brief__subtitle {
-    font-size: 1rem;
+  .brief_left {
+    position: static;
   }
 
-  fieldset h2 {
-    font-size: 1.3rem;
+  .brief_container h1 {
+    font-size: 44px;
+    line-height: 0.9;
   }
 
-  input,
-  textarea,
-  select {
-    font-size: 0.95rem;
+  .brief_nav {
+    margin-top: 16px;
   }
 
-  .submit-brief {
-    font-size: 1rem;
+  .brief_right {
+    height: auto;
+    margin-top: 40px;
+  }
+
+  #brief-form {
+    border-left: none;
+    padding-left: 0;
+    height: auto;
+    overflow: visible;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  #brief-form fieldset {
+    margin-bottom: 34px;
+    gap: 14px;
+  }
+
+  #brief-form input,
+  #brief-form textarea,
+  #brief-form select {
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brief_container h1 {
+    font-size: 40px;
   }
 }
