@@ -1,4 +1,4 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal, $ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
@@ -46,6 +46,70 @@ export const useProject = routeLoader$(async ({ params, status }) => {
   return doc;
 });
 
+/** ✅ ВАЖНО: компонент объявлен СНАРУЖИ default component */
+export const BeforeAfter = component$(
+  ({ before, after }: { before: any; after: any }) => {
+    const containerRef = useSignal<HTMLElement>();
+    const pos = useSignal(50);
+
+    const onMove = $((e: PointerEvent) => {
+      const el = containerRef.value;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percent = Math.min(100, Math.max(0, (x / rect.width) * 100));
+      pos.value = percent;
+    });
+
+    return (
+      <div
+        ref={containerRef}
+        class="ba"
+        /* ✅ чтобы TS не ругался на CSS var */
+        style={`--pos:${pos.value}%`}
+        onPointerMove$={onMove}
+      >
+        {/* AFTER */}
+        <img
+          class="ba__img"
+          src={urlFor(after).width(1800).auto('format').url()}
+          alt="after"
+          loading="lazy"
+          decoding="async"
+        />
+
+        {/* BEFORE (обрезка по ширине) */}
+        <div class="ba__before" style={`width:${pos.value}%`}>
+          <img
+            class="ba__img"
+            src={urlFor(before).width(1800).auto('format').url()}
+            alt="before"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        {/* DIVIDER */}
+        <div class="ba__divider" style={`left:${pos.value}%`}>
+          <span class="ba__knob" />
+        </div>
+
+        {/* RANGE для мобилки */}
+        <input
+          class="ba__range"
+          type="range"
+          min="0"
+          max="100"
+          value={pos.value}
+          onInput$={(e) => (pos.value = +(e.target as HTMLInputElement).value)}
+          aria-label="Before/After slider"
+        />
+      </div>
+    );
+  }
+);
+
 export default component$(() => {
   const p = useProject().value as any;
   if (!p) return <section class="case"><h1>Not found</h1></section>;
@@ -57,8 +121,6 @@ export default component$(() => {
   const showAgency =
     !!agency?.enabled && (!!agency?.name || !!agency?.note || !!agency?.logo);
 
-  const baPos = useSignal(50); // 0..100
-
   return (
     <article class="case">
       {/* HERO TOP */}
@@ -69,9 +131,7 @@ export default component$(() => {
             {hero?.pills?.length ? (
               <ul class="case-tags" aria-label="tags">
                 {hero.pills.slice(0, 6).map((t: string) => (
-                  <li class="case-tag" key={t}>
-                    {t}
-                  </li>
+                  <li class="case-tag" key={t}>{t}</li>
                 ))}
               </ul>
             ) : null}
@@ -94,27 +154,15 @@ export default component$(() => {
             {hero?.ctaPrimary?.url || hero?.ctaSecondary?.url ? (
               <div class="case-actions">
                 {hero?.ctaPrimary?.url ? (
-                  <a
-                    class="btn btn--light"
-                    href={hero.ctaPrimary.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a class="btn btn--light" href={hero.ctaPrimary.url} target="_blank" rel="noreferrer">
                     {hero.ctaPrimary.label || 'перейти на сайт'}
                   </a>
                 ) : null}
 
                 {hero?.ctaSecondary?.url ? (
-                  <a
-                    class="btn btn--dark"
-                    href={hero.ctaSecondary.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a class="btn btn--dark" href={hero.ctaSecondary.url} target="_blank" rel="noreferrer">
                     <span>{hero.ctaSecondary.label || 'Заполнить бриф'}</span>
-                    <span class="btn__arrow" aria-hidden="true">
-                      →
-                    </span>
+                    <span class="btn__arrow" aria-hidden="true">→</span>
                   </a>
                 ) : null}
               </div>
@@ -137,7 +185,7 @@ export default component$(() => {
         </div>
       </header>
 
-      {/* BIG MOCKUP (теперь из mockupBlock) */}
+      {/* BIG MOCKUP */}
       {mock?.mockup ? (
         <section class="case-mock">
           <div class="case-mock__card">
@@ -162,26 +210,19 @@ export default component$(() => {
                   />
                 </div>
               ) : (
-                <div
-                  class="case-agency__logo case-agency__logo--placeholder"
-                  aria-hidden="true"
-                />
+                <div class="case-agency__logo case-agency__logo--placeholder" aria-hidden="true" />
               )}
 
               <div class="case-agency__text">
-                <div class="case-agency__name">
-                  {agency?.name || 'GROWUP AGENCY'}
-                </div>
-                {agency?.note ? (
-                  <div class="case-agency__note">{agency.note}</div>
-                ) : null}
+                <div class="case-agency__name">{agency?.name || 'GROWUP AGENCY'}</div>
+                {agency?.note ? <div class="case-agency__note">{agency.note}</div> : null}
               </div>
             </div>
           ) : null}
         </section>
       ) : null}
 
-      {/* GALLERY (теперь item.image) */}
+      {/* GALLERY */}
       {p.gallery?.length ? (
         <section class="case-gallery">
           {p.gallery.map((item: any, i: number) => (
@@ -199,72 +240,15 @@ export default component$(() => {
         </section>
       ) : null}
 
-      {/* BEFORE / AFTER (реальный слайдер) */}
-      {p.beforeAfter?.enabled && (p.beforeAfter?.before || p.beforeAfter?.after) ? (
+      {/* BEFORE / AFTER */}
+      {p.beforeAfter?.enabled && p.beforeAfter?.before && p.beforeAfter?.after ? (
         <section class="case-beforeAfter">
-          <div class="case-beforeAfter__label">
-            {p.beforeAfter?.label || 'до\\после'}
-          </div>
-
-          <div
-            class="ba"
-            style={`--pos:${baPos.value}%`}
-            onPointerDown$={(e) => {
-              // захватываем pointer, чтобы drag не отваливался
-              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-            }}
-            onPointerMove$={(e) => {
-              // двигаем только когда есть pointer (мышь/палец)
-              const el = e.currentTarget as HTMLElement;
-              const r = el.getBoundingClientRect();
-              const x = Math.min(Math.max(e.clientX - r.left, 0), r.width);
-              baPos.value = Math.round((x / r.width) * 100);
-            }}
-          >
-            {/* AFTER (фон) */}
-            {p.beforeAfter?.after ? (
-              <img
-                class="ba__img ba__img--after"
-                src={urlFor(p.beforeAfter.after).width(2400).auto('format').url()}
-                alt="after"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : null}
-
-            {/* BEFORE (обрезается по --pos) */}
-            {p.beforeAfter?.before ? (
-              <div class="ba__before">
-                <img
-                  class="ba__img ba__img--before"
-                  src={urlFor(p.beforeAfter.before).width(2400).auto('format').url()}
-                  alt="before"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            ) : null}
-
-            {/* Divider + knob */}
-            <div class="ba__divider" aria-hidden="true">
-              <span class="ba__knob" />
-            </div>
-
-            {/* Range (невидимый, но даёт управление на мобилке + доступность) */}
-            <input
-              class="ba__range"
-              type="range"
-              min={0}
-              max={100}
-              value={baPos.value}
-              onInput$={(e) => (baPos.value = Number((e.target as HTMLInputElement).value))}
-              aria-label="До/после"
-            />
-          </div>
+          <div class="case-beforeAfter__label">{p.beforeAfter.label || 'до\\после'}</div>
+          <BeforeAfter before={p.beforeAfter.before} after={p.beforeAfter.after} />
         </section>
       ) : null}
 
-      {/* RELATED PROJECTS (mockup теперь rp.mockupBlock.mockup) */}
+      {/* RELATED */}
       {p.relatedProjects?.length ? (
         <section class="case-related">
           <div class="case-related__head">
@@ -288,13 +272,10 @@ export default component$(() => {
 
                 <div class="related-card__foot">
                   <div class="related-card__name">{rp.title}</div>
-
                   {rp?.hero?.pills?.length ? (
                     <div class="related-card__tags" aria-label="tags">
                       {rp.hero.pills.slice(0, 2).map((t: string) => (
-                        <span class="related-card__tag" key={t}>
-                          {t}
-                        </span>
+                        <span class="related-card__tag" key={t}>{t}</span>
                       ))}
                     </div>
                   ) : null}
