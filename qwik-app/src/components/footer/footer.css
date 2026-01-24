@@ -4,7 +4,7 @@
   border-radius: 22px;
   height: 98vh;
   margin: 10px;
-  padding: 56px 24px 26px;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -79,7 +79,7 @@
 .footer__bottom {
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: 70%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1.35fr;
@@ -114,7 +114,7 @@
 }
 
 .glass-card__title {
-  margin: 0 0 14px;
+  
   font-size: 22px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.9);
@@ -124,14 +124,15 @@
 .glass-card__row {
   position: relative;
   z-index: 1;
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.82);
-  margin-bottom: 8px;
+  
 }
 
 .glass-card__link {
   text-decoration: none;
   display: inline-block;
+  margin-bottom: 16px;
 }
 .glass-card__link:hover {
   text-decoration: underline;
@@ -153,9 +154,10 @@
   position: relative;
   z-index: 1;
   display: grid;
+  height: 100%;
   grid-template-columns: 1fr auto;
   gap: 18px;
-  align-items: end;
+  align-items: stretch;
 }
 
 .glass-card__nav {
@@ -175,7 +177,11 @@
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-  align-items: center;
+  align-items: end;
+}
+
+.glass-card__social.left {
+display: none;
 }
 
 .soc {
@@ -207,7 +213,8 @@
   
   .footer__bottom {
     grid-template-columns: 1fr;
-    margin-top: 70px;
+    margin-top: 30px;
+    width: 100%;
   }
   .glass-card__grid {
     grid-template-columns: 1fr;
@@ -216,4 +223,14 @@
   .glass-card__social {
     justify-content: flex-start;
   }
+  .glass-card--wide{
+    display: none;
+  }
+  .glass-card__social.left {
+display: flex;
+flex-direction: row;
 }
+  
+}
+
+

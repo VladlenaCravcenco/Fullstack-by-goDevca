@@ -251,7 +251,7 @@
   }
 
   .brief_container {
-    padding: 110px 16px 80px;
+    padding: 150px 16px 80px;
     display: block;
     height: auto;
   }
@@ -279,7 +279,7 @@
     padding-left: 0;
     height: auto;
     overflow: visible;
-
+    padding-bottom: 20px;
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -298,6 +298,9 @@
 }
 
 @media (max-width: 768px) {
+  .brief_nav {
+    display: none;
+  }
   .brief_container h1 {
     font-size: 40px;
   }

@@ -184,6 +184,12 @@ align-items: center;
 
 /* === MOBILE: заголовок сверху, карусель ниже (та же логика) === */
 @media (max-width: 1024px) {
+
+  .steps{
+
+    height: auto;
+    padding: 60px 0;
+  }
   .steps__layout {
     grid-template-columns: 1fr;
     gap: 18px;
