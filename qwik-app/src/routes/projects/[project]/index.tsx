@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useSignal } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
@@ -56,6 +56,8 @@ export default component$(() => {
 
   const showAgency =
     !!agency?.enabled && (!!agency?.name || !!agency?.note || !!agency?.logo);
+
+  const baPos = useSignal(50); // 0..100
 
   return (
     <article class="case">
@@ -197,41 +199,67 @@ export default component$(() => {
         </section>
       ) : null}
 
-      {/* BEFORE / AFTER (label из Sanity) */}
+      {/* BEFORE / AFTER (реальный слайдер) */}
       {p.beforeAfter?.enabled && (p.beforeAfter?.before || p.beforeAfter?.after) ? (
         <section class="case-beforeAfter">
           <div class="case-beforeAfter__label">
             {p.beforeAfter?.label || 'до\\после'}
           </div>
 
-          <div class="case-beforeAfter__card">
-            <div class="case-beforeAfter__grid">
-              <div class="case-beforeAfter__side">
-                {p.beforeAfter?.before ? (
-                  <img
-                    src={urlFor(p.beforeAfter.before).width(1800).auto('format').url()}
-                    alt="before"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : null}
-              </div>
+          <div
+            class="ba"
+            style={`--pos:${baPos.value}%`}
+            onPointerDown$={(e) => {
+              // захватываем pointer, чтобы drag не отваливался
+              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            }}
+            onPointerMove$={(e) => {
+              // двигаем только когда есть pointer (мышь/палец)
+              const el = e.currentTarget as HTMLElement;
+              const r = el.getBoundingClientRect();
+              const x = Math.min(Math.max(e.clientX - r.left, 0), r.width);
+              baPos.value = Math.round((x / r.width) * 100);
+            }}
+          >
+            {/* AFTER (фон) */}
+            {p.beforeAfter?.after ? (
+              <img
+                class="ba__img ba__img--after"
+                src={urlFor(p.beforeAfter.after).width(2400).auto('format').url()}
+                alt="after"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : null}
 
-              <div class="case-beforeAfter__side">
-                {p.beforeAfter?.after ? (
-                  <img
-                    src={urlFor(p.beforeAfter.after).width(1800).auto('format').url()}
-                    alt="after"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : null}
+            {/* BEFORE (обрезается по --pos) */}
+            {p.beforeAfter?.before ? (
+              <div class="ba__before">
+                <img
+                  class="ba__img ba__img--before"
+                  src={urlFor(p.beforeAfter.before).width(2400).auto('format').url()}
+                  alt="before"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
+            ) : null}
 
-              <div class="case-beforeAfter__divider" aria-hidden="true">
-                <span class="case-beforeAfter__knob" />
-              </div>
+            {/* Divider + knob */}
+            <div class="ba__divider" aria-hidden="true">
+              <span class="ba__knob" />
             </div>
+
+            {/* Range (невидимый, но даёт управление на мобилке + доступность) */}
+            <input
+              class="ba__range"
+              type="range"
+              min={0}
+              max={100}
+              value={baPos.value}
+              onInput$={(e) => (baPos.value = Number((e.target as HTMLInputElement).value))}
+              aria-label="До/после"
+            />
           </div>
         </section>
       ) : null}
