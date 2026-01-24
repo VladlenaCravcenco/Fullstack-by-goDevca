@@ -20,7 +20,7 @@ export type HomeProject = {
 };
 
 const HOME_PROJECTS_QUERY = `
-*[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc)[0...6]{
+*[_type=="project" && defined(slug.current)]|order(coalesce(publishedAt,_createdAt) desc)[0...3]{
   _id,
   title,
   "slug": slug.current,

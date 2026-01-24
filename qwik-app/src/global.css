@@ -124,3 +124,23 @@ p {
   font-weight: 300;
   color: var(--color-text);
 }
+
+
+h1 {
+  font-family: "Soyuz Grotesk";
+  font-style: normal;
+  font-weight: 700;
+
+  font-size: 77.452px;
+  line-height: 0.83;
+
+  text-align: center;
+  color: #000;
+
+  text-shadow:
+    -14.3808px 0px 4.16286px rgba(0, 0, 0, 0.01),
+    -9.0826px  0px 3.78442px rgba(0, 0, 0, 0.05),
+    -5.29818px 0px 3.02753px rgba(0, 0, 0, 0.17),
+    -2.27065px 0px 2.27065px rgba(0, 0, 0, 0.29),
+    -0.756883px 0px 1.13533px rgba(0, 0, 0, 0.33);
+}
