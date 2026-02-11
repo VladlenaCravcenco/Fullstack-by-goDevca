@@ -26,7 +26,7 @@ export default component$(() => {
   const nav = [
     { label: 'Услуги', href: '/#services' },
     { label: 'Проекты', href: '/projects' },
-    { label: 'Обо мне', href: '/about' },
+    { label: 'Обо мне', href: '/#about' },
     { label: 'Блог', href: '/blog' },
     { label: 'Контакты', href: '/contact' },
   ];
