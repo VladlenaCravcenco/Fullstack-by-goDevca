@@ -34,37 +34,75 @@ export default component$(() => {
   const openIndex = useSignal<number | null>(null);
 
   const openCal$ = $(async () => {
-    const w = window as any;
+  const w = window as any;
 
-    // 1) создаём очередь Cal, если её нет
-    if (!w.Cal) {
-      w.Cal = function (...args: any[]) {
-        (w.Cal.q = w.Cal.q || []).push(args);
-      };
-      w.Cal.q = w.Cal.q || [];
-    }
+  // 0) если Cal уже есть и namespace готов — просто открываем
+  if (w.Cal?.ns?.['30min']) {
+    w.Cal.ns['30min']('open');
+    return;
+  }
 
-    // 2) подгружаем скрипт один раз
-    if (!w.__calEmbedLoaded) {
-      w.__calEmbedLoaded = true;
+  // 1) ставим stub Cal с поддержкой init/namespace (как в официальном snippet)
+  if (!w.Cal) {
+    const d = document;
 
-      await new Promise<void>((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://cal.com/embed.js'; // более стабильный
+    w.Cal = function (...args: any[]) {
+      const cal = w.Cal;
+      cal.q = cal.q || [];
+      cal.q.push(args);
+
+      // при первом вызове — подгружаем скрипт
+      if (!cal.loaded) {
+        cal.loaded = true;
+        cal.ns = cal.ns || {};
+
+        const s = d.createElement('script');
+        s.src = 'https://app.cal.com/embed/embed.js';
         s.async = true;
-        s.onload = () => resolve();
-        s.onerror = () => reject(new Error('Failed to load Cal embed'));
-        document.head.appendChild(s);
-      });
-    }
+        d.head.appendChild(s);
+      }
 
-    // 3) открываем как popup (самый надёжный UX)
-    w.Cal('ui', {
-      calLink: 'godevca/30min',
-      layout: 'month_view',
-      hideEventTypeDetails: false,
-    });
+      // init namespace: Cal("init", "30min", {...})
+      if (args[0] === 'init' && typeof args[1] === 'string') {
+        const namespace = args[1];
+        cal.ns[namespace] =
+          cal.ns[namespace] ||
+          function (...nsArgs: any[]) {
+            (cal.ns[namespace].q = cal.ns[namespace].q || []).push(nsArgs);
+          };
+        cal.ns[namespace].q = cal.ns[namespace].q || [];
+      }
+    };
+
+    w.Cal.q = w.Cal.q || [];
+    w.Cal.ns = w.Cal.ns || {};
+  }
+
+  // 2) инициализируем namespace (как в твоём snippet)
+  w.Cal('init', '30min', { origin: 'https://app.cal.com' });
+
+  // 3) даём скрипту чуть времени появиться и потом открываем
+  //    (в проде обычно хватает 50-150мс)
+  const waitForNs = async () => {
+    for (let i = 0; i < 50; i++) {
+      if (w.Cal?.ns?.['30min']) return true;
+      await new Promise((r) => setTimeout(r, 20));
+    }
+    return false;
+  };
+
+  const ok = await waitForNs();
+  if (!ok) return;
+
+  // 4) UI настройки (один раз)
+  w.Cal.ns['30min']('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+
+  // 5) открыть
+  w.Cal.ns['30min']('open', {
+    calLink: 'godevca/30min',
+    config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
   });
+});
 
   return (
     <section class="faq container">
