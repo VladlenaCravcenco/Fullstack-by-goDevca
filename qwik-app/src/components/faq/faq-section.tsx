@@ -1,8 +1,6 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './faq-section.css';
-import { GlassEffect } from '~/components/ui/GlassEffect';
-
 
 const faqs = [
   {
@@ -35,13 +33,55 @@ const faqs = [
 export default component$(() => {
   const openIndex = useSignal<number | null>(null);
 
+  useVisibleTask$(() => {
+    if ((window as any).Cal) return;
+
+    (function (C: any, A: string, L: string) {
+      let p = function (a: any, ar: any) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api: any = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    (window as any).Cal("init", "30min", { origin: "https://app.cal.com" });
+
+    (window as any).Cal.ns["30min"]("ui", {
+      hideEventTypeDetails: false,
+      layout: "month_view",
+    });
+  });
+
   return (
     <section class="faq container">
+    <div class="faq__header">
       <h2>FAQ</h2>
       <p class="faq__description">
         Коротко отвечаю на самые частые вопросы, которые помогают вам понять процесс
       </p>
+    </div>
 
+    <div class="faq__grid">
+      {/* LEFT */}
       <ul class="faq__list">
         {faqs.map((item, index) => (
           <li
@@ -63,15 +103,23 @@ export default component$(() => {
         ))}
       </ul>
 
+      {/* RIGHT */}
+      <aside class="faq__side">
+        <h3 class="faq__sideTitle">остались вопросы?</h3>
+        <p class="faq__sideText">Забронируй звонок на 30 минут со мной.</p>
 
-
-      <div class="faq__cta" id='faq'>
-        <p>Не нашли интересующий вас вопрос?</p>
-        <GlassEffect class="faq__btn" >
-          Забронируйте звонок на 30 минут
-        </GlassEffect>
-      </div>
-    </section>
+        <button
+          class="faq__bookBtn"
+          type="button"
+          data-cal-link="godevca/30min"
+          data-cal-namespace="30min"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        >
+          забронировать консультацию
+        </button>
+      </aside>
+    </div>
+  </section>
   );
 });
 

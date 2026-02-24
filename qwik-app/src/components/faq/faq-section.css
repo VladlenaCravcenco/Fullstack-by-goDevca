@@ -1,10 +1,10 @@
 .faq {
   padding: 100px 20px;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.faq h2 {
+.faq__header h2 {
   font-size: 2.4rem;
   margin-bottom: 10px;
 }
@@ -12,6 +12,14 @@
 .faq__description {
   color: #555;
   margin-bottom: 30px;
+  max-width: 680px;
+}
+
+.faq__grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
 }
 
 .faq__list {
@@ -23,7 +31,7 @@
 .faq__item {
   background: #fff;
   border-radius: 20px;
-  padding: 20px;
+  padding: 20px 22px;
   margin-bottom: 15px;
   cursor: pointer;
   border: 1px solid #eee;
@@ -37,6 +45,7 @@
 .faq__question {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   font-weight: 600;
   font-size: 1rem;
 }
@@ -53,20 +62,59 @@
   color: #777;
 }
 
-.faq__cta {
-  margin-top: 40px;
-  text-align: center;
+/* RIGHT CARD */
+.faq__side {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 22px;
+  padding: 22px;
 }
 
-.faq__cta p {
-  margin-bottom: 10px;
+.faq__sideTitle {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: lowercase;
 }
 
-.faq__btn {
-  color: #ffffff;
-  background-color: rgb(0, 0, 0);
-    border-radius: 30px;
-  border: 10px solid #ffffff;
-
+.faq__sideText {
+  margin: 0 0 16px;
+  color: #555;
+  line-height: 1.4;
 }
 
+/* BUTTON like in mock */
+.faq__bookBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 0;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* small hover */
+.faq__bookBtn:hover {
+  transform: translateY(-1px);
+}
+
+.faq__bookBtn:active {
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .faq__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__side {
+    order: 2;
+  }
+}
