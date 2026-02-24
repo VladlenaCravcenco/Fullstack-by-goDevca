@@ -1,4 +1,4 @@
-import { component$, useSignal, $ } from '@builder.io/qwik';
+import { component$, useSignal } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import './faq-section.css';
 
@@ -33,76 +33,7 @@ const faqs = [
 export default component$(() => {
   const openIndex = useSignal<number | null>(null);
 
-  const openCal$ = $(async () => {
-  const w = window as any;
-
-  // 0) если Cal уже есть и namespace готов — просто открываем
-  if (w.Cal?.ns?.['30min']) {
-    w.Cal.ns['30min']('open');
-    return;
-  }
-
-  // 1) ставим stub Cal с поддержкой init/namespace (как в официальном snippet)
-  if (!w.Cal) {
-    const d = document;
-
-    w.Cal = function (...args: any[]) {
-      const cal = w.Cal;
-      cal.q = cal.q || [];
-      cal.q.push(args);
-
-      // при первом вызове — подгружаем скрипт
-      if (!cal.loaded) {
-        cal.loaded = true;
-        cal.ns = cal.ns || {};
-
-        const s = d.createElement('script');
-        s.src = 'https://app.cal.com/embed/embed.js';
-        s.async = true;
-        d.head.appendChild(s);
-      }
-
-      // init namespace: Cal("init", "30min", {...})
-      if (args[0] === 'init' && typeof args[1] === 'string') {
-        const namespace = args[1];
-        cal.ns[namespace] =
-          cal.ns[namespace] ||
-          function (...nsArgs: any[]) {
-            (cal.ns[namespace].q = cal.ns[namespace].q || []).push(nsArgs);
-          };
-        cal.ns[namespace].q = cal.ns[namespace].q || [];
-      }
-    };
-
-    w.Cal.q = w.Cal.q || [];
-    w.Cal.ns = w.Cal.ns || {};
-  }
-
-  // 2) инициализируем namespace (как в твоём snippet)
-  w.Cal('init', '30min', { origin: 'https://app.cal.com' });
-
-  // 3) даём скрипту чуть времени появиться и потом открываем
-  //    (в проде обычно хватает 50-150мс)
-  const waitForNs = async () => {
-    for (let i = 0; i < 50; i++) {
-      if (w.Cal?.ns?.['30min']) return true;
-      await new Promise((r) => setTimeout(r, 20));
-    }
-    return false;
-  };
-
-  const ok = await waitForNs();
-  if (!ok) return;
-
-  // 4) UI настройки (один раз)
-  w.Cal.ns['30min']('ui', { hideEventTypeDetails: false, layout: 'month_view' });
-
-  // 5) открыть
-  w.Cal.ns['30min']('open', {
-    calLink: 'godevca/30min',
-    config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-  });
-});
+ 
 
   return (
     <section class="faq container">
@@ -141,7 +72,13 @@ export default component$(() => {
           <h3 class="faq__sideTitle">остались вопросы?</h3>
           <p class="faq__sideText">Забронируй звонок на 30 минут со мной.</p>
 
-          <button type="button" class="faq__bookBtn" onClick$={openCal$}>
+          <button
+            type="button"
+            class="faq__bookBtn"
+            data-cal-link="godevca/30min"
+            data-cal-namespace="30min"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >
             забронировать консультацию
           </button>
         </aside>
