@@ -1,36 +1,76 @@
 import { component$ } from '@builder.io/qwik';
+import { useLocation } from '@builder.io/qwik-city';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 
 import './footer.css';
 
 export default component$(() => {
+    const loc = useLocation();
+    const locale = getLocaleFromPathname(loc.url.pathname);
+    const copy = {
+        ru: {
+            kicker: 'Открыта к сотрудничеству',
+            title: 'давайте обсудим',
+            text: 'Готова к новым проектам и профессиональным знакомствам.',
+            cta: 'заполнить бриф',
+            contacts: 'Контакты',
+            rights: '© 2025 Cravcenco Vladlena. Все права защищены.',
+            nav: 'Навигация',
+            services: 'Услуги',
+            projects: 'Проекты',
+            blog: 'Блог',
+        },
+        ro: {
+            kicker: 'Deschisa pentru colaborare',
+            title: 'hai sa discutam',
+            text: 'Sunt deschisa pentru proiecte noi si conexiuni profesionale.',
+            cta: 'completeaza brief-ul',
+            contacts: 'Contacte',
+            rights: '© 2025 Cravcenco Vladlena. Toate drepturile rezervate.',
+            nav: 'Navigare',
+            services: 'Servicii',
+            projects: 'Proiecte',
+            blog: 'Blog',
+        },
+        en: {
+            kicker: 'Open for collaboration',
+            title: 'let us talk',
+            text: 'Available for new projects and meaningful professional connections.',
+            cta: 'fill out the brief',
+            contacts: 'Contacts',
+            rights: '© 2025 Cravcenco Vladlena. All rights reserved.',
+            nav: 'Navigation',
+            services: 'Services',
+            projects: 'Projects',
+            blog: 'Blog',
+        },
+    }[locale];
+
     return (
         <footer class="footer">
-            {/* Фон-картинка */}
             <div class="footer__bg" aria-hidden="true" />
             <div class="container">
                 <div class="footer-flex">
-                    {/* CTA */}
                     <div class="footer__cta">
-                        <div class="footer__kicker">Открыта к сотрудничеству</div>
+                        <div class="footer__kicker">{copy.kicker}</div>
 
                         <h1 class="footer__title">
-                            давайте обсудим
+                            {copy.title}
                         </h1>
 
                         <h3 class="footer__text">
-                            Готова к новым проектам и профессиональным знакомствам.
+                            {copy.text}
                         </h3>
 
                         <GlassEffect>
-                            <a class="footer__btn" href="/brief">заполнить бриф</a>
+                            <a class="footer__btn" href={localizePath(locale, '/brief')}>{copy.cta}</a>
                         </GlassEffect>
                     </div>
 
-                    {/* Нижние карточки */}
                     <div class="footer__bottom">
                         <section class="glass-card">
-                            <h3 class="glass-card__title">Контакты</h3>
+                            <h3 class="glass-card__title">{copy.contacts}</h3>
 
                             <div class="glass-card__row">
                                 <span class="glass-card__label">Cravcenco Vladlena</span>
@@ -179,18 +219,18 @@ export default component$(() => {
 
                             </div>
 
-                            <div class="glass-card__meta">© 2025 Cravcenco Vladlena. Все права защищены.</div>
+                            <div class="glass-card__meta">{copy.rights}</div>
                         </section>
 
                         <section class="glass-card glass-card--wide">
                             <div class="glass-card__grid">
                                 <div>
-                                    <h3 class="glass-card__title">Навигация</h3>
+                                    <h3 class="glass-card__title">{copy.nav}</h3>
 
                                     <nav class="glass-card__nav">
-                                        <a href="/services">Услуги</a>
-                                        <a href="/projects">Проекты</a>
-                                        <a href="/blog">Блог</a>
+                                        <a href={localizePath(locale, '/#services')}>{copy.services}</a>
+                                        <a href={localizePath(locale, '/projects')}>{copy.projects}</a>
+                                        <a href={localizePath(locale, '/blog')}>{copy.blog}</a>
                                     </nav>
                                 </div>
 

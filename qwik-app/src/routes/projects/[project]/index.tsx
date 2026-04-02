@@ -1,7 +1,8 @@
 import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
-import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
+import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
+import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 import './project-page.css';
 
 const QUERY = `
@@ -163,6 +164,8 @@ export const BeforeAfter = component$(
 );
 
 export default component$(() => {
+  const loc = useLocation();
+  const locale = getLocaleFromPathname(loc.url.pathname);
   const p = useProject().value as any;
   if (!p) return <section class="case"><h1>Not found</h1></section>;
 
@@ -172,6 +175,35 @@ export default component$(() => {
 
   const showAgency =
     !!agency?.enabled && (!!agency?.name || !!agency?.note || !!agency?.logo);
+  const copy = {
+    ru: {
+      visit: 'перейти на сайт',
+      brief: 'Заполнить бриф',
+      duration: 'продолжительность:',
+      plan: 'План:',
+      beforeAfter: 'до\\после',
+      relatedKicker: 'посмотреть',
+      relatedTitle: 'ЕЩЕ ПРОЕКТЫ',
+    },
+    ro: {
+      visit: 'deschide site-ul',
+      brief: 'Completeaza brief-ul',
+      duration: 'durata:',
+      plan: 'Plan:',
+      beforeAfter: 'inainte\\dupa',
+      relatedKicker: 'vezi',
+      relatedTitle: 'ALTE PROIECTE',
+    },
+    en: {
+      visit: 'visit website',
+      brief: 'Fill out the brief',
+      duration: 'duration:',
+      plan: 'Plan:',
+      beforeAfter: 'before\\after',
+      relatedKicker: 'see',
+      relatedTitle: 'MORE PROJECTS',
+    },
+  }[locale];
 
   return (
     <article class="case">
@@ -214,7 +246,7 @@ export default component$(() => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {hero.ctaPrimary.label || 'перейти на сайт'}
+                    {hero.ctaPrimary.label || copy.visit}
                   </a>
                 ) : null}
 
@@ -225,7 +257,7 @@ export default component$(() => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>{hero.ctaSecondary.label || 'Заполнить бриф'}</span>
+                    <span>{hero.ctaSecondary.label || copy.brief}</span>
                     <span class="btn__arrow" aria-hidden="true">
                       →
                     </span>
@@ -239,11 +271,11 @@ export default component$(() => {
           <aside class="case-hero__right" aria-label="meta">
             <div class="case-miniMeta">
               <div class="case-miniMeta__row">
-                <div class="case-miniMeta__label">продолжительность:</div>
+                <div class="case-miniMeta__label">{copy.duration}</div>
                 <div class="case-miniMeta__value">{hero?.duration || '—'}</div>
               </div>
               <div class="case-miniMeta__row">
-                <div class="case-miniMeta__label">План:</div>
+                <div class="case-miniMeta__label">{copy.plan}</div>
                 <div class="case-miniMeta__value">{hero?.plan || '—'}</div>
               </div>
             </div>
@@ -317,7 +349,7 @@ export default component$(() => {
       {p.beforeAfter?.enabled && p.beforeAfter?.before && p.beforeAfter?.after ? (
         <section class="case-beforeAfter">
           <div class="case-beforeAfter__label">
-            {p.beforeAfter.label || 'до\\после'}
+            {p.beforeAfter.label || copy.beforeAfter}
           </div>
           <BeforeAfter before={p.beforeAfter.before} after={p.beforeAfter.after} />
         </section>
@@ -327,13 +359,13 @@ export default component$(() => {
       {p.relatedProjects?.length ? (
         <section class="case-related">
           <div class="case-related__head">
-            <div class="case-related__kicker">посмотреть</div>
-            <h2 class="case-related__title">ЕЩЕ ПРОЕКТЫ</h2>
+            <div class="case-related__kicker">{copy.relatedKicker}</div>
+            <h2 class="case-related__title">{copy.relatedTitle}</h2>
           </div>
 
           <div class="related-grid">
             {p.relatedProjects.slice(0, 6).map((rp: any) => (
-              <a class="related-card" href={`/projects/${rp.slug}`} key={rp.slug}>
+              <a class="related-card" href={localizePath(locale, `/projects/${rp.slug}`)} key={rp.slug}>
                 <div class="related-card__media">
                   {rp?.mockupBlock?.mockup ? (
                     <img
@@ -369,7 +401,7 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue }) => {
   const p: any = resolveValue(useProject);
   return {
-    title: p?.title ? `${p.title} | проекты` : 'Проект',
+    title: p?.title ? `${p.title} | godevca` : 'Project',
     meta: [{ name: 'description', content: p?.hero?.intro ?? '' }],
   };
 };

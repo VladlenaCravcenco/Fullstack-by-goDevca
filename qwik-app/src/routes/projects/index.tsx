@@ -3,6 +3,7 @@ import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { sanity } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import Blog from '~/components/blog/blog-section';
+import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 import './projects-page.css';
 
 const QUERY = `
@@ -36,9 +37,14 @@ export const useProjects = routeLoader$(async (ctx) => {
 export default component$(() => {
   const items = useProjects().value as any[];
   const loc = useLocation();
+  const locale = getLocaleFromPathname(loc.url.pathname);
   const activeTag = (loc.url.searchParams.get('tag') ?? '').trim();
+  const copy = {
+    ru: { title: 'Проекты', all: 'Все' },
+    ro: { title: 'Proiecte', all: 'Toate' },
+    en: { title: 'Projects', all: 'All' },
+  }[locale];
 
-  // счётчики по тегам
   const counts = new Map<string, number>();
   items.forEach((p) =>
     (p.tags || []).forEach((t: string) => {
@@ -53,17 +59,17 @@ export default component$(() => {
   return (
     <section class="projects-page">
       <header class="projects-head">
-        <h1>Проекты</h1>
+        <h1>{copy.title}</h1>
 
         <nav class="tags">
-          <a href="/projects" class={{ tag: true, active: !activeTag }}>
-            Все
+          <a href={localizePath(locale, '/projects')} class={{ tag: true, active: !activeTag }}>
+            {copy.all}
           </a>
 
           {[...counts.entries()].sort().map(([t, c]) => (
             <a
               key={t}
-              href={`/projects?tag=${encodeURIComponent(t)}`}
+              href={localizePath(locale, `/projects?tag=${encodeURIComponent(t)}`)}
               class={{ tag: true, active: activeTag === t }}
             >
               #{t} <span class="count">{c}</span>
@@ -81,7 +87,7 @@ export default component$(() => {
               : '';
 
           return (
-            <a href={`/projects/${p.slug}`} class="card" key={p._id}>
+            <a href={localizePath(locale, `/projects/${p.slug}`)} class="card" key={p._id}>
               {coverUrl ? (
                 <img
                   width={900}
