@@ -1,6 +1,6 @@
 import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
-import { sanity } from '~/lib/sanity';
+import { sanity, localizedString, localizedStringArray, localizedText } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 import './project-page.css';
@@ -8,41 +8,63 @@ import './project-page.css';
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  title,
+  "title": ${localizedString('titleI18n')},
   "slug": slug.current,
 
   hero{
-    pills,
-    intro,
-    taskTitle,
-    taskText,
-    ctaPrimary{label,url},
-    ctaSecondary{label,url},
-    duration,
-    plan
+    "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')},
+    "intro": ${localizedText('hero.introI18n')},
+    "taskTitle": ${localizedString('hero.taskTitleI18n')},
+    "taskText": ${localizedText('hero.taskTextI18n')},
+    "ctaPrimary": {
+      "label": coalesce(hero.ctaPrimary.labelI18n[$locale], hero.ctaPrimary.labelI18n.ru, hero.ctaPrimary.label),
+      "url": hero.ctaPrimary.url
+    },
+    "ctaSecondary": {
+      "label": coalesce(hero.ctaSecondary.labelI18n[$locale], hero.ctaSecondary.labelI18n.ru, hero.ctaSecondary.label),
+      "url": hero.ctaSecondary.url
+    },
+    "duration": ${localizedString('hero.durationI18n')},
+    "plan": ${localizedString('hero.planI18n')}
   },
 
   mockupBlock{
     mockup,
-    agency{enabled, logo, name, note}
+    agency{
+      enabled,
+      logo,
+      "name": ${localizedString('mockupBlock.agency.nameI18n')},
+      "note": ${localizedString('mockupBlock.agency.noteI18n')}
+    }
   },
 
-  gallery[]{ image, alt },
+  "gallery": gallery[]{
+    image,
+    "alt": coalesce(altI18n[$locale], altI18n.ru, alt)
+  },
 
-  beforeAfter{enabled, label, before, after},
+  "beforeAfter": {
+    "enabled": beforeAfter.enabled,
+    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru, beforeAfter.label),
+    "before": beforeAfter.before,
+    "after": beforeAfter.after
+  },
 
   relatedProjects[]->{
     _id,
-    title,
+    "title": ${localizedString('titleI18n')},
     "slug": slug.current,
-    hero{ pills },
+    hero{
+      "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')}
+    },
     mockupBlock{ mockup }
   }
 }
 `;
 
-export const useProject = routeLoader$(async ({ params, status }) => {
-  const doc = await sanity.fetch(QUERY, { slug: params.project });
+export const useProject = routeLoader$(async ({ params, status, url }) => {
+  const locale = getLocaleFromPathname(url.pathname);
+  const doc = await sanity.fetch(QUERY, { slug: params.project, locale });
   if (!doc) status(404);
   return doc;
 });

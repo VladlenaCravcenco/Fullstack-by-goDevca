@@ -25,6 +25,13 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'titleI18n',
+      title: 'Project title translations',
+      type: 'localeString',
+      group: 'meta',
+      description: 'New multilingual title. If empty, the old "title" field is used as fallback.',
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -38,6 +45,13 @@ export default defineType({
       type: 'datetime',
       group: 'meta',
       initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: 'excerptI18n',
+      title: 'Project short description translations',
+      type: 'localeText',
+      group: 'meta',
+      description: 'Optional localized excerpt for cards/listing.',
     }),
 
     // ───────────────────────────── HERO
@@ -55,6 +69,12 @@ export default defineType({
           validation: (r) => r.max(6),
           description: 'Напр.: website, seo, redesign, wordpress',
         }),
+        defineField({
+          name: 'pillsI18n',
+          title: 'Tags (pills) translations',
+          type: 'localeStringArray',
+          description: 'Localized pills for RU / RO / EN. Falls back to the old "pills" array.',
+        }),
 
         defineField({
           name: 'intro',
@@ -62,6 +82,11 @@ export default defineType({
           type: 'text',
           rows: 3,
           validation: (r) => r.required(),
+        }),
+        defineField({
+          name: 'introI18n',
+          title: 'Intro translations',
+          type: 'localeText',
         }),
 
         defineField({
@@ -71,6 +96,11 @@ export default defineType({
           initialValue: 'задача:',
           description: 'Короткая метка как на макете: "задача:"',
         }),
+        defineField({
+          name: 'taskTitleI18n',
+          title: 'Task label translations',
+          type: 'localeString',
+        }),
 
         defineField({
           name: 'taskText',
@@ -78,6 +108,11 @@ export default defineType({
           type: 'text',
           rows: 3,
           validation: (r) => r.required(),
+        }),
+        defineField({
+          name: 'taskTextI18n',
+          title: 'Task text translations',
+          type: 'localeText',
         }),
 
         defineField({
@@ -91,6 +126,11 @@ export default defineType({
               type: 'string',
               initialValue: 'перейти на сайт',
               validation: (r) => r.required(),
+            }),
+            defineField({
+              name: 'labelI18n',
+              title: 'Label translations',
+              type: 'localeString',
             }),
             defineField({
               name: 'url',
@@ -114,6 +154,11 @@ export default defineType({
               validation: (r) => r.required(),
             }),
             defineField({
+              name: 'labelI18n',
+              title: 'Label translations',
+              type: 'localeString',
+            }),
+            defineField({
               name: 'url',
               title: 'URL',
               type: 'url',
@@ -128,12 +173,22 @@ export default defineType({
           type: 'string',
           description: 'Напр.: 2 месяца',
         }),
+        defineField({
+          name: 'durationI18n',
+          title: 'Duration translations',
+          type: 'localeString',
+        }),
 
         defineField({
           name: 'plan',
           title: 'Plan (right meta)',
           type: 'string',
           description: 'Напр.: Premium',
+        }),
+        defineField({
+          name: 'planI18n',
+          title: 'Plan translations',
+          type: 'localeString',
         }),
       ],
     }),
@@ -177,10 +232,20 @@ export default defineType({
               initialValue: 'GROWUP AGENCY',
             }),
             defineField({
+              name: 'nameI18n',
+              title: 'Agency name translations',
+              type: 'localeString',
+            }),
+            defineField({
               name: 'note',
               title: 'Agency note',
               type: 'string',
               description: 'Напр.: "Проект выполнен для агентства в рамках долгосрочного сотрудничества."',
+            }),
+            defineField({
+              name: 'noteI18n',
+              title: 'Agency note translations',
+              type: 'localeString',
             }),
           ],
         }),
@@ -210,6 +275,11 @@ export default defineType({
               name: 'alt',
               title: 'Alt (optional)',
               type: 'string',
+            }),
+            defineField({
+              name: 'altI18n',
+              title: 'Alt translations',
+              type: 'localeString',
             }),
           ],
           preview: {
@@ -243,6 +313,11 @@ export default defineType({
           initialValue: 'до\\после',
         }),
         defineField({
+          name: 'labelI18n',
+          title: 'Label translations',
+          type: 'localeString',
+        }),
+        defineField({
           name: 'before',
           title: 'Before image',
           type: 'image',
@@ -270,12 +345,16 @@ export default defineType({
 
   preview: {
     select: {
-      title: 'title',
+      title: 'titleI18n.ru',
+      legacyTitle: 'title',
       media: 'mockupBlock.mockup',
-      subtitle: 'hero.intro',
+      subtitle: 'hero.introI18n.ru',
+      legacySubtitle: 'hero.intro',
     },
-    prepare({ title, media, subtitle }) {
-      return { title, media, subtitle: subtitle ? String(subtitle).slice(0, 60) + '…' : '' };
+    prepare({ title, legacyTitle, media, subtitle, legacySubtitle }) {
+      const safeTitle = title || legacyTitle;
+      const safeSubtitle = subtitle || legacySubtitle;
+      return { title: safeTitle, media, subtitle: safeSubtitle ? String(safeSubtitle).slice(0, 60) + '…' : '' };
     },
   },
 });

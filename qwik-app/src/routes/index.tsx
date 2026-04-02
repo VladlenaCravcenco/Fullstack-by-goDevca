@@ -1,7 +1,8 @@
 // src/routes/index.tsx
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
-import { sanity } from '~/lib/sanity';
+import { sanity, localizedString, localizedStringArray } from '~/lib/sanity';
+import { getLocaleFromPathname } from '~/lib/i18n';
 
 import HeroSection from '~/components/hero/hero-section';
 import ServicesSection from '~/components/services/services-section';
@@ -22,16 +23,17 @@ export type HomeProject = {
 const HOME_PROJECTS_QUERY = `
 *[_type=="project" && defined(slug.current)]|order(coalesce(publishedAt,_createdAt) desc)[0...3]{
   _id,
-  title,
+  "title": ${localizedString('titleI18n')},
   "slug": slug.current,
-  "tags": coalesce(hero.pills, tags, []),
+  "tags": ${localizedStringArray('hero.pillsI18n', 'coalesce(hero.pills, tags, [])')},
   "cover": coalesce(mockupBlock.mockup, cover)
 }
 `;
 
 export const useHomeProjects = routeLoader$<HomeProject[]>(async (ctx) => {
   try {
-    const items = await sanity.fetch(HOME_PROJECTS_QUERY);
+    const locale = getLocaleFromPathname(ctx.url.pathname);
+    const items = await sanity.fetch(HOME_PROJECTS_QUERY, { locale });
 
     if (!Array.isArray(items)) return [];
 

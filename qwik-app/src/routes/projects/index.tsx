@@ -1,6 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { sanity } from '~/lib/sanity';
+import { sanity, localizedString, localizedStringArray, localizedText } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import Blog from '~/components/blog/blog-section';
 import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
@@ -9,23 +9,18 @@ import './projects-page.css';
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
   _id,
-  title,
+  "title": ${localizedString('titleI18n')},
   "slug": slug.current,
-
-  // ✅ теги: новое поле hero.pills, но оставляем fallback на tags (если где-то ещё есть старые доки)
-  "tags": coalesce(hero.pills, tags, []),
-
-  // ✅ картинка: новое поле mockupBlock.mockup, но оставляем fallback на cover (если где-то ещё есть старые доки)
+  "tags": ${localizedStringArray('hero.pillsI18n', 'coalesce(hero.pills, tags, [])')},
   "cover": coalesce(mockupBlock.mockup, cover),
-
-  // ✅ текст для карточки: если у тебя нет excerpt в схеме — будет пусто, но не упадёт
-  excerpt
+  "excerpt": ${localizedText('excerptI18n')}
 }
 `;
 
 export const useProjects = routeLoader$(async (ctx) => {
   try {
-    const items = await sanity.fetch(QUERY);
+    const locale = getLocaleFromPathname(ctx.url.pathname);
+    const items = await sanity.fetch(QUERY, { locale });
     return Array.isArray(items) ? items.filter((p) => p?.slug) : [];
   } catch (e: any) {
     console.error('Sanity fetch failed:', e?.message || e);

@@ -7,3 +7,8 @@ export const sanity = createClient({
   useCdn: false,           // ← на время диагностики лучше выключить кеш CDN
   perspective: 'published' // показываем только опубликованное
 });
+
+export const localizedString = (field: string) => `coalesce(${field}[$locale], ${field}.ru, ${field})`;
+export const localizedText = (field: string) => `coalesce(${field}[$locale], ${field}.ru, ${field})`;
+export const localizedStringArray = (field: string, fallback = '[]') =>
+  `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;
