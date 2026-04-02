@@ -1,7 +1,9 @@
-import { component$, Slot } from '@builder.io/qwik';
+import { component$, Slot, useVisibleTask$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
+import { useLocation } from '@builder.io/qwik-city';
 import Header from '~/components/header/header';
 import Footer from '~/components/footer/footer';
+import { getLocaleFromPathname, localeHtmlLang } from '~/lib/i18n';
 import '~/global.css';
 
 export const head: DocumentHead = {
@@ -51,6 +53,17 @@ Cal.ns["30min"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
 };
 
 export default component$(() => {
+  const loc = useLocation();
+
+  useVisibleTask$(({ track }) => {
+    track(() => loc.url.pathname);
+    const locale = getLocaleFromPathname(loc.url.pathname);
+    const lang = localeHtmlLang[locale];
+
+    document.documentElement.lang = lang;
+    document.body.lang = lang;
+  });
+
   return (
     <>
       <Header />

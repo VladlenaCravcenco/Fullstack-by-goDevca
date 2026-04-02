@@ -1,7 +1,9 @@
 import { component$ } from '@builder.io/qwik';
+import { useLocation } from '@builder.io/qwik-city';
 import './ProjectsSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
 import { urlFor } from '~/lib/imageUrl';
+import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 
 export type HomeProject = {
   _id: string;
@@ -14,21 +16,42 @@ export type HomeProject = {
 };
 
 export default component$(({ projects }: { projects: HomeProject[] }) => {
+  const loc = useLocation();
+  const locale = getLocaleFromPathname(loc.url.pathname);
+  const copy = {
+    ru: {
+      title: ['От идеи', 'до результата'],
+      description: 'Каждый кейс, это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.',
+      cta: 'посмотреть проекты',
+    },
+    ro: {
+      title: ['De la idee', 'la rezultat'],
+      description: 'Fiecare caz este o lucrare completa cu design, dezvoltare, CMS, SEO si lansare.',
+      cta: 'vezi proiectele',
+    },
+    en: {
+      title: ['From idea', 'to launch'],
+      description: 'Each case study is a full scope project covering design, development, CMS, SEO and launch.',
+      cta: 'view projects',
+    },
+  }[locale];
+
   return (
     <section class="projects" id="projects">
       <div class="container">
         <div class="projects__head">
           <h2 class="projects__title">
-            От идеи<br />до результата
+            {copy.title[0]}
+            <br />
+            {copy.title[1]}
           </h2>
 
-          <p class="projects__desc">
-            Каждый кейс — это полноценная работа с дизайном, разработкой, CMS, SEO и запуском.
-          </p>
+          <p class="projects__desc">{copy.description}</p>
 
-          {/* кнопки НЕ трогаю */}
           <GlassEffect class="projects__btn">
-            <a href="/projects" rel="external">посмотреть проекты</a>
+            <a href={localizePath(locale, '/projects')} rel="external">
+              {copy.cta}
+            </a>
           </GlassEffect>
         </div>
 
@@ -40,7 +63,7 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
                 : '';
 
             return (
-              <a href={`/projects/${p.slug}`} key={p._id} class="pCard">
+              <a href={localizePath(locale, `/projects/${p.slug}`)} key={p._id} class="pCard">
                 <div class="pCard__media">
                   {coverUrl ? (
                     <img
@@ -61,7 +84,6 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
                   <h3 class="pCard__title">{p.title}</h3>
 
                   <div class="pCard__meta">
-                    {/* если duration нет — просто не показываем */}
                     {p.duration ? (
                       <span class="pBadge">
                         <span class="pBadge__icon" aria-hidden="true">⏱</span>

@@ -1,51 +1,67 @@
 import { component$, useSignal } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { useLocation } from '@builder.io/qwik-city';
 import './faq-section.css';
-
-const faqs = [
-  {
-    question: 'Сколько времени занимает создание сайта?',
-    answer:
-      'Зависит от объёма и сложности проекта: лендинг — от 7 до 14 дней; сайт с CMS и мультиязыком — от 3 недель. Каждый проект начинается с обсуждения сроков и этапов.',
-  },
-  {
-    question: 'Что нужно от меня для начала работы?',
-    answer:
-      'На старте мне нужны: Краткое описание вашего бизнеса; Примеры сайтов, которые вам нравятся; Структура или черновик контента (если есть); Остальное я помогу сформулировать и соберу в бриф.',
-  },
-  {
-    question: 'Я не разбираюсь в технических деталях — вы всё сделаете?',
-    answer:
-      'Конечно. Я беру на себя весь процесс: от дизайна до публикации сайта. Вы получите готовый результат и инструкции для управления.',
-  },
-  {
-    question: 'Смогу ли я потом менять тексты и фото самостоятельно?',
-    answer:
-      'Да! Если в пакете есть CMS (Sanity), вы сможете редактировать проекты, тексты, цены и другие блоки через простой интерфейс.',
-  },
-  {
-    question: 'Чем вы отличаетесь от студий и шаблонных решений?',
-    answer:
-      'Я не использую шаблоны и не гонюсь за количеством. Каждый сайт — это индивидуальное решение, в котором я продумываю не только визуал, но и структуру, контент, анимации и удобство обновления.',
-  },
-];
+import { getLocaleFromPathname } from '~/lib/i18n';
 
 export default component$(() => {
+  const loc = useLocation();
+  const locale = getLocaleFromPathname(loc.url.pathname);
   const openIndex = useSignal<number | null>(null);
+  const copy = {
+    ru: {
+      title: 'FAQ',
+      description: 'Коротко отвечаю на самые частые вопросы, которые помогают вам понять процесс',
+      sideTitle: 'остались вопросы?',
+      sideText: 'Забронируй звонок на 30 минут со мной.',
+      book: 'забронировать консультацию',
+      faqs: [
+        ['Сколько времени занимает создание сайта?', 'Зависит от объёма и сложности проекта: лендинг от 7 до 14 дней, сайт с CMS и мультиязыком от 3 недель.'],
+        ['Что нужно от меня для начала работы?', 'На старте мне нужны описание бизнеса, примеры сайтов, которые вам нравятся, и черновик контента, если он уже есть.'],
+        ['Я не разбираюсь в технических деталях, вы всё сделаете?', 'Да. Я беру на себя весь процесс: от дизайна до публикации сайта и передачи инструкции.'],
+        ['Смогу ли я потом менять тексты и фото самостоятельно?', 'Да. Если в проекте есть CMS Sanity, вы сможете редактировать контент через простой интерфейс.'],
+        ['Чем вы отличаетесь от студий и шаблонных решений?', 'Я не работаю по шаблону. Каждый сайт собирается под конкретную задачу, структуру и контент бизнеса.'],
+      ],
+    },
+    ro: {
+      title: 'FAQ',
+      description: 'Raspund pe scurt la cele mai frecvente intrebari ca sa intelegi procesul mai clar',
+      sideTitle: 'mai sunt intrebari?',
+      sideText: 'Programeaza un apel de 30 de minute cu mine.',
+      book: 'rezerva consultatia',
+      faqs: [
+        ['Cat dureaza crearea unui site?', 'Depinde de volum si complexitate: un landing dureaza de obicei 7-14 zile, iar un site cu CMS si multilingv de la 3 saptamani.'],
+        ['Ce trebuie sa pregatesc pentru start?', 'Am nevoie de o descriere scurta a businessului, exemple de site-uri care iti plac si, daca exista, un draft de continut.'],
+        ['Nu ma pricep la partea tehnica, te ocupi de tot?', 'Da. Preiau intregul proces, de la design pana la lansare si predare.'],
+        ['Voi putea schimba ulterior textele si pozele?', 'Da. Daca proiectul include Sanity CMS, vei putea actualiza continutul singur printr-o interfata simpla.'],
+        ['Prin ce te diferentiezi de studiouri si sabloane?', 'Nu lucrez cu template-uri standard. Fiecare site este construit pentru contextul, structura si obiectivele businessului tau.'],
+      ],
+    },
+    en: {
+      title: 'FAQ',
+      description: 'Short answers to the most common questions so you can understand the process quickly',
+      sideTitle: 'still have questions?',
+      sideText: 'Book a 30-minute call with me.',
+      book: 'book a consultation',
+      faqs: [
+        ['How long does a website take to build?', 'It depends on scope and complexity: a landing page usually takes 7-14 days, while a CMS and multilingual site starts from 3 weeks.'],
+        ['What do you need from me to get started?', 'I need a short description of your business, examples of websites you like and any rough content structure if you already have one.'],
+        ['I do not understand technical details, will you handle everything?', 'Yes. I take care of the full process from design to launch and handoff.'],
+        ['Will I be able to update text and images myself later?', 'Yes. If the project includes Sanity CMS, you will be able to edit content yourself through a simple interface.'],
+        ['What makes you different from agencies and template solutions?', 'I do not work from generic templates. Every site is built around the specific goal, structure and content of the business.'],
+      ],
+    },
+  }[locale];
 
- 
+  const faqs = copy.faqs.map(([question, answer]) => ({ question, answer }));
 
   return (
     <section class="faq container">
       <div class="faq__header">
-        <h2>FAQ</h2>
-        <p class="faq__description">
-          Коротко отвечаю на самые частые вопросы, которые помогают вам понять процесс
-        </p>
+        <h2>{copy.title}</h2>
+        <p class="faq__description">{copy.description}</p>
       </div>
 
       <div class="faq__grid">
-        {/* LEFT */}
         <ul class="faq__list">
           {faqs.map((item, index) => (
             <li
@@ -67,10 +83,9 @@ export default component$(() => {
           ))}
         </ul>
 
-        {/* RIGHT */}
         <aside class="faq__side">
-          <h3 class="faq__sideTitle">остались вопросы?</h3>
-          <p class="faq__sideText">Забронируй звонок на 30 минут со мной.</p>
+          <h3 class="faq__sideTitle">{copy.sideTitle}</h3>
+          <p class="faq__sideText">{copy.sideText}</p>
 
           <button
             type="button"
@@ -79,20 +94,10 @@ export default component$(() => {
             data-cal-namespace="30min"
             data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
           >
-            забронировать консультацию
+            {copy.book}
           </button>
         </aside>
       </div>
     </section>
   );
 });
-
-export const head: DocumentHead = {
-  title: 'Частые вопросы',
-  meta: [
-    {
-      name: 'description',
-      content: 'Ответы на популярные вопросы по созданию сайтов и шаблонов.',
-    },
-  ],
-};
