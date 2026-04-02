@@ -26,7 +26,7 @@ export default component$(({ projects }: { projects: HomeProject[] }) => {
     },
     ro: {
       title: ['De la idee', 'la rezultat'],
-      description: 'Fiecare caz este o lucrare completa cu design, dezvoltare, CMS, SEO si lansare.',
+      description: 'Fiecare caz este o lucrare completă cu design, dezvoltare, CMS, SEO și lansare.',
       cta: 'vezi proiectele',
     },
     en: {

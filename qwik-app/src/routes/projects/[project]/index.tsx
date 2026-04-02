@@ -187,10 +187,10 @@ export default component$(() => {
     },
     ro: {
       visit: 'deschide site-ul',
-      brief: 'Completeaza brief-ul',
-      duration: 'durata:',
+      brief: 'Completează brief-ul',
+      duration: 'durată:',
       plan: 'Plan:',
-      beforeAfter: 'inainte\\dupa',
+      beforeAfter: 'înainte\\după',
       relatedKicker: 'vezi',
       relatedTitle: 'ALTE PROIECTE',
     },

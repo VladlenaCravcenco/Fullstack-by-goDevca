@@ -44,12 +44,12 @@ export default component$(() => {
       ],
     },
     ro: {
-      available: 'Disponibila pentru proiecte',
+      available: 'Disponibilă pentru proiecte',
       navLabel: 'Navigare',
       menuLabel: 'Meniu',
       openMenu: 'Deschide meniul',
-      closeMenu: 'Inchide meniul',
-      cta: 'completeaza brief-ul',
+      closeMenu: 'Închide meniul',
+      cta: 'completează brief-ul',
       nav: [
         { label: 'Servicii', href: '/#services' },
         { label: 'Proiecte', href: '/projects' },

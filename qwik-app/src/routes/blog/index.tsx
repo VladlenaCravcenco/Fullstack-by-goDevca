@@ -24,7 +24,7 @@ export const head: DocumentHead = ({ url }) => {
         },
         ro: {
             title: 'Insight-urile mele | godevca',
-            description: 'Aici poti gasi lucruri noi din zona digitala',
+            description: 'Aici poți găsi lucruri noi din zona digitală',
         },
         en: {
             title: 'My insights | godevca',

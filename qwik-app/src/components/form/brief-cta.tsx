@@ -13,8 +13,8 @@ export default component$(() => {
       cta: 'заполнить бриф',
     },
     ro: {
-      title: 'Pornim cu un pas mic, tu completezi, iar eu iti propun solutia.',
-      cta: 'completeaza brief-ul',
+      title: 'Pornim cu un pas mic, tu completezi, iar eu îți propun soluția.',
+      cta: 'completează brief-ul',
     },
     en: {
       title: 'Let us start with a small step, you fill it out and I propose the solution.',

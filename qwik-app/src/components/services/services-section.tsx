@@ -50,21 +50,21 @@ export default component$(() => {
                 },
                 {
                     tag: 'React / Qwik',
-                    title: 'Dezvoltare dupa design existent',
+                    title: 'Dezvoltare după design existent',
                     description:
-                        'Transform designul tau in cod curat, rapid si adaptiv. Potrivit daca ai deja designul in Figma si trebuie construit site-ul.'
+                        'Transform designul tău în cod curat, rapid și adaptiv. Potrivit dacă ai deja designul în Figma și trebuie construit site-ul.'
                 },
                 {
                     tag: 'Sanity',
                     title: 'Integrare CMS si admin',
                     description:
-                        'Conectez panoul Sanity ca sa poti edita textele, imaginile si proiectele fara programator.'
+                        'Conectez panoul Sanity ca să poți edita textele, imaginile și proiectele fără programator.'
                 },
                 {
                     tag: 'Qwik / Sanity',
                     title: 'SEO si optimizare',
                     description:
-                        'Setez meta taguri, alt-uri, headings si structura ca site-ul sa intre in Google si sa ramana rapid.'
+                        'Setez meta taguri, alt-uri, headings și structură ca site-ul să intre în Google și să rămână rapid.'
                 }
             ]
         },

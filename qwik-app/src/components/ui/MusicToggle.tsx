@@ -10,7 +10,7 @@ export const MusicToggle = component$(() => {
   const enabled = useSignal(false);
   const label = {
     ru: 'Музыка',
-    ro: 'Muzica',
+    ro: 'Muzică',
     en: 'Music',
   }[locale];
 
