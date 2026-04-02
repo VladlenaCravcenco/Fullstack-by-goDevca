@@ -8,14 +8,14 @@ import './project-page.css';
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  "title": ${localizedString('titleI18n')},
+  "title": ${localizedString('titleI18n', 'title')},
   "slug": slug.current,
 
   hero{
     "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')},
-    "intro": ${localizedText('hero.introI18n')},
-    "taskTitle": ${localizedString('hero.taskTitleI18n')},
-    "taskText": ${localizedText('hero.taskTextI18n')},
+    "intro": ${localizedText('hero.introI18n', 'hero.intro')},
+    "taskTitle": ${localizedString('hero.taskTitleI18n', 'hero.taskTitle')},
+    "taskText": ${localizedText('hero.taskTextI18n', 'hero.taskText')},
     "ctaPrimary": {
       "label": coalesce(hero.ctaPrimary.labelI18n[$locale], hero.ctaPrimary.labelI18n.ru, hero.ctaPrimary.label),
       "url": hero.ctaPrimary.url
@@ -24,8 +24,8 @@ const QUERY = `
       "label": coalesce(hero.ctaSecondary.labelI18n[$locale], hero.ctaSecondary.labelI18n.ru, hero.ctaSecondary.label),
       "url": hero.ctaSecondary.url
     },
-    "duration": ${localizedString('hero.durationI18n')},
-    "plan": ${localizedString('hero.planI18n')}
+    "duration": ${localizedString('hero.durationI18n', 'hero.duration')},
+    "plan": ${localizedString('hero.planI18n', 'hero.plan')}
   },
 
   mockupBlock{
@@ -33,8 +33,8 @@ const QUERY = `
     agency{
       enabled,
       logo,
-      "name": ${localizedString('mockupBlock.agency.nameI18n')},
-      "note": ${localizedString('mockupBlock.agency.noteI18n')}
+      "name": ${localizedString('mockupBlock.agency.nameI18n', 'mockupBlock.agency.name')},
+      "note": ${localizedString('mockupBlock.agency.noteI18n', 'mockupBlock.agency.note')}
     }
   },
 
@@ -52,7 +52,7 @@ const QUERY = `
 
   relatedProjects[]->{
     _id,
-    "title": ${localizedString('titleI18n')},
+    "title": ${localizedString('titleI18n', 'title')},
     "slug": slug.current,
     hero{
       "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')}

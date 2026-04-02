@@ -9,11 +9,11 @@ import './projects-page.css';
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
   _id,
-  "title": ${localizedString('titleI18n')},
+  "title": ${localizedString('titleI18n', 'title')},
   "slug": slug.current,
   "tags": ${localizedStringArray('hero.pillsI18n', 'coalesce(hero.pills, tags, [])')},
   "cover": coalesce(mockupBlock.mockup, cover),
-  "excerpt": ${localizedText('excerptI18n')}
+  "excerpt": ${localizedText('excerptI18n', 'excerpt')}
 }
 `;
 
