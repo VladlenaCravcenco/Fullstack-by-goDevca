@@ -8,9 +8,7 @@ export const sanity = createClient({
   perspective: 'published' // показываем только опубликованное
 });
 
-export const localizedString = (field: string, fallback = 'null') =>
-  `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;
-export const localizedText = (field: string, fallback = 'null') =>
-  `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;
+export const localizedString = (field: string) => `coalesce(${field}[$locale], ${field}.ru)`;
+export const localizedText = (field: string) => `coalesce(${field}[$locale], ${field}.ru)`;
 export const localizedStringArray = (field: string, fallback = '[]') =>
   `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;

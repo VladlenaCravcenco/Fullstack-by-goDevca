@@ -1,6 +1,6 @@
 import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
-import { sanity, localizedString, localizedStringArray, localizedText } from '~/lib/sanity';
+import { sanity, localizedString } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 import './project-page.css';
@@ -8,24 +8,24 @@ import './project-page.css';
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  "title": ${localizedString('titleI18n', 'title')},
+  "title": ${localizedString('titleI18n')},
   "slug": slug.current,
 
   hero{
-    "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')},
-    "intro": ${localizedText('hero.introI18n', 'hero.intro')},
-    "taskTitle": ${localizedString('hero.taskTitleI18n', 'hero.taskTitle')},
-    "taskText": ${localizedText('hero.taskTextI18n', 'hero.taskText')},
+    "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills),
+    "intro": coalesce(introI18n[$locale], introI18n.ru),
+    "taskTitle": coalesce(taskTitleI18n[$locale], taskTitleI18n.ru),
+    "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru),
     "ctaPrimary": {
-      "label": coalesce(hero.ctaPrimary.labelI18n[$locale], hero.ctaPrimary.labelI18n.ru, hero.ctaPrimary.label),
-      "url": hero.ctaPrimary.url
+      "label": coalesce(ctaPrimary.labelI18n[$locale], ctaPrimary.labelI18n.ru),
+      "url": ctaPrimary.url
     },
     "ctaSecondary": {
-      "label": coalesce(hero.ctaSecondary.labelI18n[$locale], hero.ctaSecondary.labelI18n.ru, hero.ctaSecondary.label),
-      "url": hero.ctaSecondary.url
+      "label": coalesce(ctaSecondary.labelI18n[$locale], ctaSecondary.labelI18n.ru),
+      "url": ctaSecondary.url
     },
-    "duration": ${localizedString('hero.durationI18n', 'hero.duration')},
-    "plan": ${localizedString('hero.planI18n', 'hero.plan')}
+    "duration": coalesce(durationI18n[$locale], durationI18n.ru),
+    "plan": coalesce(planI18n[$locale], planI18n.ru)
   },
 
   mockupBlock{
@@ -33,29 +33,29 @@ const QUERY = `
     agency{
       enabled,
       logo,
-      "name": ${localizedString('mockupBlock.agency.nameI18n', 'mockupBlock.agency.name')},
-      "note": ${localizedString('mockupBlock.agency.noteI18n', 'mockupBlock.agency.note')}
+      "name": coalesce(nameI18n[$locale], nameI18n.ru),
+      "note": coalesce(noteI18n[$locale], noteI18n.ru)
     }
   },
 
   "gallery": gallery[]{
     image,
-    "alt": coalesce(altI18n[$locale], altI18n.ru, alt)
+    "alt": coalesce(altI18n[$locale], altI18n.ru)
   },
 
   "beforeAfter": {
     "enabled": beforeAfter.enabled,
-    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru, beforeAfter.label),
+    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru),
     "before": beforeAfter.before,
     "after": beforeAfter.after
   },
 
   relatedProjects[]->{
     _id,
-    "title": ${localizedString('titleI18n', 'title')},
+    "title": ${localizedString('titleI18n')},
     "slug": slug.current,
     hero{
-      "pills": ${localizedStringArray('hero.pillsI18n', 'hero.pills')}
+      "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, [])
     },
     mockupBlock{ mockup }
   }
