@@ -1,30 +1,36 @@
-import {component$} from '@builder.io/qwik'
-import type {DocumentHead} from '@builder.io/qwik-city'
-import { Link } from '@builder.io/qwik-city';
+import { component$ } from '@builder.io/qwik';
+import { Link, useLocation } from '@builder.io/qwik-city';
 import './brief-cta.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
+import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 
 export default component$(() => {
+  const loc = useLocation();
+  const locale = getLocaleFromPathname(loc.url.pathname);
+  const copy = {
+    ru: {
+      title: 'Начнём с маленького шага, вы заполняете, а я предложу решение.',
+      cta: 'заполнить бриф',
+    },
+    ro: {
+      title: 'Pornim cu un pas mic, tu completezi, iar eu iti propun solutia.',
+      cta: 'completeaza brief-ul',
+    },
+    en: {
+      title: 'Let us start with a small step, you fill it out and I propose the solution.',
+      cta: 'fill out the brief',
+    },
+  }[locale];
+
   return (
     <section class="brief-cta">
       <div class="brief-cta__overlay">
-        <h2>Начнём с маленького шага — вы заполняете, а я предложу решение.</h2>
+        <h2>{copy.title}</h2>
         
          <GlassEffect class="brief-cta__btn">
-            <Link href="/brief">заполнить бриф</Link>
+            <Link href={localizePath(locale, '/brief')}>{copy.cta}</Link>
           </GlassEffect>
       </div>
     </section>
   );
 });
-
-export const head: DocumentHead = {
-    title: 'Обо мне',
-    meta: [
-        {
-            name: 'description',
-            content: 'Всё началось с желания сделать сайт для своей анимационной студии uhappy.md',
-
-        },
-    ],
-};
