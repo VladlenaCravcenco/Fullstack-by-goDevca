@@ -29,6 +29,7 @@
   grid-column: 1 / 2;
   border-radius: 25px;
   padding: 25px;
+  min-height: 310px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
@@ -68,25 +69,25 @@
 
 /* Позиции плашки (зависит от расстояния между пунктами) */
 .blog__tabs--design::before {
-  transform: translateY(0);
-}
-
-.blog__tabs--framework::before {
-  transform: translateY(52px);
-}
-
-.blog__tabs--soft::before {
   transform: translateY(104px);
 }
 
-.blog__tabs--ai::before {
+.blog__tabs--react::before {
+  transform: translateY(0);
+}
+
+.blog__tabs--qwik::before {
+  transform: translateY(52px);
+}
+
+.blog__tabs--3d::before {
   transform: translateY(156px);
 }
 
 /* Можно добавить лёгкий эффект "растягивания" при переходе на нижние табы */
-.blog__tabs--framework::before,
-.blog__tabs--soft::before,
-.blog__tabs--ai::before {
+.blog__tabs--react::before,
+.blog__tabs--qwik::before,
+.blog__tabs--3d::before {
   height: 48px;
 }
 
@@ -105,6 +106,15 @@
   font-weight: 700;
 }
 
+.blog__filter-description {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
 /* Кнопка снизу */
 .blog__all-posts-btn .glass-btn {
   width: 100%;
@@ -118,11 +128,33 @@
 .blog__post-card {
   background: #fff;
   border-radius: 24px;
-  height: 180px;
+  min-height: 180px;
   padding: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
   font-weight: 600;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.blog__post-card strong {
+  font-size: 22px;
+  line-height: 1.05;
+  font-family: "Soyuz Grotesk";
+}
+
+.blog__post-card span {
+  color: rgba(0, 0, 0, 0.72);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.blog__post-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 /* Адаптив */
@@ -142,6 +174,7 @@
 
   .blog__post-card {
     order: 3;
+    min-height: 220px;
   }
 
   .blog__filter .blog__all-posts-btn {
