@@ -8,7 +8,28 @@ export const sanity = createClient({
   perspective: 'published' // показываем только опубликованное
 });
 
-export const localizedString = (field: string) => `coalesce(${field}[$locale], ${field}.ru)`;
-export const localizedText = (field: string) => `coalesce(${field}[$locale], ${field}.ru)`;
+const withLegacyFallback = (field: string, legacyField?: string, fallback?: string) => {
+  const parts = [`${field}[$locale]`, `${field}.ru`];
+
+  if (legacyField) {
+    parts.push(legacyField);
+  }
+
+  if (fallback) {
+    parts.push(fallback);
+  }
+
+  return `coalesce(${parts.join(', ')})`;
+};
+
+export const localizedString = (field: string, legacyField?: string, fallback?: string) =>
+  withLegacyFallback(field, legacyField, fallback);
+
+export const localizedText = (field: string, legacyField?: string, fallback?: string) =>
+  withLegacyFallback(field, legacyField, fallback);
+
 export const localizedStringArray = (field: string, fallback = '[]') =>
   `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;
+
+export const localizedPortableText = (field: string, legacyField?: string, fallback = '[]') =>
+  withLegacyFallback(field, legacyField, fallback);

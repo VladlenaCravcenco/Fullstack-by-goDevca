@@ -21,10 +21,10 @@ import "./blog-page.css";
 const BLOG_LIST_QUERY = `
 *[_type=="post" && defined(slug.current)]|order(featured desc, publishedAt desc){
   _id,
-  "title": ${localizedString("titleI18n")},
+  "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
   category,
-  "excerpt": ${localizedText("excerptI18n")},
+  "excerpt": ${localizedText("excerptI18n", "excerpt", '""')},
   publishedAt,
   readingTime,
   featured,

@@ -1,6 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { sanity, localizedString, localizedStringArray, localizedText } from '~/lib/sanity';
+import { sanity, localizedString, localizedText } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
 import Blog from '~/components/blog/blog-section';
 import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
@@ -9,11 +9,11 @@ import './projects-page.css';
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
   _id,
-  "title": ${localizedString('titleI18n')},
+  "title": ${localizedString('titleI18n', 'title', 'slug.current')},
   "slug": slug.current,
-  "tags": ${localizedStringArray('hero.pillsI18n')},
+  "tags": coalesce(hero.pillsI18n[$locale], hero.pillsI18n.ru, hero.pills, []),
   "cover": mockupBlock.mockup,
-  "excerpt": ${localizedText('excerptI18n')}
+  "excerpt": ${localizedText('excerptI18n', 'excerpt', '""')}
 }
 `;
 

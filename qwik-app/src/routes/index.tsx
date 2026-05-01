@@ -4,7 +4,6 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   sanity,
   localizedString,
-  localizedStringArray,
   localizedText,
 } from "~/lib/sanity";
 import { getLocaleFromPathname } from "~/lib/i18n";
@@ -30,9 +29,9 @@ export type HomeProject = {
 const HOME_PROJECTS_QUERY = `
 *[_type=="project" && defined(slug.current)]|order(coalesce(publishedAt,_createdAt) desc)[0...3]{
   _id,
-  "title": ${localizedString("titleI18n")},
+  "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
-  "tags": ${localizedStringArray("hero.pillsI18n")},
+  "tags": coalesce(hero.pillsI18n[$locale], hero.pillsI18n.ru, hero.pills, []),
   "cover": mockupBlock.mockup
 }
 `;
@@ -40,10 +39,10 @@ const HOME_PROJECTS_QUERY = `
 const HOME_POSTS_QUERY = `
 *[_type=="post" && defined(slug.current)]|order(featured desc, publishedAt desc)[0...8]{
   _id,
-  "title": ${localizedString("titleI18n")},
+  "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
   category,
-  "excerpt": ${localizedText("excerptI18n")},
+  "excerpt": ${localizedText("excerptI18n", "excerpt", '""')},
   publishedAt,
   readingTime,
   featured,

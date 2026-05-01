@@ -8,24 +8,24 @@ import './project-page.css';
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  "title": ${localizedString('titleI18n')},
+  "title": ${localizedString('titleI18n', 'title', 'slug.current')},
   "slug": slug.current,
 
   hero{
-    "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills),
-    "intro": coalesce(introI18n[$locale], introI18n.ru),
-    "taskTitle": coalesce(taskTitleI18n[$locale], taskTitleI18n.ru),
-    "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru),
+    "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills, []),
+    "intro": coalesce(introI18n[$locale], introI18n.ru, intro),
+    "taskTitle": coalesce(taskTitleI18n[$locale], taskTitleI18n.ru, taskTitle),
+    "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru, taskText),
     "ctaPrimary": {
-      "label": coalesce(ctaPrimary.labelI18n[$locale], ctaPrimary.labelI18n.ru),
+      "label": coalesce(ctaPrimary.labelI18n[$locale], ctaPrimary.labelI18n.ru, ctaPrimary.label),
       "url": ctaPrimary.url
     },
     "ctaSecondary": {
-      "label": coalesce(ctaSecondary.labelI18n[$locale], ctaSecondary.labelI18n.ru),
+      "label": coalesce(ctaSecondary.labelI18n[$locale], ctaSecondary.labelI18n.ru, ctaSecondary.label),
       "url": ctaSecondary.url
     },
-    "duration": coalesce(durationI18n[$locale], durationI18n.ru),
-    "plan": coalesce(planI18n[$locale], planI18n.ru)
+    "duration": coalesce(durationI18n[$locale], durationI18n.ru, duration),
+    "plan": coalesce(planI18n[$locale], planI18n.ru, plan)
   },
 
   mockupBlock{
@@ -33,29 +33,29 @@ const QUERY = `
     agency{
       enabled,
       logo,
-      "name": coalesce(nameI18n[$locale], nameI18n.ru),
-      "note": coalesce(noteI18n[$locale], noteI18n.ru)
+      "name": coalesce(nameI18n[$locale], nameI18n.ru, name),
+      "note": coalesce(noteI18n[$locale], noteI18n.ru, note)
     }
   },
 
   "gallery": gallery[]{
     image,
-    "alt": coalesce(altI18n[$locale], altI18n.ru)
+    "alt": coalesce(altI18n[$locale], altI18n.ru, alt)
   },
 
   "beforeAfter": {
     "enabled": beforeAfter.enabled,
-    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru),
+    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru, beforeAfter.label),
     "before": beforeAfter.before,
     "after": beforeAfter.after
   },
 
   relatedProjects[]->{
     _id,
-    "title": ${localizedString('titleI18n')},
+    "title": ${localizedString('titleI18n', 'title', 'slug.current')},
     "slug": slug.current,
     hero{
-      "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, [])
+      "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills, [])
     },
     mockupBlock{ mockup }
   }

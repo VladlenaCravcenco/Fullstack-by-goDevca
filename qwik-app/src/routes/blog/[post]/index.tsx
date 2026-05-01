@@ -6,7 +6,6 @@ import {
 } from "@builder.io/qwik-city";
 import { PortableText } from "~/components/blog/portable-text";
 import {
-  getPortableTextQuery,
   blogCategoryCopy,
   blogPageCopy,
   formatBlogDate,
@@ -16,6 +15,7 @@ import { getLocaleFromPathname, localizePath } from "~/lib/i18n";
 import {
   localizedString,
   localizedStringArray,
+  localizedPortableText,
   localizedText,
   sanity,
 } from "~/lib/sanity";
@@ -26,17 +26,17 @@ import "./post-page.css";
 const BLOG_POST_QUERY = `
 *[_type=="post" && slug.current == $slug][0]{
   _id,
-  "title": ${localizedString("titleI18n")},
+  "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
   category,
-  "excerpt": ${localizedText("excerptI18n")},
+  "excerpt": ${localizedText("excerptI18n", "excerpt", '""')},
   publishedAt,
   readingTime,
   featured,
   cover,
-  "content": ${getPortableTextQuery("content")},
-  "seoTitle": ${localizedString("seoTitleI18n")},
-  "seoDescription": ${localizedText("seoDescriptionI18n")},
+  "content": ${localizedPortableText("content", "content", "[]")},
+  "seoTitle": ${localizedString("seoTitleI18n", "seoTitle", '""')},
+  "seoDescription": ${localizedText("seoDescriptionI18n", "seoDescription", '""')},
   "seoKeywords": ${localizedStringArray("seoKeywordsI18n")}
 }
 `;

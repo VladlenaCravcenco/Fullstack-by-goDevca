@@ -180,5 +180,5 @@ export function isBlogCategory(value: string | null | undefined): value is BlogC
 }
 
 export function getPortableTextQuery(fieldName: string): string {
-  return `coalesce(${fieldName}[$locale], ${fieldName}.ru)`;
+  return `coalesce(${fieldName}[$locale], ${fieldName}.ru, [])`;
 }
