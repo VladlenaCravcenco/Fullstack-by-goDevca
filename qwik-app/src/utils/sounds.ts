@@ -36,7 +36,6 @@ export function playGlassHover() {
       src: ["/sounds/glass-tap3.aiff"],
       volume: 0.1,
       preload: true,
-      html5: true,
     });
   }
 
