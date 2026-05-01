@@ -16,9 +16,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 40px;
+  gap: var(--space-7);
   align-items: center;
-  width: 70%;
+  width: min(100%, 76rem);
 }
 
 .hero__left {
@@ -28,9 +28,10 @@
 }
 
 .hero-title {
-  font-size: clamp(40px, 6vw, 72px);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .hero-title .line {
@@ -96,9 +97,10 @@
 } */
 
 .hero__left p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 12px;
+  max-width: 44rem;
+  margin: 0 auto var(--space-3);
+  font-size: var(--text-lg);
+  line-height: var(--lh-copy-wide);
 }
 
 .hero__left p strong {
@@ -108,13 +110,13 @@
 .hero__buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 32px;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
   justify-content: center;
 }
 
 .btn {
-  font-size: 16px;
+  font-size: var(--text-base);
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -162,7 +164,8 @@
 /* Mobile */
 @media (max-width: 768px) {
   .hero {
-    padding: 200px 0 50px;
+    padding: 160px 0 64px;
+    height: auto;
   }
   .hero__content {
     flex-direction: column;
@@ -182,8 +185,8 @@
   }
 
   .hero__left h1 {
-    font-size: 40px;
-    line-height: 40px;
+    font-size: clamp(2.5rem, 9vw, 3.5rem);
+    line-height: 0.98;
     text-align: center;
   }
   .hero__buttons {

@@ -4,7 +4,7 @@
 .case {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 200px 20px 130px;
+  padding: 180px var(--container-gutter) 120px;
   position: relative;
 }
 
@@ -14,13 +14,13 @@
 .case-hero {
   position: relative;
   padding: 0;
-  margin-bottom: 18px;
+  margin-bottom: var(--space-4);
 }
 
 .case-hero__grid {
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
-  gap: 28px;
+  gap: var(--space-6);
   align-items: start;
 }
 
@@ -28,10 +28,10 @@
 .case-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-2);
   list-style: none;
   padding: 0;
-  margin: 0 0 18px;
+  margin: 0 0 var(--space-4);
 }
 
 .case-tag {
@@ -46,17 +46,17 @@
 
 /* typography */
 .case-title {
-  font-size: 44px;
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  margin: 0 0 10px;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0 0 var(--space-3);
   font-weight: 800;
 }
 
 .case-intro {
-  font-size: 14px;
-  line-height: 1.55;
-  margin: 0 0 16px;
+  font-size: var(--text-base);
+  line-height: var(--lh-copy);
+  margin: 0 0 var(--space-4);
   opacity: 0.85;
   max-width: 70ch;
 }
@@ -69,22 +69,22 @@
 
 .case-task__label {
   font-weight: 800;
-  font-size: 14px;
+  font-size: var(--text-sm);
 }
 
 .case-task__text {
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: var(--text-base);
+  line-height: var(--lh-copy);
   opacity: 0.85;
   max-width: 70ch;
 }
 
 /* buttons */
 .case-actions {
-  margin-top: 18px;
+  margin-top: var(--space-5);
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .btn {
@@ -142,7 +142,7 @@
   text-align: right;
   display: grid;
   gap: 12px;
-  margin-top: 44px;
+  margin-top: var(--space-7);
 }
 
 .case-miniMeta__row {
@@ -156,7 +156,7 @@
 }
 
 .case-miniMeta__value {
-  font-size: 14px;
+  font-size: var(--text-base);
   font-weight: 800;
   opacity: 0.9;
 }
@@ -165,14 +165,14 @@
    MOCKUP podium
 ========================= */
 .case-mock {
-  margin-top: 26px;
+  margin-top: var(--space-6);
   position: relative;
 }
 
 .case-mock__card {
   position: relative; /* важно для ::before */
   border-radius: 34px;
-  padding: 34px;
+  padding: clamp(18px, 3vw, 34px);
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 26px 70px rgba(0, 0, 0, 0.12);
@@ -206,7 +206,7 @@
 
 /* agency badge under mockup, right aligned */
 .case-agency {
-  margin-top: 18px;
+  margin-top: var(--space-4);
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -257,7 +257,7 @@
    GALLERY stack
 ========================= */
 .case-gallery {
-  margin-top: 30px;
+  margin-top: var(--space-6);
   display: grid;
   gap: 26px;
 }
@@ -387,12 +387,12 @@
    RELATED
 ========================= */
 .case-related {
-  margin-top: 54px;
+  margin-top: var(--space-8);
 }
 
 .case-related__head {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: var(--space-6);
 }
 
 .case-related__kicker {
@@ -403,7 +403,7 @@
 }
 
 .case-related__title {
-  font-size: 44px;
+  font-size: var(--text-3xl);
   letter-spacing: -0.02em;
   margin: 0;
   font-weight: 900;
@@ -503,7 +503,7 @@
 
 @media (max-width: 520px) {
   .case {
-    padding: 120px 14px 110px;
+    padding: 120px var(--container-gutter) 96px;
   }
 
   .case-title {

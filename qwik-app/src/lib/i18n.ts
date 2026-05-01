@@ -37,13 +37,8 @@ export function getLocaleFromPathname(pathname: string): Locale {
 
 export function stripLocalePrefix(pathname: string): string {
   const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
-  const locale = getLocaleFromPathname(normalized);
-
-  if (locale === defaultLocale) {
-    return normalized || '/';
-  }
-
-  const stripped = normalized.replace(new RegExp(`^/${locale}(?=/|$)`), '') || '/';
+  const stripped =
+    normalized.replace(new RegExp(`^/(?:${locales.join('|')})(?=/|$)`), '') || '/';
   return stripped.startsWith('/') ? stripped : `/${stripped}`;
 }
 

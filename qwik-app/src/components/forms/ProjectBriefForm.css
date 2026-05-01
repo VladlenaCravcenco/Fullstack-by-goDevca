@@ -44,7 +44,7 @@ input[name="_gotcha"] {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 14px;
   padding: 10px 12px;
   border-radius: 9999px;
   background: #f7f7f7;
@@ -92,7 +92,7 @@ input[name="_gotcha"] {
 /* Поля */
 .custom-form__label {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   color: #0b0b0b;
 }
 .custom-form__input,
@@ -103,7 +103,7 @@ input[name="_gotcha"] {
   border: 1px solid var(--field-border);
   border-radius: 18px;
   padding: 14px 16px;
-  font-size: 12px;
+  font-size: 16px;
   color: #0b0b0b;
   box-shadow: var(--field-shadow);
   transition:
@@ -204,6 +204,7 @@ input[name="_gotcha"] {
   }
   .chip-group label {
     padding: 10px 14px;
+    font-size: 15px;
   }
   .custom-form__btn-inner {
     padding: 16px 22px;

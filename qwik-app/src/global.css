@@ -32,13 +32,42 @@ body {
 /* 2. Базовые переменные (цвета, отступы) */
 :root {
   --font-main: "Onest", sans-serif;
+  --font-display: "Soyuz Grotesk", var(--font-main);
   --color-black: #000;
   --color-white: #f6f6f6;
   --color-green: #0e2e08;
-  --color-green-dark: rgb(27, 27, 27) --color-text: #222;
+  --color-green-dark: rgb(27, 27, 27);
+  --color-text: #222;
   --color-muted: #777;
-  --container-width: 1300px;
+  --container-width: 1240px;
+  --container-gutter: clamp(16px, 2vw, 28px);
   --radius: 20px;
+  --radius-lg: 28px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.75rem;
+  --space-8: 4rem;
+  --space-9: 5.5rem;
+  --space-10: 7rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: clamp(1.75rem, 2vw, 2.5rem);
+  --text-3xl: clamp(2.5rem, 5vw, 4.5rem);
+  --text-4xl: clamp(3rem, 7vw, 6rem);
+
+  --lh-tight: 1.02;
+  --lh-title: 1.08;
+  --lh-copy: 1.65;
+  --lh-copy-wide: 1.75;
 
   /* время/кривая для всех ховеров на сайте */
   --anim--hover-time: 0.25s;
@@ -65,10 +94,11 @@ body {
 /* 3. Базовые теги */
 body {
   font-family: var(--font-main);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: var(--text-base);
+  line-height: var(--lh-copy);
   color: var(--color-text);
   background-color: var(--color-white);
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -100,7 +130,7 @@ img {
 .container {
   width: 100%;
   max-width: var(--container-width);
-  padding: 0 20px;
+  padding: 0 var(--container-gutter);
   margin: 0 auto;
 }
 
@@ -112,31 +142,25 @@ h4,
 h5,
 h6 {
   font-weight: bold;
-  line-height: 1.2;
-  margin-bottom: 0.5em;
+  line-height: var(--lh-title);
+  margin-bottom: 0.35em;
   color: var(--color-black);
-  font-family: "Soyuz Grotesk";
-  
-  
+  font-family: var(--font-display);
 }
 
 p {
   margin-bottom: 1em;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text);
 }
 
 
 h1,
 h2 {
-  font-family: "Soyuz Grotesk";
+  font-family: var(--font-display);
   font-style: normal;
   font-weight: 700;
-
-  
-  line-height: 0.83;
-
-  
+  line-height: var(--lh-tight);
   color: #000;
 
   text-shadow:
@@ -145,4 +169,19 @@ h2 {
     -5.29818px 0px 3.02753px rgba(0, 0, 0, 0.17),
     -2.27065px 0px 2.27065px rgba(0, 0, 0, 0.29),
     -0.756883px 0px 1.13533px rgba(0, 0, 0, 0.33);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
 }

@@ -50,10 +50,23 @@ const QUERY = `
 `;
 
 export const useProject = routeLoader$(async ({ params, status, url }) => {
-  const locale = getLocaleFromPathname(url.pathname);
-  const doc = await sanity.fetch(QUERY, { slug: params.project, locale });
-  if (!doc) status(404);
-  return doc;
+  try {
+    const locale = getLocaleFromPathname(url.pathname);
+    const slug = typeof params.project === 'string' ? params.project.trim() : '';
+
+    if (!slug) {
+      status(404);
+      return null;
+    }
+
+    const doc = await sanity.fetch(QUERY, { slug, locale });
+    if (!doc) status(404);
+    return doc ?? null;
+  } catch (error: any) {
+    console.error('Sanity PROJECT fetch failed:', error?.message || error);
+    status(404);
+    return null;
+  }
 });
 
 export default component$(() => {
@@ -65,6 +78,9 @@ export default component$(() => {
   const hero = p.hero || {};
   const mock = p.mockupBlock || {};
   const agency = mock.agency || {};
+  const relatedProjects = Array.isArray(p.relatedProjects)
+    ? p.relatedProjects.filter((item: any) => typeof item?.slug === 'string' && item.slug.length > 0)
+    : [];
 
   const showAgency =
     !!agency?.enabled && (!!agency?.name || !!agency?.note || !!agency?.logo);
@@ -228,7 +244,7 @@ export default component$(() => {
       ) : null}
 
       {/* RELATED */}
-      {p.relatedProjects?.length ? (
+      {relatedProjects.length ? (
         <section class="case-related">
           <div class="case-related__head">
             <div class="case-related__kicker">{copy.relatedKicker}</div>
@@ -236,7 +252,7 @@ export default component$(() => {
           </div>
 
           <div class="related-grid">
-            {p.relatedProjects.slice(0, 6).map((rp: any) => (
+            {relatedProjects.slice(0, 6).map((rp: any) => (
               <a class="related-card" href={localizePath(locale, `/projects/${rp.slug}`)} key={rp.slug}>
                 <div class="related-card__media">
                   {rp?.mockupBlock?.mockup ? (

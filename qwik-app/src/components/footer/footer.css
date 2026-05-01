@@ -43,22 +43,24 @@
   position: relative;
   z-index: 2;
   max-width: 980px;
-  margin: 90px auto 0;
+  margin: var(--space-9) auto 0;
   text-align: center;
 }
 
 .footer__kicker {
   display: inline-block;
-  font-size: 18px;
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #677A17;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-3);
 }
 
 .footer__title {
   margin: 0;
-  font-family: soyuz grotesk;
-  font-size: clamp(44px, 5vw, 72px);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.25rem);
   letter-spacing: -0.03em;
   font-weight: 800;
   color: #0a0a0a;
@@ -69,9 +71,10 @@
 }
 
 .footer__text {
-  margin: 14px auto 18px;
+  margin: var(--space-4) auto var(--space-5);
   max-width: 560px;
-  font-size: 18px;
+  font-size: var(--text-lg);
+  line-height: var(--lh-copy);
   color: rgba(10, 10, 10, 0.75);
 }
 
@@ -114,8 +117,7 @@
 }
 
 .glass-card__title {
-  
-  font-size: 22px;
+  font-size: var(--text-xl);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 10px 18px rgba(0, 0, 0, 0.22);
@@ -124,9 +126,9 @@
 .glass-card__row {
   position: relative;
   z-index: 1;
-  font-size: 14px;
+  font-size: var(--text-sm);
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.82);
-  
 }
 
 .glass-card__link {
@@ -232,5 +234,4 @@ flex-direction: row;
 }
   
 }
-
 
