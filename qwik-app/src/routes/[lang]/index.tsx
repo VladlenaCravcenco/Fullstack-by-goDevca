@@ -1,1 +1,1 @@
-export { default, useHomeProjects } from '../index';
+export { default, useHomeProjects, useHomeBlogPosts } from '../index';

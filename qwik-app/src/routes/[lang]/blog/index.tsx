@@ -1,1 +1,1 @@
-export { default, head } from '../../blog/index';
+export { default, head, useBlogPosts } from '../../blog/index';
