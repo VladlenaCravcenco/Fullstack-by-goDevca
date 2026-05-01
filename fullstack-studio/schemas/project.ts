@@ -23,16 +23,22 @@ export default defineType({
     { name: 'hero', title: 'Hero' },
     { name: 'mock', title: 'Mockup' },
     { name: 'gallery', title: 'Gallery' },
-    { name: 'beforeAfter', title: 'Before / After' },
     { name: 'related', title: 'Related' },
   ],
   fields: [
     defineField({
-      name: 'titleI18n',
+      name: 'title',
       title: 'Title',
-      type: 'localeString',
+      type: 'string',
       group: 'meta',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'titleI18n',
+      title: 'Title (legacy i18n)',
+      type: 'localeString',
+      group: 'meta',
+      hidden: true,
     }),
     defineField({
       name: 'slug',
@@ -40,7 +46,7 @@ export default defineType({
       type: 'slug',
       group: 'meta',
       options: {
-        source: (doc: any) => doc?.titleI18n?.ru || '',
+        source: (doc: any) => doc?.title || doc?.titleI18n?.ru || '',
         maxLength: 96,
       },
       validation: (rule) => rule.required(),
@@ -65,12 +71,30 @@ export default defineType({
       group: 'hero',
       fields: [
         defineField({
-          name: 'pillsI18n',
+          name: 'pills',
           title: 'Tags',
+          type: 'array',
+          of: [defineArrayMember({ type: 'string' })],
+        }),
+        defineField({
+          name: 'taskTitle',
+          title: 'Task label (legacy)',
+          type: 'string',
+          hidden: true,
+        }),
+        defineField({
+          name: 'pillsI18n',
+          title: 'Tags (legacy i18n)',
           type: 'localeStringArray',
+          hidden: true,
         }),
         localeTextField('introI18n', 'Intro'),
-        localeStringField('taskTitleI18n', 'Task label'),
+        defineField({
+          name: 'taskTitleI18n',
+          title: 'Task label (legacy i18n)',
+          type: 'localeString',
+          hidden: true,
+        }),
         localeTextField('taskTextI18n', 'Task text'),
         defineField({
           name: 'ctaPrimary',
@@ -88,15 +112,21 @@ export default defineType({
         }),
         defineField({
           name: 'ctaSecondary',
-          title: 'Secondary button',
+          title: 'Secondary button (legacy)',
           type: 'object',
+          hidden: true,
           fields: [
-            localeStringField('labelI18n', 'Label'),
+            defineField({
+              name: 'labelI18n',
+              title: 'Label (legacy i18n)',
+              type: 'localeString',
+              hidden: true,
+            }),
             defineField({
               name: 'url',
               title: 'URL',
               type: 'url',
-              validation: (rule) => rule.required(),
+              hidden: true,
             }),
           ],
         }),
@@ -134,7 +164,17 @@ export default defineType({
               type: 'image',
               options: { hotspot: true },
             }),
-            localeStringField('nameI18n', 'Agency name'),
+            defineField({
+              name: 'name',
+              title: 'Agency name',
+              type: 'string',
+            }),
+            defineField({
+              name: 'nameI18n',
+              title: 'Agency name (legacy i18n)',
+              type: 'localeString',
+              hidden: true,
+            }),
             localeStringField('noteI18n', 'Agency note'),
           ],
         }),
@@ -172,9 +212,9 @@ export default defineType({
     }),
     defineField({
       name: 'beforeAfter',
-      title: 'Before / After',
+      title: 'Before / After (legacy)',
       type: 'object',
-      group: 'beforeAfter',
+      hidden: true,
       fields: [
         defineField({
           name: 'enabled',
@@ -208,7 +248,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'titleI18n.ru',
+      title: 'title',
       media: 'mockupBlock.mockup',
       subtitle: 'hero.introI18n.ru',
     },

@@ -9,9 +9,9 @@ import './projects-page.css';
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
   _id,
-  "title": ${localizedString('titleI18n', 'title', 'slug.current')},
+  "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
   "slug": slug.current,
-  "tags": coalesce(hero.pillsI18n[$locale], hero.pillsI18n.ru, hero.pills, []),
+  "tags": coalesce(hero.pills, hero.pillsI18n[$locale], hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup,
   "excerpt": ${localizedText('excerptI18n', 'excerpt', '""')}
 }

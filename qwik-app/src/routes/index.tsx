@@ -29,9 +29,9 @@ export type HomeProject = {
 const HOME_PROJECTS_QUERY = `
 *[_type=="project" && defined(slug.current)]|order(coalesce(publishedAt,_createdAt) desc)[0...3]{
   _id,
-  "title": ${localizedString("titleI18n", "title", 'slug.current')},
+  "title": coalesce(title, ${localizedString("titleI18n", undefined, 'slug.current')}),
   "slug": slug.current,
-  "tags": coalesce(hero.pillsI18n[$locale], hero.pillsI18n.ru, hero.pills, []),
+  "tags": coalesce(hero.pills, hero.pillsI18n[$locale], hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup
 }
 `;

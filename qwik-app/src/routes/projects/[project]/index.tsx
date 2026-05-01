@@ -1,4 +1,4 @@
-import { component$, useSignal, $, useVisibleTask$ } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
 import { sanity, localizedString } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
@@ -8,21 +8,16 @@ import './project-page.css';
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  "title": ${localizedString('titleI18n', 'title', 'slug.current')},
+  "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
   "slug": slug.current,
 
   hero{
-    "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills, []),
+    "pills": coalesce(pills, pillsI18n[$locale], pillsI18n.ru, []),
     "intro": coalesce(introI18n[$locale], introI18n.ru, intro),
-    "taskTitle": coalesce(taskTitleI18n[$locale], taskTitleI18n.ru, taskTitle),
     "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru, taskText),
     "ctaPrimary": {
       "label": coalesce(ctaPrimary.labelI18n[$locale], ctaPrimary.labelI18n.ru, ctaPrimary.label),
       "url": ctaPrimary.url
-    },
-    "ctaSecondary": {
-      "label": coalesce(ctaSecondary.labelI18n[$locale], ctaSecondary.labelI18n.ru, ctaSecondary.label),
-      "url": ctaSecondary.url
     },
     "duration": coalesce(durationI18n[$locale], durationI18n.ru, duration),
     "plan": coalesce(planI18n[$locale], planI18n.ru, plan)
@@ -33,7 +28,7 @@ const QUERY = `
     agency{
       enabled,
       logo,
-      "name": coalesce(nameI18n[$locale], nameI18n.ru, name),
+      "name": coalesce(name, nameI18n[$locale], nameI18n.ru),
       "note": coalesce(noteI18n[$locale], noteI18n.ru, note)
     }
   },
@@ -42,20 +37,12 @@ const QUERY = `
     image,
     "alt": coalesce(altI18n[$locale], altI18n.ru, alt)
   },
-
-  "beforeAfter": {
-    "enabled": beforeAfter.enabled,
-    "label": coalesce(beforeAfter.labelI18n[$locale], beforeAfter.labelI18n.ru, beforeAfter.label),
-    "before": beforeAfter.before,
-    "after": beforeAfter.after
-  },
-
   relatedProjects[]->{
     _id,
-    "title": ${localizedString('titleI18n', 'title', 'slug.current')},
+    "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
     "slug": slug.current,
     hero{
-      "pills": coalesce(pillsI18n[$locale], pillsI18n.ru, pills, [])
+      "pills": coalesce(pills, pillsI18n[$locale], pillsI18n.ru, [])
     },
     mockupBlock{ mockup }
   }
@@ -68,122 +55,6 @@ export const useProject = routeLoader$(async ({ params, status, url }) => {
   if (!doc) status(404);
   return doc;
 });
-
-export const BeforeAfter = component$(
-  ({ before, after }: { before: any; after: any }) => {
-    const wrapRef = useSignal<HTMLElement>();
-    const pos = useSignal(50);
-    const dragging = useSignal(false);
-
-    const setFromClientX = $((clientX: number) => {
-      const el = wrapRef.value;
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      if (!rect.width) return;
-
-      const x = clientX - rect.left;
-
-      // ✅ clamp ВНУТРИ $()
-      let percent = (x / rect.width) * 100;
-      if (percent < 0) percent = 0;
-      if (percent > 100) percent = 100;
-
-      pos.value = percent;
-    });
-
-    const onDown = $((e: PointerEvent) => {
-      dragging.value = true;
-
-      const btn = e.currentTarget as HTMLElement | null;
-      if (btn?.setPointerCapture) {
-        btn.setPointerCapture(e.pointerId);
-      }
-
-      setFromClientX(e.clientX);
-    });
-
-    const onMove = $((e: PointerEvent) => {
-      if (!dragging.value) return;
-      setFromClientX(e.clientX);
-    });
-
-    const onUp = $((e: PointerEvent) => {
-      dragging.value = false;
-
-      const btn = e.currentTarget as HTMLElement | null;
-      if (btn?.releasePointerCapture) {
-        try {
-          btn.releasePointerCapture(e.pointerId);
-        } catch { 
-          // ignore: pointer capture may already be released
-        }
-      }
-    });
-
-    useVisibleTask$(({ cleanup }) => {
-      const stop = () => (dragging.value = false);
-      window.addEventListener('pointerup', stop);
-      window.addEventListener('pointercancel', stop);
-      cleanup(() => {
-        window.removeEventListener('pointerup', stop);
-        window.removeEventListener('pointercancel', stop);
-      });
-    });
-
-    return (
-      <div
-        ref={wrapRef}
-        class="ba"
-        style={`--pos:${pos.value}%`}
-        aria-label="до/после"
-      >
-        {/* AFTER */}
-        <img
-          class="ba__img ba__after"
-          src={urlFor(after).width(2400).auto('format').url()}
-          alt="after"
-          draggable={false}
-        />
-
-        {/* BEFORE */}
-        <img
-          class="ba__img ba__beforeImg"
-          src={urlFor(before).width(2400).auto('format').url()}
-          alt="before"
-          draggable={false}
-          style="clip-path: inset(0 calc(100% - var(--pos)) 0 0);"
-        />
-
-        {/* HANDLE */}
-        <div class="ba__handle" style="left: var(--pos);">
-          <div class="ba__line" />
-          <button
-            type="button"
-            class="ba__knob"
-            aria-label="перетянуть"
-            onPointerDown$={onDown}
-            onPointerMove$={onMove}
-            onPointerUp$={onUp}
-            onPointerCancel$={onUp}
-          />
-        </div>
-
-        {/* RANGE */}
-        <input
-          class="ba__range"
-          type="range"
-          min="0"
-          max="100"
-          value={pos.value}
-          onInput$={(e) =>
-            (pos.value = +(e.target as HTMLInputElement).value)
-          }
-        />
-      </div>
-    );
-  }
-);
 
 export default component$(() => {
   const loc = useLocation();
@@ -201,27 +72,27 @@ export default component$(() => {
     ru: {
       visit: 'перейти на сайт',
       brief: 'Заполнить бриф',
+      taskLabel: 'Задача:',
       duration: 'продолжительность:',
       plan: 'План:',
-      beforeAfter: 'до\\после',
       relatedKicker: 'посмотреть',
       relatedTitle: 'ЕЩЕ ПРОЕКТЫ',
     },
     ro: {
       visit: 'deschide site-ul',
       brief: 'Completează brief-ul',
+      taskLabel: 'Sarcina:',
       duration: 'durată:',
       plan: 'Plan:',
-      beforeAfter: 'înainte\\după',
       relatedKicker: 'vezi',
       relatedTitle: 'ALTE PROIECTE',
     },
     en: {
       visit: 'visit website',
       brief: 'Fill out the brief',
+      taskLabel: 'Task:',
       duration: 'duration:',
       plan: 'Plan:',
-      beforeAfter: 'before\\after',
       relatedKicker: 'see',
       relatedTitle: 'MORE PROJECTS',
     },
@@ -248,45 +119,34 @@ export default component$(() => {
 
             {hero?.intro ? <p class="case-intro">{hero.intro}</p> : null}
 
-            {hero?.taskTitle || hero?.taskText ? (
+            {hero?.taskText ? (
               <div class="case-task">
-                {hero?.taskTitle ? (
-                  <div class="case-task__label">{hero.taskTitle}</div>
-                ) : null}
+                <div class="case-task__label">{copy.taskLabel}</div>
                 {hero?.taskText ? (
                   <div class="case-task__text">{hero.taskText}</div>
                 ) : null}
               </div>
             ) : null}
 
-            {hero?.ctaPrimary?.url || hero?.ctaSecondary?.url ? (
-              <div class="case-actions">
-                {hero?.ctaPrimary?.url ? (
-                  <a
-                    class="btn btn--light"
-                    href={hero.ctaPrimary.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {hero.ctaPrimary.label || copy.visit}
-                  </a>
-                ) : null}
+            <div class="case-actions">
+              {hero?.ctaPrimary?.url ? (
+                <a
+                  class="btn btn--light"
+                  href={hero.ctaPrimary.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {hero.ctaPrimary.label || copy.visit}
+                </a>
+              ) : null}
 
-                {hero?.ctaSecondary?.url ? (
-                  <a
-                    class="btn btn--dark"
-                    href={hero.ctaSecondary.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span>{hero.ctaSecondary.label || copy.brief}</span>
-                    <span class="btn__arrow" aria-hidden="true">
-                      →
-                    </span>
-                  </a>
-                ) : null}
-              </div>
-            ) : null}
+              <a class="btn btn--dark" href={localizePath(locale, '/brief')}>
+                <span>{copy.brief}</span>
+                <span class="btn__arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </div>
           </div>
 
           {/* RIGHT META */}
@@ -364,16 +224,6 @@ export default component$(() => {
               ) : null}
             </div>
           ))}
-        </section>
-      ) : null}
-
-      {/* BEFORE / AFTER */}
-      {p.beforeAfter?.enabled && p.beforeAfter?.before && p.beforeAfter?.after ? (
-        <section class="case-beforeAfter">
-          <div class="case-beforeAfter__label">
-            {p.beforeAfter.label || copy.beforeAfter}
-          </div>
-          <BeforeAfter before={p.beforeAfter.before} after={p.beforeAfter.after} />
         </section>
       ) : null}
 
