@@ -7,6 +7,7 @@ import {
   blogCategories,
   blogCategoryCopy,
   blogPageCopy,
+  normalizeBlogCategory,
   type BlogCategory,
   type BlogListItem,
 } from "~/lib/blog";
@@ -131,22 +132,26 @@ export default component$<BlogSectionProps>(({ posts }) => {
         </div>
 
         {items
-          .filter((post) => post.category === selectedTag.value)
+          .filter((post) => normalizeBlogCategory(post.category) === selectedTag.value)
           .slice(0, 2)
-          .map((post) => (
-            <a
-              key={post._id}
-              href={localizePath(locale, `/blog/${post.slug}`)}
-              class="blog__post-card"
-            >
-              <span class="blog__post-kicker">
-                {categories[post.category].label}
-                {post.featured ? ` · ${pageCopy.featured}` : ""}
-              </span>
-              <strong>{post.title}</strong>
-              <span>{post.excerpt}</span>
-            </a>
-          ))}
+          .map((post) => {
+            const category = normalizeBlogCategory(post.category);
+
+            return (
+              <a
+                key={post._id}
+                href={localizePath(locale, `/blog/${post.slug}`)}
+                class="blog__post-card"
+              >
+                <span class="blog__post-kicker">
+                  {categories[category].label}
+                  {post.featured ? ` · ${pageCopy.featured}` : ""}
+                </span>
+                <strong>{post.title}</strong>
+                <span>{post.excerpt}</span>
+              </a>
+            );
+          })}
       </div>
     </section>
   );

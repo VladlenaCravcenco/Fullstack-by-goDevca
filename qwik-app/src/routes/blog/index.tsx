@@ -11,6 +11,7 @@ import {
   blogPageCopy,
   formatBlogDate,
   isBlogCategory,
+  normalizeBlogCategory,
   type BlogListItem,
 } from "~/lib/blog";
 import { seededBlogPosts } from "~/lib/blogSeed";
@@ -62,12 +63,13 @@ export default component$(() => {
 
   const counts = new Map<(typeof blogCategories)[number], number>();
   for (const category of blogCategories) counts.set(category, 0);
-  posts.forEach((post) =>
-    counts.set(post.category, (counts.get(post.category) || 0) + 1),
-  );
+  posts.forEach((post) => {
+    const category = normalizeBlogCategory(post.category);
+    counts.set(category, (counts.get(category) || 0) + 1);
+  });
 
   const filteredPosts = activeCategory
-    ? posts.filter((post) => post.category === activeCategory)
+    ? posts.filter((post) => normalizeBlogCategory(post.category) === activeCategory)
     : posts;
 
   return (
@@ -115,6 +117,7 @@ export default component$(() => {
         {filteredPosts.length ? (
           <div class="blog-page__grid">
             {filteredPosts.map((post) => {
+              const category = normalizeBlogCategory(post.category);
               const coverUrl = (post.cover as any)?.asset?._ref
                 ? urlFor(post.cover as any)
                     .width(1200)
@@ -144,7 +147,7 @@ export default component$(() => {
 
                   <div class="blog-card__body">
                     <div class="blog-card__meta">
-                      <span>{categoryCopy[post.category].label}</span>
+                      <span>{categoryCopy[category].label}</span>
                       <span>{formatBlogDate(locale, post.publishedAt)}</span>
                       <span>
                         {post.readingTime} {copy.minutes}

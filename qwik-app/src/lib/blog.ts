@@ -179,6 +179,10 @@ export function isBlogCategory(value: string | null | undefined): value is BlogC
   return !!value && blogCategories.includes(value as BlogCategory);
 }
 
+export function normalizeBlogCategory(value: string | null | undefined): BlogCategory {
+  return isBlogCategory(value) ? value : 'design';
+}
+
 export function getPortableTextQuery(fieldName: string): string {
   return `coalesce(${fieldName}[$locale], ${fieldName}.ru, [])`;
 }

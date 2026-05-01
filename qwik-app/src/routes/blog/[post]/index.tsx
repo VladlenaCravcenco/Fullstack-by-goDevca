@@ -9,6 +9,7 @@ import {
   blogCategoryCopy,
   blogPageCopy,
   formatBlogDate,
+  normalizeBlogCategory,
   type BlogPost,
 } from "~/lib/blog";
 import { getLocaleFromPathname, localizePath } from "~/lib/i18n";
@@ -82,7 +83,8 @@ export default component$(() => {
     );
   }
 
-  const categoryCopy = blogCategoryCopy[locale][post.category];
+  const category = normalizeBlogCategory(post.category);
+  const categoryCopy = blogCategoryCopy[locale][category];
   const coverUrl = (post.cover as any)?.asset?._ref
     ? urlFor(post.cover as any)
         .width(1600)
@@ -135,7 +137,7 @@ export default component$(() => {
           <aside class="post-page__sidebar">
             <div class="post-page__sidebar-card">
               <div class="post-page__sidebar-label">{categoryCopy.label}</div>
-              <p>{blogCategoryCopy[locale][post.category].description}</p>
+              <p>{blogCategoryCopy[locale][category].description}</p>
             </div>
 
             <div class="post-page__sidebar-card">
