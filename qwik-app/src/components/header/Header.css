@@ -317,6 +317,10 @@
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 900px) {
+  .h {
+    top: calc(16px + var(--safe-top));
+  }
+
   .h__inner {
     grid-template-columns: 1fr 1fr;
   }
