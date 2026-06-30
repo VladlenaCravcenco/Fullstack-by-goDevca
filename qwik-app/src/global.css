@@ -185,3 +185,32 @@ h3 {
   font-size: var(--text-2xl);
   letter-spacing: -0.02em;
 }
+
+/* Mobile typography: a clear title / subtitle / body hierarchy. */
+@media (max-width: 768px) {
+  :root {
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1rem;
+    --text-xl: 1.375rem;
+    --text-2xl: 1.75rem;
+    --text-3xl: clamp(2.25rem, 9.5vw, 2.75rem);
+    --text-4xl: clamp(2.625rem, 11vw, 3.25rem);
+
+    --lh-tight: 1;
+    --lh-title: 1;
+    --lh-copy: 1;
+    --lh-copy-wide: 1;
+  }
+
+  body,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1;
+  }
+}

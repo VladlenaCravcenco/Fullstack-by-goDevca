@@ -184,10 +184,29 @@
     width: 100%;
   }
 
-  .hero__left h1 {
-    font-size: clamp(2.5rem, 9vw, 3.5rem);
-    line-height: 0.98;
+  .hero__left .hero-title {
+    font-size: var(--text-4xl);
+    line-height: 1;
     text-align: center;
+  }
+
+  .hero__left h2 {
+    font-size: var(--text-2xl);
+    line-height: 1;
+    margin-bottom: var(--space-3);
+  }
+
+  .hero__left h4 {
+    font-family: var(--font-main);
+    font-size: var(--text-lg);
+    line-height: 1;
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__left p {
+    max-width: 22rem;
+    font-size: var(--text-base);
+    line-height: 1;
   }
   .hero__buttons {
     justify-content: center;
