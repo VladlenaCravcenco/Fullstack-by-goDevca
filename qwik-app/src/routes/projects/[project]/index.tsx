@@ -15,6 +15,7 @@ const QUERY = `
 
   hero{
     directions,
+    "directionRefs": directionRefs[]->{_id, "title": coalesce(titleI18n[$locale], title)},
     "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, []),
     "intro": coalesce(introI18n[$locale], introI18n.ru, intro),
     "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru, taskText),
@@ -46,6 +47,7 @@ const QUERY = `
     "slug": slug.current,
     hero{
     directions,
+    "directionRefs": directionRefs[]->{_id, "title": coalesce(titleI18n[$locale], title)},
       "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, [])
     },
     mockupBlock{ mockup }

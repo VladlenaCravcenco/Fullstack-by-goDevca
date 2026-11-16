@@ -1,4 +1,4 @@
-import { projectDirections } from '../../shared/projectDirections'
+import ProjectDirectionsInput from '../components/ProjectDirectionsInput'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 const localeStringField = (name: string, title: string) =>
@@ -13,6 +13,16 @@ const localeTextField = (name: string, title: string) =>
     name,
     title,
     type: 'localeText',
+  })
+
+// Keep older documents editable without renaming, migrating or deleting their fields.
+const savedField = (name: string, title: string, type: 'string' | 'text' = 'string') =>
+  defineField({
+    name,
+    title: `${title} — сохранённый текст`,
+    type,
+    description: 'Текст из прежней формы. Он сохранён и доступен для редактирования. Переводы ниже заполнять заново не требуется.',
+    hidden: ({value}) => value === undefined || value === null,
   })
 
 export default defineType({
@@ -36,10 +46,10 @@ export default defineType({
     }),
     defineField({
       name: 'titleI18n',
-      title: 'Title (legacy i18n)',
+      title: 'Title — сохранённые переводы',
       type: 'localeString',
       group: 'meta',
-      hidden: true,
+      hidden: ({value}) => !value,
     }),
     defineField({
       name: 'slug',
@@ -59,6 +69,7 @@ export default defineType({
       group: 'meta',
       initialValue: () => new Date().toISOString(),
     }),
+    {...savedField('excerpt', 'Excerpt', 'text'), group: 'meta'},
     defineField({
       name: 'excerptI18n',
       title: 'Excerpt',
@@ -72,17 +83,22 @@ export default defineType({
       group: 'hero',
       fields: [
         defineField({
-          name: 'directions',
+          name: 'directionRefs',
           title: 'Направления проекта',
-          description: 'Отметьте одно или несколько направлений. Они появятся в фильтре и на карточке проекта. Пока ничего не выбрано, сайт использует прежние теги.',
+          description: 'Отметьте нужные направления. Можно выбрать несколько или добавить новое в общий список.',
           type: 'array',
-          of: [defineArrayMember({ type: 'string' })],
-          options: { list: projectDirections.map(({ value, labels }) => ({ title: labels.ru, value })) },
+          of: [defineArrayMember({type: 'reference', to: [{type: 'projectDirection'}]})],
+          components: {input: ProjectDirectionsInput},
           validation: (rule) => rule.unique(),
+        }),
+        defineField({
+          name: 'directions', title: 'Прежние направления', type: 'array',
+          of: [defineArrayMember({type: 'string'})], hidden: true,
         }),
         defineField({
           name: 'pills',
           title: 'Прежние теги',
+          hidden: true,
           description: 'Сохранены для старых проектов. Для изменений используйте направления выше.',
           readOnly: true,
           type: 'array',
@@ -100,6 +116,7 @@ export default defineType({
           type: 'localeStringArray',
           hidden: true,
         }),
+        savedField('intro', 'Intro', 'text'),
         localeTextField('introI18n', 'Intro'),
         defineField({
           name: 'taskTitleI18n',
@@ -107,12 +124,14 @@ export default defineType({
           type: 'localeString',
           hidden: true,
         }),
+        savedField('taskText', 'Task text', 'text'),
         localeTextField('taskTextI18n', 'Task text'),
         defineField({
           name: 'ctaPrimary',
           title: 'Primary button',
           type: 'object',
           fields: [
+            savedField('label', 'Label'),
             localeStringField('labelI18n', 'Label'),
             defineField({
               name: 'url',
@@ -124,25 +143,28 @@ export default defineType({
         }),
         defineField({
           name: 'ctaSecondary',
-          title: 'Secondary button (legacy)',
+          title: 'Secondary button — сохранённые данные',
           type: 'object',
-          hidden: true,
+          hidden: ({value}) => !value || Object.keys(value).length === 0,
           fields: [
+            savedField('label', 'Label'),
             defineField({
               name: 'labelI18n',
-              title: 'Label (legacy i18n)',
+              title: 'Label — сохранённые переводы',
               type: 'localeString',
-              hidden: true,
+              hidden: ({value}) => value === undefined || value === null,
             }),
             defineField({
               name: 'url',
               title: 'URL',
               type: 'url',
-              hidden: true,
+              hidden: ({value}) => value === undefined || value === null,
             }),
           ],
         }),
+        savedField('duration', 'Duration', 'string'),
         localeStringField('durationI18n', 'Duration'),
+        savedField('plan', 'Plan', 'string'),
         localeStringField('planI18n', 'Plan'),
       ],
     }),
@@ -183,10 +205,11 @@ export default defineType({
             }),
             defineField({
               name: 'nameI18n',
-              title: 'Agency name (legacy i18n)',
+              title: 'Agency name — сохранённые переводы',
               type: 'localeString',
-              hidden: true,
+              hidden: ({value}) => !value,
             }),
+            savedField('note', 'Agency note'),
             localeStringField('noteI18n', 'Agency note'),
           ],
         }),
@@ -210,6 +233,7 @@ export default defineType({
               options: { hotspot: true },
               validation: (rule) => rule.required(),
             }),
+            savedField('alt', 'Alt'),
             localeStringField('altI18n', 'Alt'),
           ],
           preview: {
@@ -224,9 +248,9 @@ export default defineType({
     }),
     defineField({
       name: 'beforeAfter',
-      title: 'Before / After (legacy)',
+      title: 'Before / After — сохранённые данные',
       type: 'object',
-      hidden: true,
+      hidden: ({value}) => !value || !(value.before || value.after || value.label || value.labelI18n || value.enabled),
       fields: [
         defineField({
           name: 'enabled',
@@ -234,6 +258,7 @@ export default defineType({
           type: 'boolean',
           initialValue: false,
         }),
+        savedField('label', 'Label'),
         localeStringField('labelI18n', 'Label'),
         defineField({
           name: 'before',
@@ -261,12 +286,15 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
+      titleRu: 'titleI18n.ru',
+      titleEn: 'titleI18n.en',
+      titleRo: 'titleI18n.ro',
       media: 'mockupBlock.mockup',
       subtitle: 'hero.introI18n.ru',
     },
-    prepare({ title, media, subtitle }) {
+    prepare({ title, titleRu, titleEn, titleRo, media, subtitle }) {
       return {
-        title,
+        title: title || titleRu || titleEn || titleRo || 'Проект без названия',
         media,
         subtitle: subtitle ? `${String(subtitle).slice(0, 60)}…` : '',
       }

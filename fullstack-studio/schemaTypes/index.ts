@@ -1,3 +1,4 @@
+import projectDirection from '../schemas/projectDirection'
 // fullstack-studio/schemaTypes/index.ts
 import project from '../schemas/project'
 import post from '../schemas/post'
@@ -13,6 +14,7 @@ export const schemaTypes = [
   localeStringArray,
   localePortableText,
   blogCategory,
+  projectDirection,
   project,
   post,
 ]

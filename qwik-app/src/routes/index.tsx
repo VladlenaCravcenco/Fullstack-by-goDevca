@@ -34,6 +34,7 @@ const HOME_PROJECTS_QUERY = `
   "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString("titleI18n", undefined, 'slug.current')}),
   "slug": slug.current,
   "directions": hero.directions,
+  "directionRefs": hero.directionRefs[]->{_id, "title": coalesce(titleI18n[$locale], title)},
   "tags": coalesce(select($locale != "ru" => hero.pillsI18n[$locale]), hero.pills, hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup
 }
