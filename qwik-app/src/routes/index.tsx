@@ -1,3 +1,4 @@
+import { withProjectDirections } from '~/lib/projectDirections';
 import { translateLegacyProject } from '~/lib/projectTranslations';
 // src/routes/index.tsx
 import { component$ } from "@builder.io/qwik";
@@ -32,6 +33,7 @@ const HOME_PROJECTS_QUERY = `
   _id,
   "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString("titleI18n", undefined, 'slug.current')}),
   "slug": slug.current,
+  "directions": hero.directions,
   "tags": coalesce(select($locale != "ru" => hero.pillsI18n[$locale]), hero.pills, hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup
 }
@@ -59,9 +61,9 @@ export const useHomeProjects = routeLoader$<HomeProject[]>(async (ctx) => {
     if (!Array.isArray(items)) return [];
 
     // ✅ убираем проекты без slug, чтобы ссылки не ломались
-    return translateLegacyProject(items.filter(
+    return withProjectDirections(translateLegacyProject(items.filter(
       (p: any) => typeof p?.slug === "string" && p.slug.length > 0,
-    ), locale);
+    ), locale), locale);
   } catch (e: any) {
     console.error("Sanity HOME_PROJECTS fetch failed:", e?.message || e);
     ctx.status(200); // ✅ не даём 500 на главной

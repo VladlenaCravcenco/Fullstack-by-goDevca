@@ -1,3 +1,4 @@
+import { projectDirections } from '../../shared/projectDirections'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 const localeStringField = (name: string, title: string) =>
@@ -71,8 +72,19 @@ export default defineType({
       group: 'hero',
       fields: [
         defineField({
+          name: 'directions',
+          title: 'Направления проекта',
+          description: 'Отметьте одно или несколько направлений. Они появятся в фильтре и на карточке проекта. Пока ничего не выбрано, сайт использует прежние теги.',
+          type: 'array',
+          of: [defineArrayMember({ type: 'string' })],
+          options: { list: projectDirections.map(({ value, labels }) => ({ title: labels.ru, value })) },
+          validation: (rule) => rule.unique(),
+        }),
+        defineField({
           name: 'pills',
-          title: 'Tags',
+          title: 'Прежние теги',
+          description: 'Сохранены для старых проектов. Для изменений используйте направления выше.',
+          readOnly: true,
           type: 'array',
           of: [defineArrayMember({ type: 'string' })],
         }),

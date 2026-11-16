@@ -1,3 +1,4 @@
+import { withProjectDirections } from '~/lib/projectDirections';
 import { translateLegacyProject } from '~/lib/projectTranslations';
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
@@ -13,6 +14,7 @@ const QUERY = `
   "slug": slug.current,
 
   hero{
+    directions,
     "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, []),
     "intro": coalesce(introI18n[$locale], introI18n.ru, intro),
     "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru, taskText),
@@ -43,6 +45,7 @@ const QUERY = `
     "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString('titleI18n', undefined, 'slug.current')}),
     "slug": slug.current,
     hero{
+    directions,
       "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, [])
     },
     mockupBlock{ mockup }
@@ -62,7 +65,7 @@ export const useProject = routeLoader$(async ({ params, status, url }) => {
 
     const doc = await sanity.fetch(QUERY, { slug, locale });
     if (!doc) status(404);
-    return translateLegacyProject(doc ?? null, locale);
+    return withProjectDirections(translateLegacyProject(doc ?? null, locale), locale);
   } catch (error: any) {
     console.error('Sanity PROJECT fetch failed:', error?.message || error);
     status(404);

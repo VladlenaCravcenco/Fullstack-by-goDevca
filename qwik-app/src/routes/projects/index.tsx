@@ -1,3 +1,4 @@
+import { projectDirections, resolveProjectDirections, directionLabel } from '../../../../shared/projectDirections';
 import { translateLegacyProject } from '~/lib/projectTranslations';
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
@@ -12,6 +13,7 @@ const QUERY = `
   _id,
   "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString('titleI18n', undefined, 'slug.current')}),
   "slug": slug.current,
+  "directions": hero.directions,
   "tags": coalesce(select($locale != "ru" => hero.pillsI18n[$locale]), hero.pills, hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup,
   "excerpt": ${localizedText('excerptI18n', 'excerpt', '""')}
@@ -34,41 +36,38 @@ export default component$(() => {
   const items = useProjects().value as any[];
   const loc = useLocation();
   const locale = getLocaleFromPathname(loc.url.pathname);
-  const activeTag = (loc.url.searchParams.get('tag') ?? '').trim();
+  const requestedDirection = (loc.url.searchParams.get('direction') ?? loc.url.searchParams.get('tag') ?? '').trim();
+  const activeTag = resolveProjectDirections([requestedDirection])[0] ?? '';
+  const projects = items.map((p) => ({ ...p, directions: resolveProjectDirections(p.directions?.length ? p.directions : p.tags) }));
   const copy = {
     ru: { title: 'Проекты', all: 'Все' },
     ro: { title: 'Proiecte', all: 'Toate' },
     en: { title: 'Projects', all: 'All' },
   }[locale];
 
-  const counts = new Map<string, number>();
-  items.forEach((p) =>
-    (p.tags || []).forEach((t: string) => {
-      counts.set(t, (counts.get(t) ?? 0) + 1);
-    })
-  );
-
+  const availableDirections = projectDirections.filter((d) => projects.some((p) => p.directions.includes(d.value)));
   const filtered = activeTag
-    ? items.filter((p) => (p.tags || []).includes(activeTag))
-    : items;
+    ? projects.filter((p) => p.directions.includes(activeTag))
+    : projects;
 
   return (
     <section class="projects-page">
       <header class="projects-head">
         <h1>{copy.title}</h1>
 
-        <nav class="tags">
-          <a href={localizePath(locale, '/projects')} class={{ tag: true, active: !activeTag }}>
+        <nav class="project-directions" aria-label={copy.title}>
+          <a href={localizePath(locale, '/projects')} class={{ "project-direction": true, active: !activeTag }} aria-current={!activeTag ? "page" : undefined}>
             {copy.all}
           </a>
 
-          {[...counts.entries()].sort().map(([t, c]) => (
+          {availableDirections.map(({ value: t, labels }) => (
             <a
               key={t}
-              href={localizePath(locale, `/projects?tag=${encodeURIComponent(t)}`)}
-              class={{ tag: true, active: activeTag === t }}
+              href={localizePath(locale, `/projects?direction=${encodeURIComponent(t)}`)}
+              class={{ "project-direction": true, active: activeTag === t }}
+              aria-current={activeTag === t ? "page" : undefined}
             >
-              #{t} <span class="count">{c}</span>
+              {labels[locale]}
             </a>
           ))}
         </nav>
@@ -101,10 +100,10 @@ export default component$(() => {
 
                 {p.excerpt ? <p>{p.excerpt}</p> : null}
 
-                {p.tags?.length ? (
+                {p.directions?.length ? (
                   <ul class="mini-tags">
-                    {p.tags.map((t: string) => (
-                      <li key={t}>#{t}</li>
+                    {p.directions.map((t: string) => (
+                      <li key={t}>{directionLabel(t, locale)}</li>
                     ))}
                   </ul>
                 ) : null}
