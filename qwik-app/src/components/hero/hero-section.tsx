@@ -2,7 +2,6 @@ import { component$, useVisibleTask$ } from '@builder.io/qwik';
 import { Link, useLocation } from '@builder.io/qwik-city';
 import './HeroSection.css';
 import { GlassEffect } from '~/components/ui/GlassEffect';
-import { playGlassHover } from '~/utils/sounds';
 import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
 
 export default component$(() => {
@@ -61,8 +60,6 @@ export default component$(() => {
               <GlassEffect class="btn btn--primary">
                 <Link
                   href={localizePath(locale, '/projects')}
-                  onMouseEnter$={() => playGlassHover()}
-                  onPointerDown$={() => playGlassHover()}
                 >
                   {copy.cta}
                 </Link>

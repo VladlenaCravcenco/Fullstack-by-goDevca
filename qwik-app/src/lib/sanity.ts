@@ -8,28 +8,17 @@ export const sanity = createClient({
   perspective: 'published' // показываем только опубликованное
 });
 
-const withLegacyFallback = (field: string, legacyField?: string, fallback?: string) => {
-  const parts = [`${field}[$locale]`, `${field}.ru`];
-
-  if (legacyField) {
-    parts.push(legacyField);
-  }
-
-  if (fallback) {
-    parts.push(fallback);
-  }
-
-  return `coalesce(${parts.join(', ')})`;
+export const localizedString = (field: string, legacyField?: string, fallback?: string) => {
+  const candidates = [`${field}[$locale]`, `${field}.ru`, ...(legacyField ? [legacyField] : [])];
+  return `coalesce(${candidates.map((candidate) => `select(length(${candidate}) > 0 => ${candidate})`).concat(fallback ? [fallback] : []).join(', ')})`;
 };
 
-export const localizedString = (field: string, legacyField?: string, fallback?: string) =>
-  withLegacyFallback(field, legacyField, fallback);
+export const localizedText = localizedString;
 
-export const localizedText = (field: string, legacyField?: string, fallback?: string) =>
-  withLegacyFallback(field, legacyField, fallback);
+export const localizedPortableText = (field: string, legacyField?: string, fallback = '[]') => {
+  const candidates = [`${field}[$locale]`, `${field}.ru`, ...(legacyField ? [legacyField] : [])];
+  return `coalesce(${candidates.map((candidate) => `select(count(${candidate}) > 0 => ${candidate})`).concat(fallback).join(', ')})`;
+};
 
 export const localizedStringArray = (field: string, fallback = '[]') =>
-  `coalesce(${field}[$locale], ${field}.ru, ${fallback})`;
-
-export const localizedPortableText = (field: string, legacyField?: string, fallback = '[]') =>
-  withLegacyFallback(field, legacyField, fallback);
+  localizedPortableText(field, undefined, fallback);

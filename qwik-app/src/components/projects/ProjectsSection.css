@@ -12,7 +12,7 @@
 .projects__title {
   text-align: center;
   font-size: var(--text-3xl);
-  line-height: 1.02;
+  line-height: var(--lh-title);
   margin: 0 0 var(--space-3);
 }
 
@@ -117,7 +117,7 @@
 .pCard__title {
   margin: 0 0 10px;
   font-size: var(--text-xl);
-  line-height: 1.15;
+  line-height: var(--lh-title);
   letter-spacing: -0.02em;
   color: #0c0c0c;
 }

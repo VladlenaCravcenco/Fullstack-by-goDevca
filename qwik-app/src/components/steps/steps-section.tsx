@@ -7,9 +7,6 @@ export default component$(() => {
   const loc = useLocation();
   const locale = getLocaleFromPathname(loc.url.pathname);
   const index = useSignal(0);
-  const cardWidth = 360;
-  const gap = 18;
-  const stepPx = cardWidth + gap;
 
   const copy = {
     ru: {
@@ -123,9 +120,7 @@ export default component$(() => {
           <div
             class="steps__track"
             style={{
-              transform: `translateX(-${index.value * stepPx}px)`,
-              '--cardW': `${cardWidth}px`,
-              '--gap': `${gap}px`,
+              '--step-index': index.value,
             }}
           >
             {steps.map((s, i) => (

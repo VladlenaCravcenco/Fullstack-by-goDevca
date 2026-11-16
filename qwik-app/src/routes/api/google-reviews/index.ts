@@ -1,8 +1,11 @@
+import { isLocale, defaultLocale } from '~/lib/i18n';
 import type { RequestHandler } from '@builder.io/qwik-city';
 
 export const onGet: RequestHandler = async ({ url, json, env }) => {
   try {
     const key = env.get('GOOGLE_MAPS_API_KEY');
+    const requestedLocale = url.searchParams.get('lang');
+    const locale = isLocale(requestedLocale) ? requestedLocale : defaultLocale;
     const placeId = url.searchParams.get('place_id') || '';
 
     if (!key) {
@@ -15,10 +18,10 @@ export const onGet: RequestHandler = async ({ url, json, env }) => {
     }
 
     // Places API v1
-    const fields = ['displayName', 'rating', 'userRatingCount', 'reviews'].join(',');
+    const fields = ['displayName', 'rating', 'userRatingCount', 'reviews', 'googleMapsLinks'].join(',');
     const endpoint =
       `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}` +
-      `?fields=${encodeURIComponent(fields)}`;
+      `?fields=${encodeURIComponent(fields)}&languageCode=${locale}`;
 
     const resp = await fetch(endpoint, {
       headers: {
@@ -45,7 +48,7 @@ export const onGet: RequestHandler = async ({ url, json, env }) => {
       publishTime: r?.publishTime,
     }));
 
-    json(200, { ok: true, name, rating, total, reviews });
+    json(200, { ok: true, name, rating, total, reviews, reviewsUrl: data?.googleMapsLinks?.reviewsUri });
     return;
   } catch {
     json(200, { ok: false, reason: 'exception' });

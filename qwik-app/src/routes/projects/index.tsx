@@ -1,3 +1,4 @@
+import { translateLegacyProject } from '~/lib/projectTranslations';
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { sanity, localizedString, localizedText } from '~/lib/sanity';
@@ -9,9 +10,9 @@ import './projects-page.css';
 const QUERY = `
 *[_type=="project"]|order(coalesce(publishedAt,_createdAt) desc){
   _id,
-  "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
+  "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString('titleI18n', undefined, 'slug.current')}),
   "slug": slug.current,
-  "tags": coalesce(hero.pills, hero.pillsI18n[$locale], hero.pillsI18n.ru, []),
+  "tags": coalesce(select($locale != "ru" => hero.pillsI18n[$locale]), hero.pills, hero.pillsI18n.ru, []),
   "cover": mockupBlock.mockup,
   "excerpt": ${localizedText('excerptI18n', 'excerpt', '""')}
 }
@@ -21,7 +22,7 @@ export const useProjects = routeLoader$(async (ctx) => {
   try {
     const locale = getLocaleFromPathname(ctx.url.pathname);
     const items = await sanity.fetch(QUERY, { locale });
-    return Array.isArray(items) ? items.filter((p) => p?.slug) : [];
+    return Array.isArray(items) ? translateLegacyProject(items.filter((p) => p?.slug), locale) : [];
   } catch (e: any) {
     console.error('Sanity fetch failed:', e?.message || e);
     ctx.status(200);

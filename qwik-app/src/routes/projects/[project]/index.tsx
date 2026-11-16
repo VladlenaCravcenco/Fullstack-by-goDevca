@@ -1,18 +1,19 @@
+import { translateLegacyProject } from '~/lib/projectTranslations';
 import { component$ } from '@builder.io/qwik';
 import { routeLoader$, type DocumentHead, useLocation } from '@builder.io/qwik-city';
 import { sanity, localizedString } from '~/lib/sanity';
 import { urlFor } from '~/lib/imageUrl';
-import { getLocaleFromPathname, localizePath } from '~/lib/i18n';
+import { uiCopy, getLocaleFromPathname, localizePath } from '~/lib/i18n';
 import './project-page.css';
 
 const QUERY = `
 *[_type=="project" && slug.current == $slug][0]{
   _id,
-  "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
+  "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString('titleI18n', undefined, 'slug.current')}),
   "slug": slug.current,
 
   hero{
-    "pills": coalesce(pills, pillsI18n[$locale], pillsI18n.ru, []),
+    "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, []),
     "intro": coalesce(introI18n[$locale], introI18n.ru, intro),
     "taskText": coalesce(taskTextI18n[$locale], taskTextI18n.ru, taskText),
     "ctaPrimary": {
@@ -39,10 +40,10 @@ const QUERY = `
   },
   relatedProjects[]->{
     _id,
-    "title": coalesce(title, ${localizedString('titleI18n', undefined, 'slug.current')}),
+    "title": coalesce(select($locale != "ru" => titleI18n[$locale]), title, ${localizedString('titleI18n', undefined, 'slug.current')}),
     "slug": slug.current,
     hero{
-      "pills": coalesce(pills, pillsI18n[$locale], pillsI18n.ru, [])
+      "pills": coalesce(select($locale != "ru" => pillsI18n[$locale]), pills, pillsI18n.ru, [])
     },
     mockupBlock{ mockup }
   }
@@ -61,7 +62,7 @@ export const useProject = routeLoader$(async ({ params, status, url }) => {
 
     const doc = await sanity.fetch(QUERY, { slug, locale });
     if (!doc) status(404);
-    return doc ?? null;
+    return translateLegacyProject(doc ?? null, locale);
   } catch (error: any) {
     console.error('Sanity PROJECT fetch failed:', error?.message || error);
     status(404);
@@ -73,9 +74,12 @@ export default component$(() => {
   const loc = useLocation();
   const locale = getLocaleFromPathname(loc.url.pathname);
   const p = useProject().value as any;
-  if (!p) return <section class="case"><h1>Not found</h1></section>;
+  if (!p) return <section class="case"><h1>{uiCopy[locale].notFound}</h1></section>;
 
   const hero = p.hero || {};
+  const primaryUrl = hero.ctaPrimary?.url || '';
+  const internalPath = primaryUrl.match(/^https:\/\/(?:www\.)?godevca\.com(\/.*)?$/)?.[1];
+  const primaryHref = internalPath ? localizePath(locale, internalPath) : primaryUrl;
   const mock = p.mockupBlock || {};
   const agency = mock.agency || {};
   const relatedProjects = Array.isArray(p.relatedProjects)
@@ -122,7 +126,7 @@ export default component$(() => {
           {/* LEFT */}
           <div class="case-hero__left">
             {hero?.pills?.length ? (
-              <ul class="case-tags" aria-label="tags">
+              <ul class="case-tags" aria-label={uiCopy[locale].tags}>
                 {hero.pills.slice(0, 6).map((t: string) => (
                   <li class="case-tag" key={t}>
                     {t}
@@ -148,7 +152,7 @@ export default component$(() => {
               {hero?.ctaPrimary?.url ? (
                 <a
                   class="btn btn--light"
-                  href={hero.ctaPrimary.url}
+                  href={primaryHref}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -166,7 +170,7 @@ export default component$(() => {
           </div>
 
           {/* RIGHT META */}
-          <aside class="case-hero__right" aria-label="meta">
+          <aside class="case-hero__right" aria-label={uiCopy[locale].meta}>
             <div class="case-miniMeta">
               <div class="case-miniMeta__row">
                 <div class="case-miniMeta__label">{copy.duration}</div>
@@ -188,7 +192,7 @@ export default component$(() => {
             <img
               class="case-mock__img"
               src={urlFor(mock.mockup).width(2200).auto('format').url()}
-              alt={`${p.title} mockup`}
+              alt={`${p.title} — ${uiCopy[locale].mockup}`}
               loading="eager"
               decoding="async"
             />
@@ -200,7 +204,7 @@ export default component$(() => {
                 <div class="case-agency__logo">
                   <img
                     src={urlFor(agency.logo).width(160).auto('format').url()}
-                    alt={agency?.name || 'agency'}
+                    alt={agency?.name || uiCopy[locale].agency}
                     loading="lazy"
                     decoding="async"
                   />
@@ -233,7 +237,7 @@ export default component$(() => {
               {item?.image ? (
                 <img
                   src={urlFor(item.image).width(2400).auto('format').url()}
-                  alt={item?.alt || `${p.title} screen ${i + 1}`}
+                  alt={item?.alt || `${p.title} — ${uiCopy[locale].screen} ${i + 1}`}
                   loading="lazy"
                   decoding="async"
                 />
@@ -268,7 +272,7 @@ export default component$(() => {
                 <div class="related-card__foot">
                   <div class="related-card__name">{rp.title}</div>
                   {rp?.hero?.pills?.length ? (
-                    <div class="related-card__tags" aria-label="tags">
+                    <div class="related-card__tags" aria-label={uiCopy[locale].tags}>
                       {rp.hero.pills.slice(0, 2).map((t: string) => (
                         <span class="related-card__tag" key={t}>
                           {t}
@@ -286,10 +290,10 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = ({ resolveValue }) => {
+export const head: DocumentHead = ({ resolveValue, url }) => {
   const p: any = resolveValue(useProject);
   return {
-    title: p?.title ? `${p.title} | godevca` : 'Project',
+    title: p?.title ? `${p.title} | godevca` : uiCopy[getLocaleFromPathname(url.pathname)].project,
     meta: [{ name: 'description', content: p?.hero?.intro ?? '' }],
   };
 };

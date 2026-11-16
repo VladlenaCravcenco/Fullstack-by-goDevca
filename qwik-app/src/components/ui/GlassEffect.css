@@ -23,6 +23,8 @@
 .glass-wrap {
   position: relative;
   display: inline-block;
+  max-width: 100%;
+  min-width: 0;
   border-radius: 20px;
   pointer-events: none;
   transition: all var(--anim--hover-time) var(--anim--hover-ease);
@@ -61,6 +63,8 @@
 
 .glass-btn {
   all: unset;
+  box-sizing: border-box;
+  max-width: 100%;
   cursor: pointer;
   position: relative;
   pointer-events: auto;
@@ -88,7 +92,7 @@
     color var(--anim--hover-time, .25s) var(--anim--hover-ease, cubic-bezier(.2,.8,.2,1));
 }
 
-.glass-btn span {
+.glass-btn > span {
   position: relative;
   display: block;
   user-select: none;
@@ -100,7 +104,7 @@
   transition: all var(--anim--hover-time) var(--anim--hover-ease);
 }
 
-.glass-btn span::after {
+.glass-btn > span::after {
   content: "";
   position: absolute;
   z-index: 1;
@@ -138,11 +142,11 @@
   backdrop-filter: blur(0.01em);
 }
 
-.glass-hover .glass-btn span {
+.glass-hover .glass-btn > span {
   text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
 }
 
-.glass-hover .glass-btn span::after {
+.glass-hover .glass-btn > span::after {
   background-position: 25% 50%;
 }
 
@@ -155,7 +159,7 @@
   opacity: 0.75;
 }
 
-.glass-active .glass-btn span::after {
+.glass-active .glass-btn > span::after {
   background-position: 50% 15%;
   --angle-2: -15deg;
 }

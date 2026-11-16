@@ -74,3 +74,9 @@ export function localizePath(locale: Locale, rawPath: string): string {
 export function switchLocalePath(currentPath: string, targetLocale: Locale): string {
   return localizePath(targetLocale, currentPath);
 }
+
+export const uiCopy = {
+  ru: { notFound: 'Страница не найдена', postNotFound: 'Статья не найдена.', project: 'Проект', tags: 'Теги', meta: 'О проекте', mockup: 'Макет', screen: 'Экран', agency: 'Агентство', categories: 'Категории блога', name: 'Кравченко Владлена', preview: 'Превью дизайн-проекта', education: ['Курс веб-дизайна — Vanar.md', 'USM, информационные и коммуникационные технологии', 'Skillbox, веб-дизайн с нуля до PRO'] },
+  ro: { notFound: 'Pagina nu a fost găsită', postNotFound: 'Articolul nu a fost găsit.', project: 'Proiect', tags: 'Etichete', meta: 'Despre proiect', mockup: 'Machetă', screen: 'Ecran', agency: 'Agenție', categories: 'Categoriile blogului', name: 'Cravcenco Vladlena', preview: 'Previzualizare proiect de design', education: ['Curs de web design — Vanar.md', 'USM, tehnologii informaționale și de comunicații', 'Skillbox, web design de la zero la PRO'] },
+  en: { notFound: 'Page not found', postNotFound: 'Post not found.', project: 'Project', tags: 'Tags', meta: 'About the project', mockup: 'Mockup', screen: 'Screen', agency: 'Agency', categories: 'Blog categories', name: 'Vladlena Cravcenco', preview: 'Design project preview', education: ['Web design course — Vanar.md', 'USM, Information and Communication Technologies', 'Skillbox, Web Design from Zero to PRO'] },
+} satisfies Record<Locale, object>;

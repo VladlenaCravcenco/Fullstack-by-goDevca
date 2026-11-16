@@ -1,6 +1,7 @@
 .hero {
   display: flex;
-  height: 100vh;
+  min-height: 100svh;
+  padding: 160px 0 64px;
 }
 
 .hero .container {
@@ -23,6 +24,7 @@
 
 .hero__left {
   flex: 1 1 600px;
+  min-width: 0;
   align-items: center;
   text-align: center;
 }
@@ -30,7 +32,7 @@
 .hero-title {
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: var(--lh-title);
   letter-spacing: -0.04em;
 }
 
@@ -192,27 +194,27 @@
 
   .hero__left .hero-title {
     font-size: var(--text-4xl);
-    line-height: 1;
+    line-height: var(--lh-title);
     text-align: center;
   }
 
   .hero__left h2 {
     font-size: var(--text-2xl);
-    line-height: 1;
+    line-height: var(--lh-title);
     margin-bottom: var(--space-3);
   }
 
   .hero__left h4 {
     font-family: var(--font-main);
     font-size: var(--text-lg);
-    line-height: 1;
+    line-height: var(--lh-title);
     margin-bottom: var(--space-5);
   }
 
   .hero__left p {
     max-width: 22rem;
     font-size: var(--text-base);
-    line-height: 1;
+    line-height: var(--lh-copy);
   }
   .hero__buttons {
     justify-content: center;

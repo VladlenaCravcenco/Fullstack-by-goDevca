@@ -2,7 +2,7 @@ import { GlassEffect } from '~/components/ui/GlassEffect';
 import { component$ } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
 import GoogleReviews from '~/components/reviews/GoogleReviews';
-import { getLocaleFromPathname } from '~/lib/i18n';
+import { uiCopy, getLocaleFromPathname } from '~/lib/i18n';
 
 import './about-me.css';
 
@@ -17,7 +17,7 @@ export default component$(() => {
     {
       type: 'image',
       src: '/images/design/preview-1.jpg',
-      alt: 'Design project preview 1',
+      alt: `${uiCopy[locale].preview} 1`,
       href: 'https://go-de-vca.vercel.app',
     },
     {
@@ -29,7 +29,7 @@ export default component$(() => {
     {
       type: 'image',
       src: '/images/design/preview-3.jpg',
-      alt: 'Design project preview 3',
+      alt: `${uiCopy[locale].preview} 3`,
       href: 'https://go-de-vca.vercel.app',
     },
   ];
@@ -93,7 +93,7 @@ export default component$(() => {
       <div class="container">
         <div class="about-me__grid">
           <div class="card photo">
-            <img src="/images/me.jpg" alt="Vladlena Cravcenco" />
+            <img src="/images/me.jpg" width="4000" height="6000" alt="Vladlena Cravcenco" />
           </div>
 
           <div class="card about-text">
@@ -104,7 +104,7 @@ export default component$(() => {
           </div>
 
           <div class="card contact">
-            <h2>Кравченко Владлена</h2>
+            <h2>{uiCopy[locale].name}</h2>
             <h3>{copy.role}</h3>
             <a href="https://bento.me/godevca">bento.me</a>
             <p>{copy.extra}</p>
@@ -119,13 +119,13 @@ export default component$(() => {
             <h3>{copy.education}</h3>
             <ul>
               <li>
-                <strong>2017</strong> — Cours web design – Vanar.md
+                <strong>2017</strong> — {uiCopy[locale].education[0]}
               </li>
               <li>
-                <strong>2018–2023</strong> — USM, Information and Communication Technologies
+                <strong>2018–2023</strong> — {uiCopy[locale].education[1]}
               </li>
               <li>
-                <strong>2022–2024</strong> — Skillbox, Web design from scratch to PRO
+                <strong>2022–2024</strong> — {uiCopy[locale].education[2]}
               </li>
             </ul>
           </div>

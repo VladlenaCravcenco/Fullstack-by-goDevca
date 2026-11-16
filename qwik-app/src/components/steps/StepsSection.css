@@ -1,7 +1,7 @@
 .steps {
   padding: var(--space-9) 0;
   position: relative;
-  height: 60vh;
+  min-height: 420px;
 display: flex;
 align-items: center;
 }
@@ -15,7 +15,7 @@ align-items: center;
 /* === LAYOUT как в референсе === */
 .steps__layout {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
   gap: 30px;
   align-items: start;
 }
@@ -27,7 +27,7 @@ align-items: center;
 .steps__title {
   font-size: var(--text-3xl);
   font-weight: 700;
-  line-height: 1.02;
+  line-height: var(--lh-title);
   margin: 0 0 var(--space-3);
 }
 
@@ -101,7 +101,7 @@ align-items: center;
   will-change: transform;
   transition: transform 420ms cubic-bezier(0.22, 0.8, 0.2, 1);
   padding-right: 140px; /* чтобы карточки “уезжали” под fade красиво */
-  height: 250px;
+  min-height: 280px;
 }
 
 /* === CARD === */
@@ -123,8 +123,8 @@ align-items: center;
 .steps__decor {
   position: absolute;
   top: -20px; /* “вылазит” наружу */
-  right: -50px;
-  width: 140px;
+  right: -30px;
+  width: 80px;
   pointer-events: none;
   transform: rotate(-45deg);
 }
@@ -142,7 +142,7 @@ align-items: center;
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
-  padding-right: 110px;
+  padding-right: 0;
 }
 
 .steps__num {
@@ -157,12 +157,12 @@ align-items: center;
 .steps__card-title {
   margin: 0;
   font-size: var(--text-xl);
-  line-height: 1.15;
+  line-height: var(--lh-title);
   font-weight: 600;
 }
 
 .steps__card-text {
-  margin: 0 50px 0 16px;
+  margin: 0;
   color: #444;
   font-size: var(--text-sm);
   line-height: var(--lh-copy);
@@ -202,14 +202,23 @@ align-items: center;
   }
 
   .steps__rail{
-    overflow: visible;
+    overflow: hidden;
   }
 
   .steps__track {
-    padding-right: 110px;
+    padding-right: 0;
   }
 
   .steps__meta{
-    width: 90vw;
+    min-width: 0;
   }
 }
+
+.steps__rail { container-type: inline-size; }
+.steps__track {
+  --cardW: min(360px, 100cqi);
+  --gap: 18px;
+  transform: translateX(calc(var(--step-index) * (var(--cardW) + var(--gap)) * -1));
+}
+.steps__card-top { flex-wrap: wrap; }
+.steps__card-title { flex-basis: 100%; }

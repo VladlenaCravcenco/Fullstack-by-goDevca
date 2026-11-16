@@ -14,13 +14,13 @@ import {
   normalizeBlogCategory,
   type BlogListItem,
 } from "~/lib/blog";
-import { seededBlogPosts } from "~/lib/blogSeed";
-import { getLocaleFromPathname, localizePath } from "~/lib/i18n";
+import { getSeededBlogPosts } from "~/lib/blogSeed";
+import { uiCopy, getLocaleFromPathname, localizePath } from "~/lib/i18n";
 import { urlFor } from "~/lib/imageUrl";
 import "./blog-page.css";
 
 const BLOG_LIST_QUERY = `
-*[_type=="post" && defined(slug.current)]|order(featured desc, publishedAt desc){
+*[_type=="post" && (count(content[$locale]) > 0 || count(content.ru) > 0 || count(content) > 0) && defined(slug.current)]|order(featured desc, publishedAt desc){
   _id,
   "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
@@ -38,16 +38,16 @@ export const useBlogPosts = routeLoader$<BlogListItem[]>(async (ctx) => {
     const locale = getLocaleFromPathname(ctx.url.pathname);
     const posts = await sanity.fetch(BLOG_LIST_QUERY, { locale });
 
-    if (!Array.isArray(posts)) return seededBlogPosts;
+    if (!Array.isArray(posts)) return getSeededBlogPosts(getLocaleFromPathname(ctx.url.pathname));
 
     const normalized = posts.filter(
       (post: any) => typeof post?.slug === "string" && post.slug.length > 0,
     );
-    return normalized.length ? normalized : seededBlogPosts;
+    return normalized.length ? normalized : getSeededBlogPosts(getLocaleFromPathname(ctx.url.pathname));
   } catch (error: any) {
     console.error("Sanity BLOG_LIST fetch failed:", error?.message || error);
     ctx.status(200);
-    return seededBlogPosts;
+    return getSeededBlogPosts(getLocaleFromPathname(ctx.url.pathname));
   }
 });
 
@@ -81,7 +81,7 @@ export default component$(() => {
           <p>{copy.description}</p>
         </header>
 
-        <nav class="blog-page__tabs" aria-label="Blog categories">
+        <nav class="blog-page__tabs" aria-label={uiCopy[locale].categories}>
           <a
             href={localizePath(locale, "/blog")}
             class={{

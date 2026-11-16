@@ -29,7 +29,7 @@ export default component$(() => {
 
   const copy = {
     ru: {
-      available: 'Available to Work',
+      available: 'Открыта для проектов',
       navLabel: 'Навигация',
       menuLabel: 'Меню',
       openMenu: 'Открыть меню',
@@ -75,7 +75,7 @@ export default component$(() => {
     },
   }[locale];
 
-  const currentPath = `${loc.url.pathname}${loc.url.search}`;
+  const currentPath = `${loc.url.pathname}${loc.url.search}${loc.url.hash}`;
 
   return (
     <header class="h">
@@ -101,7 +101,7 @@ export default component$(() => {
         </nav>
 
         <div class="h__right">
-          <div class="h__langs" aria-label="Language switcher">
+          <div class="h__langs" aria-label={{ ru: 'Выбор языка', ro: 'Selectarea limbii', en: 'Language switcher' }[locale]}>
             {(['ru', 'ro', 'en'] as const).map((item) => (
               <a
                 key={item}

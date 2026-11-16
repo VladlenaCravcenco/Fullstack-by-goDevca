@@ -11,7 +11,7 @@
 
 .about-me__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: auto auto auto;
   gap: 24px;
 }
@@ -41,7 +41,7 @@
   grid-column: 3 / 4;
   grid-row: 2 / 3;
 }
-.about-me__grid .review {
+.about-me__grid > .review {
   grid-column: 2 / 4;
   grid-row: 3 / 4;
 }
@@ -61,7 +61,8 @@
   justify-content: space-between;
   border: 10px solid #ffffff3a;
   border-radius: 25px;
-  padding: 24px;
+  padding: clamp(16px, 2vw, 24px);
+  min-width: 0;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
@@ -70,6 +71,7 @@
   border-radius: 20px;
   display: block;
   height: 100%;
+  object-fit: cover;
 }
 
 .design-portfolio-btn {
@@ -115,7 +117,7 @@
 
 .design-preview__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -181,7 +183,9 @@
   .about-me__grid .contact,
   .about-me__grid .about-text,
   .about-me__grid .education,
-  .about-me__grid .skills .about-me__grid .design-preview {
+  .about-me__grid .skills,
+  .about-me__grid > .review,
+  .about-me__grid .design-preview {
     grid-column: auto;
     grid-row: auto;
   }
@@ -216,10 +220,16 @@
     order: 5;
   }
 
-  .about-me__grid .review {
+  .about-me__grid > .review {
     order: 6;
   }
   .about-me__grid .design-preview {
     order: 7;
   }
+}
+
+.about-me__grid .contact h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
+.design-preview__head { flex-wrap: wrap; }
+@media (max-width: 1024px) {
+  .about-me .card.photo img { height: auto; max-height: 640px; object-position: center 25%; }
 }

@@ -5,16 +5,21 @@ import { RouterHead } from "./components/router-head/router-head";
 import {
   restoreMusicState,
   attachAudioUnlockOnce,
+  attachGlassSounds,
 } from "~/utils/sounds";
 
 import "./global.css";
 
 export default component$(() => {
-  // 🔒 ЭТО КЛЮЧЕВОЕ МЕСТО
-  useVisibleTask$(() => {
-    attachAudioUnlockOnce(); // один раз разблокирует аудио
-    restoreMusicState();     // 👈 если музыка была включена — она ВОЗОБНОВИТСЯ
-  });
+  useVisibleTask$(({ cleanup }) => {
+    const detachUnlock = attachAudioUnlockOnce();
+    const detachGlass = attachGlassSounds();
+    restoreMusicState();
+    cleanup(() => {
+      detachUnlock?.();
+      detachGlass();
+    });
+  }, { strategy: "document-ready" });
 
   return (
     <QwikCityProvider>
@@ -28,7 +33,7 @@ export default component$(() => {
         )}
         <RouterHead />
       </head>
-      <body lang="ru">
+      <body>
         <RouterOutlet />
       </body>
     </QwikCityProvider>

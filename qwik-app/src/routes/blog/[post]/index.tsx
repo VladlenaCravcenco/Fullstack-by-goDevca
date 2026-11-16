@@ -12,7 +12,7 @@ import {
   normalizeBlogCategory,
   type BlogPost,
 } from "~/lib/blog";
-import { getLocaleFromPathname, localizePath } from "~/lib/i18n";
+import { uiCopy, getLocaleFromPathname, localizePath } from "~/lib/i18n";
 import {
   localizedString,
   localizedStringArray,
@@ -21,11 +21,11 @@ import {
   sanity,
 } from "~/lib/sanity";
 import { urlFor } from "~/lib/imageUrl";
-import { seededBlogPosts } from "~/lib/blogSeed";
+import { getSeededBlogPosts } from "~/lib/blogSeed";
 import "./post-page.css";
 
 const BLOG_POST_QUERY = `
-*[_type=="post" && slug.current == $slug][0]{
+*[_type=="post" && (count(content[$locale]) > 0 || count(content.ru) > 0 || count(content) > 0) && slug.current == $slug][0]{
   _id,
   "title": ${localizedString("titleI18n", "title", 'slug.current')},
   "slug": slug.current,
@@ -54,13 +54,13 @@ export const useBlogPost = routeLoader$<BlogPost | null>(
       if (post) return post;
 
       const fallbackPost =
-        seededBlogPosts.find((item) => item.slug === params.post) || null;
+        getSeededBlogPosts(getLocaleFromPathname(url.pathname)).find((item) => item.slug === params.post) || null;
       if (!fallbackPost) status(404);
       return fallbackPost;
     } catch (error: any) {
       console.error("Sanity BLOG_POST fetch failed:", error?.message || error);
       const fallbackPost =
-        seededBlogPosts.find((item) => item.slug === params.post) || null;
+        getSeededBlogPosts(getLocaleFromPathname(url.pathname)).find((item) => item.slug === params.post) || null;
       if (!fallbackPost) status(404);
       return fallbackPost;
     }
@@ -77,7 +77,7 @@ export default component$(() => {
     return (
       <section class="post-page">
         <div class="container">
-          <div class="post-page__empty">Post not found.</div>
+          <div class="post-page__empty">{uiCopy[locale].postNotFound}</div>
         </div>
       </section>
     );

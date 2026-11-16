@@ -1,3 +1,4 @@
+import { getSeededBlogPosts } from '~/lib/blogSeed';
 import { component$, useSignal } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import "./blog-section.css";
@@ -16,55 +17,12 @@ type BlogSectionProps = {
   posts?: BlogListItem[];
 };
 
-const fallbackPosts: BlogListItem[] = [
-  {
-    _id: "fallback-react",
-    title: "Когда React-сайт начинает тормозить еще до рекламы",
-    slug: "react-site-performance-for-business",
-    category: "react",
-    excerpt:
-      "Где бизнес теряет скорость на тяжелом фронтенде и как это исправить без полной переделки.",
-    publishedAt: "2026-01-15T09:00:00.000Z",
-    readingTime: 6,
-  },
-  {
-    _id: "fallback-qwik",
-    title: "Qwik для лендинга: когда он реально выгоднее React",
-    slug: "qwik-vs-react-for-landing-pages",
-    category: "qwik",
-    excerpt:
-      "Разбираю, в каких задачах Qwik оправдывает сложность внедрения и приносит бизнесу пользу.",
-    publishedAt: "2026-01-23T09:00:00.000Z",
-    readingTime: 5,
-  },
-  {
-    _id: "fallback-design",
-    title: "Почему хороший UI не начинается с Figma",
-    slug: "why-good-ui-starts-before-figma",
-    category: "design",
-    excerpt:
-      "Структура, контент и сценарии сильнее влияют на продажи, чем красивые карточки и кнопки.",
-    publishedAt: "2026-02-02T09:00:00.000Z",
-    readingTime: 7,
-  },
-  {
-    _id: "fallback-3d",
-    title: "3D на сайте без перегруза: где проходит граница",
-    slug: "3d-on-websites-without-overload",
-    category: "3d",
-    excerpt:
-      "Как использовать 3D так, чтобы оно усиливало продукт, а не ломало скорость и восприятие.",
-    publishedAt: "2026-02-10T09:00:00.000Z",
-    readingTime: 6,
-  },
-];
-
 export default component$<BlogSectionProps>(({ posts }) => {
   const loc = useLocation();
   const locale = getLocaleFromPathname(loc.url.pathname);
   const selectedTag = useSignal<BlogCategory>("react");
   const backgroundImageUrl = "/images/form-cta-bg.jpg";
-  const items = posts?.length ? posts : fallbackPosts;
+  const items = posts?.length ? posts : getSeededBlogPosts(locale);
   const copy = {
     ru: {
       title: "Полезный блог для клиентов",

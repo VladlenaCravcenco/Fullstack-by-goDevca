@@ -1,3 +1,5 @@
+import type { Locale } from './i18n';
+import { blogSeedTranslations } from './blogSeedTranslations';
 import type { BlogPost } from '~/lib/blog';
 
 const block = (text: string, style: 'normal' | 'h2' | 'h3' | 'blockquote' = 'normal') => ({
@@ -341,3 +343,18 @@ export const seededBlogPosts: BlogPost[] = [
     ],
   },
 ];
+
+export function getSeededBlogPosts(locale: Locale): BlogPost[] {
+  if (locale === 'ru') return seededBlogPosts;
+  return seededBlogPosts.map((post) => {
+    const translation = blogSeedTranslations[locale][post.slug];
+    return {
+      ...post,
+      ...translation,
+      content: post.content.map((block, index) => ({
+        ...block,
+        children: [{ _type: 'span', text: translation.content[index] }],
+      })),
+    };
+  });
+}

@@ -2,7 +2,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 22px;
-  height: 98vh;
+  min-height: 98svh;
+  padding: clamp(32px, 5vw, 72px) 0;
   margin: 10px;
   
   display: flex;
@@ -14,7 +15,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 90vh;
+  min-height: 80svh;
+  gap: clamp(32px, 5vw, 72px);
 
 }
 
@@ -43,7 +45,7 @@
   position: relative;
   z-index: 2;
   max-width: 980px;
-  margin: var(--space-9) auto 0;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -74,7 +76,7 @@
   margin: var(--space-4) auto var(--space-5);
   max-width: 560px;
   font-size: var(--text-lg);
-  line-height: var(--lh-copy);
+  line-height: var(--lh-title);
   color: rgba(10, 10, 10, 0.75);
 }
 
@@ -82,10 +84,11 @@
 .footer__bottom {
   position: relative;
   z-index: 2;
-  width: 70%;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1.35fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
   gap: 22px;
 }
 
@@ -157,7 +160,7 @@
   z-index: 1;
   display: grid;
   height: 100%;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   align-items: stretch;
 }
@@ -177,6 +180,7 @@
 
 .glass-card__social {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-end;
   align-items: end;

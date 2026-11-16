@@ -1,6 +1,6 @@
 import { component$, useSignal, useVisibleTask$, $ } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
-import { toggleMusic, isMusicEnabled, restoreMusicState, playGlassHover } from '~/utils/sounds';
+import { toggleMusic, isMusicEnabled, subscribeMusicState, playGlassHover } from '~/utils/sounds';
 import { getLocaleFromPathname } from '~/lib/i18n';
 import './musictoggle.css'
 
@@ -14,9 +14,8 @@ export const MusicToggle = component$(() => {
     en: 'Music',
   }[locale];
 
-  useVisibleTask$(() => {
-    restoreMusicState();
-    enabled.value = isMusicEnabled();
+  useVisibleTask$(({ cleanup }) => {
+    cleanup(subscribeMusicState((playing) => { enabled.value = playing; }));
   });
 
   const onToggle$ = $(() => {
@@ -26,7 +25,7 @@ export const MusicToggle = component$(() => {
   });
 
   return (
-    <button class="sound-toggle" onClick$={onToggle$} aria-label={label}>
+    <button class="sound-toggle" onClick$={onToggle$} aria-label={label} aria-pressed={enabled.value}>
       <span class={enabled.value ? 'sound-wave is-on' : 'sound-wave is-off'} />
     </button>
   );

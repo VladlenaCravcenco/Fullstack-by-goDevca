@@ -64,8 +64,8 @@ body {
   --text-3xl: clamp(2.5rem, 5vw, 4.5rem);
   --text-4xl: clamp(3rem, 7vw, 6rem);
 
-  --lh-tight: 1.02;
-  --lh-title: 1.08;
+  --lh-tight: 0.8;
+  --lh-title: 0.8;
   --lh-copy: 1.65;
   --lh-copy-wide: 1.75;
 
@@ -143,7 +143,9 @@ h5,
 h6 {
   font-weight: bold;
   line-height: var(--lh-title);
-  margin-bottom: 0.35em;
+  margin-bottom: 0.5em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
   color: var(--color-black);
   font-family: var(--font-display);
 }
@@ -197,20 +199,17 @@ h3 {
     --text-3xl: clamp(2.25rem, 9.5vw, 2.75rem);
     --text-4xl: clamp(2.625rem, 11vw, 3.25rem);
 
-    --lh-tight: 1;
-    --lh-title: 1;
-    --lh-copy: 1;
-    --lh-copy-wide: 1;
+    --lh-copy: 1.55;
+    --lh-copy-wide: 1.65;
   }
 
   body,
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1;
+  p {
+    line-height: var(--lh-copy);
   }
+}
+
+/* Keep section links clear of the fixed navigation. */
+section[id] {
+  scroll-margin-top: 140px;
 }

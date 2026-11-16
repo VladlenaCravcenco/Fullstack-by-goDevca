@@ -22,6 +22,8 @@ export default component$(({ placeId }: { placeId: string }) => {
   const copy = {
     ru: {
       title: 'Отзывы',
+      allReviews: 'Все отзывы в Google',
+      scrollHint: 'Прокрутите, чтобы прочитать отзывы',
       leaveReview: 'Оставить отзыв в Google',
       loadingError: 'Ошибка загрузки отзывов',
       noReviews: 'Пока нет отзывов. Буду благодарна, если вы напишете первый.',
@@ -32,6 +34,8 @@ export default component$(({ placeId }: { placeId: string }) => {
     },
     ro: {
       title: 'Recenzii',
+      allReviews: 'Toate recenziile pe Google',
+      scrollHint: 'Derulați pentru a citi recenziile',
       leaveReview: 'Lasa o recenzie in Google',
       loadingError: 'Eroare la incarcarea recenziilor',
       noReviews: 'Inca nu exista recenzii. As aprecia mult daca o lasi pe prima.',
@@ -42,6 +46,8 @@ export default component$(({ placeId }: { placeId: string }) => {
     },
     en: {
       title: 'Reviews',
+      allReviews: 'All reviews on Google',
+      scrollHint: 'Scroll to read the reviews',
       leaveReview: 'Leave a Google review',
       loadingError: 'Failed to load reviews',
       noReviews: 'There are no reviews yet. I would appreciate it if you left the first one.',
@@ -52,9 +58,14 @@ export default component$(({ placeId }: { placeId: string }) => {
     },
   }[locale];
 
-  useVisibleTask$(async () => {
+  useVisibleTask$(async ({ track, cleanup }) => {
+    const language = track(() => getLocaleFromPathname(loc.url.pathname));
+    const controller = new AbortController();
+    cleanup(() => controller.abort());
+    error.value = null;
+    data.value = null;
     try {
-      const r = await fetch(`/api/google-reviews?place_id=${placeId}`);
+      const r = await fetch(`/api/google-reviews?place_id=${encodeURIComponent(placeId)}&lang=${language}`, { signal: controller.signal });
       const json = await r.json();
 
       if (!json?.ok) {
@@ -62,19 +73,23 @@ export default component$(({ placeId }: { placeId: string }) => {
       }
 
       data.value = json; // { ok, name, rating, total, reviews }
-    } catch (e: any) {
-      error.value = e?.message || copy.loadingError;
+    } catch {
+      if (!controller.signal.aborted) error.value = 'load_failed';
     }
   });
 
-  const writeUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
+  const writeUrl = `https://search.google.com/local/writereview?placeid=${encodeURIComponent(placeId)}`;
+  const allReviewsUrl = data.value?.reviewsUrl || `https://www.google.com/maps/search/?api=1&query=godevca&query_place_id=${encodeURIComponent(placeId)}`;
 
   if (error.value) {
     return (
       <section class="reviews">
         <h3>{copy.title}</h3>
-        <p style="color:#999">{error.value}</p>
-        <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+        <p style="color:#999">{copy.loadingError}</p>
+        <div class="reviews__actions">
+          <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+          <a class="reviews__all" href={allReviewsUrl} target="_blank" rel="noopener">{copy.allReviews} ↗</a>
+        </div>
       </section>
     );
   }
@@ -105,7 +120,10 @@ export default component$(({ placeId }: { placeId: string }) => {
       <section class="reviews">
         <h3>{name}: {copy.title}</h3>
         <p style="color:#666">{copy.noReviews}</p>
-        <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+        <div class="reviews__actions">
+          <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+          <a class="reviews__all" href={allReviewsUrl} target="_blank" rel="noopener">{copy.allReviews} ↗</a>
+        </div>
         <div class="sidenote">
           {total > 0
             ? <>{copy.now}: ⭐ {rating} · {total} {copy.reviewsCount}</>
@@ -126,9 +144,11 @@ export default component$(({ placeId }: { placeId: string }) => {
         </div>
       </div>
 
+      <p class="reviews__hint">{copy.scrollHint} ↓</p>
+      <div class="reviews__scroll" tabIndex={0} role="region" aria-label={copy.scrollHint}>
       <ul class="reviews__list">
-        {reviews.slice(0, 6).map((r, i) => (
-          <li key={i} class="review">
+        {reviews.map((r, i) => (
+          <li key={i} class="reviews__item">
             <div class="review__top">
               <div class="avatar" />
               <div>
@@ -147,8 +167,12 @@ export default component$(({ placeId }: { placeId: string }) => {
           </li>
         ))}
       </ul>
+      </div>
 
-      <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+      <div class="reviews__actions">
+          <a class="gbtn" href={writeUrl} target="_blank" rel="noopener">{copy.leaveReview}</a>
+          <a class="reviews__all" href={allReviewsUrl} target="_blank" rel="noopener">{copy.allReviews} ↗</a>
+        </div>
     </section>
   );
 });
