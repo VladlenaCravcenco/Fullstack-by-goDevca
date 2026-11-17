@@ -16,7 +16,7 @@ export default function ProjectDirectionsInput(props: ArrayOfObjectsInputProps) 
   useEffect(() => {
     let active = true
     const refresh = () => client.fetch<Direction[]>(
-      '*[_type == "projectDirection" && !(_id in path("drafts.**"))] | order(title asc){_id, title}',
+      '*[_type == "projectDirection" && !(_id in path("drafts.**")) && !(_id in path("projectDirection.**"))] | order(title asc){_id, title}',
       {}, {perspective: 'raw'},
     ).then((items) => {if (active) {setOptions(items); setLoading(false)}})
       .catch(() => {if (active) {setError('Не удалось загрузить направления. Обновите страницу.'); setLoading(false)}})
@@ -39,7 +39,7 @@ export default function ProjectDirectionsInput(props: ArrayOfObjectsInputProps) 
     try {
       // Deterministic IDs prevent duplicate directions when editors create the same name.
       const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(title.toLowerCase()))
-      const id = 'projectDirection.' + Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, '0')).join('')
+      const id = 'projectDirection-' + Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, '0')).join('')
       const existing = options.find((item) => item.title.trim().toLowerCase() === title.toLowerCase())
       const direction = existing || await client.createIfNotExists({_id: id, _type: 'projectDirection', title})
       setOptions((items) => items.some((item) => item._id === direction._id) ? items : [...items, direction])
