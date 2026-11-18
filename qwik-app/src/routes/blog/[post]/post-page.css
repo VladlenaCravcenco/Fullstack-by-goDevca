@@ -9,8 +9,8 @@
 }
 
 .post-page__hero {
-  max-width: 920px;
-  margin-bottom: 28px;
+  max-width: 1120px;
+  margin-bottom: 36px;
 }
 
 .post-page__meta {
@@ -25,9 +25,13 @@
 }
 
 .post-page__hero h1 {
-  font-size: clamp(54px, 8vw, 104px);
-  max-width: 11ch;
-  margin-bottom: 18px;
+  font-size: clamp(38px, 6vw, 88px);
+  max-width: 100%;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  margin-bottom: 24px;
 }
 
 .post-page__hero p {

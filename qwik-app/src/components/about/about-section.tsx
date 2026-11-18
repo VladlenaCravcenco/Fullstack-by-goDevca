@@ -97,7 +97,7 @@ export default component$(() => {
           <div class="card photo">
             <img
               src={portraitLarge}
-              srcSet={`${portraitSmall} 640w, ${portraitLarge} 1200w`}
+              srcset={`${portraitSmall} 640w, ${portraitLarge} 1200w`}
               sizes="(max-width: 1024px) calc(100vw - 60px), 400px"
               width="1200"
               height="1800"
