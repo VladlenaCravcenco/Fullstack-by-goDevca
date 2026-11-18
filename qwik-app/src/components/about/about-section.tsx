@@ -4,6 +4,8 @@ import { useLocation } from '@builder.io/qwik-city';
 import GoogleReviews from '~/components/reviews/GoogleReviews';
 import { uiCopy, getLocaleFromPathname } from '~/lib/i18n';
 
+import portraitSmall from '~/media/vladlena-640.webp';
+import portraitLarge from '~/media/vladlena-1200.webp';
 import './about-me.css';
 
 type DesignItem =
@@ -93,7 +95,15 @@ export default component$(() => {
       <div class="container">
         <div class="about-me__grid">
           <div class="card photo">
-            <img src="/images/me.jpg" width="4000" height="6000" alt="Vladlena Cravcenco" />
+            <img
+              src={portraitLarge}
+              srcSet={`${portraitSmall} 640w, ${portraitLarge} 1200w`}
+              sizes="(max-width: 1024px) calc(100vw - 60px), 400px"
+              width="1200"
+              height="1800"
+              decoding="async"
+              alt="Vladlena Cravcenco"
+            />
           </div>
 
           <div class="card about-text">
